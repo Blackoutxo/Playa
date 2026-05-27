@@ -7,5 +7,8 @@ setInterval(() => {
 
 // --------- Settings ---------- //
 const settingsBar = document.querySelector('.settings');
+const settingBtn = document.querySelector('.settings-icon');
 
 settingsBar.classList.add('hidden');
+
+
