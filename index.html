@@ -1,4 +1,5 @@
-<html>   
+<!---Background video by https://pixabay.com/users/gam-ol-2829280/-->
+<html>
 
 <head>
     <meta charset="UTF-8" />
@@ -8,6 +9,7 @@
 </head>
 
 <body>
+    <!---------- Loading screen ---------->
     <div class="init-window">
         <div class="init-box"> initializing </div>
         <div class="progress-bar">
@@ -15,8 +17,24 @@
         </div>
     </div>
 
+    <div class="main-window-container">
     
+        <!----------Settings---------->
+        <img class="settings-icon" src="./assets/images/icon/settings-icon.svg" />
+        <div class="settings">
+            <div class="toggle-mode">Dark Theme: </div>
+        </div>
 
+    
+        <!---------- Game Page window ---------->
+        <div class="game-page-window">
+            <video class="loop-background" src="./assets/video/background.mp4" autoplay loop></video>
+            <h1>playa</h1>
+            <div class="game-selection-window">
+            </div>
+        </div>
+
+    </div>
 </body>
 
 <script src="script.js" defer></script>

@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
 
 :root {
+    --txt-dark:rgb(0, 0, 0);
+    --txt-white:rgb(255, 255, 255);
+
     --bg-white: rgb(255, 255, 255);
 
     --border-color-dark: rgb(0, 0, 0);
@@ -30,9 +33,10 @@ body {
     width: 100%;
     height: 100%;
 
+    background-color: rgb(31, 29, 29);
     outline: 0.3vw solid rgb(32, 128, 192);
 
-    z-index: 5;
+    z-index: 999;
 }
 
 .init-window.dissapear {
@@ -66,7 +70,7 @@ body {
 
     animation: bounce 1s ease-in-out infinite;
 
-    z-index: 6;
+    z-index: 999;
 }
 
 @keyframes bounce {
@@ -94,7 +98,7 @@ body {
     outline: 0.3vw solid var(--border-color-dark);
     box-shadow: 0.7vw 0.7vw 0px 0px var(--border-color-dark);
 
-    z-index: 6;
+    z-index: 999;
 }
 
 .progression {
@@ -109,7 +113,7 @@ body {
 
     animation: progressExpand 1.6s ease-in-out;
 
-    z-index: 6;
+    z-index: 999;
 }
 
 @keyframes progressExpand {
@@ -119,4 +123,66 @@ body {
     100% {
         width: 100%;
     }
+}
+
+/* ---------- Main window ---------- */
+.main-window-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* ---------- Settings ----------(10-dashes)*/
+.settings-icon {
+    position: absolute;
+    top: 1%;
+    right: 0;
+
+    width: 6%;
+    height: 6%;
+}
+
+.settings {
+    position: absolute;
+    top: 1%;
+    right: 3%;
+} 
+
+.settings.hidden {
+    transform: translateX(200px);
+}
+
+
+/* ---------- Game Page Window ---------- */
+.game-page-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+}
+
+
+
+h1 {
+    position: absolute;
+    top: -3%;
+    left: 45%;
+
+    font-size: 5rem;
+    text-transform: uppercase;
+    
+    color: white;
+    text-shadow: 10px 10px 50px black;
+    
+}
+
+.loop-background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+
+    min-width: 100%;
+    min-height: 100%;
+
+    z-index: -2;
 }
