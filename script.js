@@ -9,8 +9,6 @@ setInterval(() => {
 const settingsBar = document.querySelector('.settings');
 const settingBtn = document.querySelector('.settings-icon');
 
-const toggleBtn = document.querySelector('.toggle-button');
-const toggleableBtn = document.querySelector('.toggleable-button');
 let toggle = 0;
 
 settingsBar.classList.add('hidden');
@@ -33,7 +31,30 @@ settingBtn.addEventListener('click', () => {
     }
 });
 
-toggleBtn.addEventListener('click', () => {
+// Settings bar
+const toggleTrack = document.querySelector('.toggle-button');
+const toggleknob = document.querySelector('.toggleable-button');
+let toggleTheme = 0;
+
+toggleTrack.addEventListener('click', () => {
     console.log('clicked toggle button');
-    toggleableBtn.classList.add('clicked');
+
+    if (toggleTheme === 0) {
+        toggleknob.classList.add('clicked');
+        document.documentElement.classList.add('dark');
+        toggleTheme = 1;
+    } else {
+        toggleknob.classList.remove('clicked');
+        document.documentElement.classList.remove('dark');
+        toggleTheme = 0;
+    }
 });
+
+function updateIcon() {
+  const isDark = document.documentElement.classList.contains('dark');
+  settingBtn.src = isDark
+    ? './assets/images/icon/settings-white.svg'
+    : './assets/images/icon/settings-icon.svg';
+}
+
+updateIcon();
