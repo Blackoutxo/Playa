@@ -359,4 +359,6 @@ body {
 
     outline: 0.3vw solid var(--border-color);
     box-shadow: 0.7vw 0.7vw 0px 0px var(--border-color);
+
+    transition: 1s ease-in-out;
 }
