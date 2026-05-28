@@ -1,22 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
 
 :root {
-    --txt-dark:rgb(0, 0, 0);
-    --txt-white:rgb(255, 255, 255);
+    --txt:rgb(0, 0, 0);
+    --txt:rgb(255, 255, 255);
 
-    --bg-white: rgb(255, 255, 255);
+    --bg: rgb(255, 255, 255);
 
-    --border-color-dark: rgb(0, 0, 0);
+    --border-color: rgb(0, 0, 0);
     
     --accent-color: rgb(32, 128, 192);
 }
 
 .inconsolata {
-  font-family: "Inconsolata", monospace;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings:
+    font-family: "Inconsolata", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
     "wdth" 100;
 }
 
@@ -65,8 +65,8 @@ body {
     padding: 15px 10px;
 
     background-color: var(--accent-color);
-    outline: 0.3vw solid var(--border-color-dark);
-    box-shadow: 0.9vw 0.9vw 0px 0px var(--border-color-dark);
+    outline: 0.3vw solid var(--border-color);
+    box-shadow: 0.9vw 0.9vw 0px 0px var(--border-color);
 
     animation: bounce 1s ease-in-out infinite;
 
@@ -95,8 +95,8 @@ body {
     height: 4%;
 
     background-color: white;
-    outline: 0.3vw solid var(--border-color-dark);
-    box-shadow: 0.7vw 0.7vw 0px 0px var(--border-color-dark);
+    outline: 0.3vw solid var(--border-color);
+    box-shadow: 0.7vw 0.7vw 0px 0px var(--border-color);
 
     z-index: 9999;
 }
@@ -134,9 +134,9 @@ body {
     width: 100%;
     height: 10%;
 
-    outline: 0.3vw solid var(--border-color-dark);
-    box-shadow: 0.6vw 0.6vw 0px 0px var(--border-color-dark);
-    background-color: white;
+    outline: 0.3vw solid var(--border-color);
+    box-shadow: 0.6vw 0.6vw 0px 0px var(--border-color);
+    background-color: var(--bg);
 
     z-index: 10;
 }
@@ -206,13 +206,87 @@ body {
 .settings {
     position: absolute;
     top: 1%;
-    right: 3%;
+    right: 0%;
+
+    height: 100%;
+    width: 20%;
+
+    transform: translateX(0px);
+
+    background-color: var(--bg);
+    outline: 4px solid var(--border-color);
+
+    transition: 1s ease-in-out;
 } 
 
 .settings.hidden {
-    transform: translateX(200px);
+    transform: translateX(100%);
 }
 
+.title-settings {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+
+    font-size: 3vw;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: underline;
+    letter-spacing: -0.1rem;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20%;
+    left: 1%;
+
+    font-size: 2vw;
+}
+
+.toggle-button {
+    position: absolute;
+    top: 21%;
+    left: 60%;
+
+    width: 20%;
+    height: 3%;
+    border-radius: 1vw;
+
+    background-color: var(--bg);
+    outline: 0.2vw solid var(--border-color);
+
+    transition: 0.5s ease-in-out;
+}
+
+.toggleable-button {
+    position: absolute;
+    top: 3%;
+    left: 3%;
+
+    width: 30%;
+    height: 90%;
+
+    border-radius: 50%;
+
+    background-color: black;
+
+    transition: 0.5s ease-in-out;
+
+    animation: buttonOn 0.5s ease-in-out;
+}
+
+.toggleable-button.clicked {
+    animation: buttonOn 0.5s ease-in-out;
+}
+
+@keyframes buttonOn {
+    0% {
+        
+    }
+    100% {
+        transform: translate(97%);
+    }
+}
 
 /* ---------- Game Page Window ---------- */
 .game-page-window {
