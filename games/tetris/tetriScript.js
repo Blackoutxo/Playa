@@ -353,5 +353,167 @@ function setShapes() {
         n.addToFamily(new TetrisNode(x, y + 30));
         n.setShape("I");
         n.setColor("#39EAFF");
-    } else if
+    } else if (random === 2) {
+        n.addToFamily(new TetrisNode(x + 10, y));
+        n.addToFamily(new TetrisNode(x, y + 10));
+        n.addToFamily(new TetrisNode(x - 10, y + 10));
+        n.setShape("S");
+        n.setColor("#FF0009");
+    } else if (random === 3) {
+        n.addToFamily(new TetrisNode(x - 10, y));
+        n.addToFamily(new TetrisNode(x, y + 10));
+        n.addToFamily(new TetrisNode(x + 10, y + 10));
+        n.setShape("Z");
+        n.setColor("#00FF2B");
+    } else if (random === 4) {
+        n.addToFamily(new TetrisNode(x, y + 10));
+        n.addToFamily(new TetrisNode(x, y + 20));
+        n.addToFamily(new TetrisNode(x + 10, y + 20));
+        n.setShape("L");
+        n.setColor("#EC830C");
+    } else if (random === 5) {
+        n.addToFamily(new TetrisNode(x, y + 10));
+        n.addToFamily(new TetrisNode(x, y + 20));
+        n.addToFamily(new TetrisNode(x - 10, y + 20));
+        n.setShape("T");
+        n.setColor("#9100FF");
+    }
+
+    currentNode = n;
+}
+
+// remove layer
+const scored = new Audio('../../assets/audio/gain.mp3');
+
+function removeLayer() {
+    if (!currentNode) return;
+
+    for (let i = 0; i < currentNode.getFamily().length; i++) {
+        let y1 = currentNode.getFamily()[i].getY();
+        let x1 = Tetris.x - 10;
+
+        for (let i2 = 0; i2 < 100; i2++) {
+            x1 = x1 + 10;
+
+            if (x1 > Tetris.width - 10) {
+                // Complete layer
+                x1 = Tetris.x - 10;
+                for (let i3 = 0; i3 < 100; i3++) {
+                    x1 = x1 + 10;
+                    let targetedNode = TetrisNode.getNode(x1, y1);
+                    if (targetedNode) targetedNode.removeFromList();
+                }
+
+                /// Pull Down upper layers
+                for (let i4 = 0; i4 < TetrisNode.nodes.length; i4++) {
+                    if (TetrisNode.nodes[i4].getY() <= y1) {
+                        TetrisNode.nodes[i4].setY(TetrisNode.nodes[i4].getY() + 10);
+                    }
+                }
+                score += 5;
+                scored.currentTime= 0.5;
+                scored.play();
+                break;
+            }
+
+            if (TetrisNode.getNode(x1, y1) == null) {
+                break;
+            }
+        }
+    }
+}
+
+// Game over
+function gameOver() {
+    gameOver = true;
+    isFirstGame = false;
+    Tetris.nodes = [];
+    currentNode = null;
+}
+
+function startGame() {
+    gameOver = false;
+    score = 0;
+    TetrisNode.nodes = [];
+    setShapes();
+}
+
+// Render wahooo
+function render() {
+    // Clear BG
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, Tetris.width, Tetris.height);
+
+    // Gravity calculation Math loop
+    let divided = 300 - Math.floor(score / 10);
+    if (divided < 10) divided = 10;
+
+    let sec = Math.floor(Date.now() / divided);
+    if(sec !== lastSec && !gameOver) {
+        if(TetrisNode.nodes.length === 0 || !currentNode.canGoDown()) {
+            score++;
+            removeLayer();
+            setShapes();
+
+            if (!currentNode.canGoDown()) {
+                gameOver();
+            }
+        }
+
+        if (currentNode && currentNode.canGoDown()) {
+            currentNode.moveDown();
+        }
+
+        lastSec = sec;
+    }
+
+    // Input handler
+    let sec2 = Math.floor(Date.now() / 40);
+
+    if (sec2 !== lastSecMove) {
+        if (!gameOver && currentNode != null) {
+            if (keysPressed['ArrowRight'] || keysPressed['ArrowLeft'] || keysPressed['ArrowDown']) {
+                if (keysPressed['ArrowRight'] && currentNode.canMoveRight()) {
+                    currentNode.moveRight();
+                } else if (keysPressed['ArrowLeft'] && currentNode.canMoveLeft()) {
+                    currentNode.moveLeft();
+                } else if (keysPressed['ArrowDown'] && currentNode.canGoDown()) {
+                    currentNode.moveDown();                
+                }
+            }
+        }
+        lastSecMove = sec2;
+    }
+
+    // Draw Hard drop preview
+    if (!gameover && currentNode && currentNode.canGoDown()) {
+        currentNode.setDownPosition();
+        
+        for (let fNode of currentNode.getFamily()) {
+            let tx = fNode.getX();
+            let ty = fNode.getDownPosition();
+
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
+            ctx.lineWidth = 1;
+            ctx.strokeRect(tx, ty - Tetris.multiplier, TetrisNode.multiplier, Tetris.multiplier);
+        }
+    }
+
+    // Draw Set Nodes
+    for (let node of TetrisNode.nodes) {
+        ctx.fillStyle = node.getColor();
+        ctx.fillRect(node.getX(), node.getY() - TetrisNode.multiplier, TetrisNode.multiplier, TetrisNode.multiplier);
+
+        // Ouline divider
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = 0.5;
+        ctx.strokeRect(node.getX(), node.getY() - TetrisNode.multiplier, TetrisNode.multiplier, TetrisNode.multiplier);
+    }
+
+    if (!gameOver) {
+        ctx.fillStyle = '#00FFFF';
+        ctx.font = "8px 'Inconsolata', monospace";  
+        ctx.fillText("Score: " );
+        
+    }
 }
