@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
+
+.comic-relief-regular {
+  font-family: "Comic Relief", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+    background-color: forestgreen;
+    overflow: hidden;
+
+    font-family: "Comic Relief";
+}
+
+.game-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+.snake-title {
+    position: absolute;
+    top: 0%;
+    left: 45%;
+
+    margin: 0;
+
+    font-size: 3.6vw;
+}
+
+.snake-board {
+    position: absolute;
+    top: 20%;
+    left: 25%;
+
+    width: 50%;
+    height: 70%;
+
+    background-color: transparent;
+    outline: 1vw solid rgb(89, 255, 47);
+}
+
+.board-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
