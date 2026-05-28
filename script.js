@@ -48,13 +48,19 @@ toggleTrack.addEventListener('click', () => {
         document.documentElement.classList.remove('dark');
         toggleTheme = 0;
     }
+
+    updateIcon();
 });
 
 function updateIcon() {
   const isDark = document.documentElement.classList.contains('dark');
-  settingBtn.src = isDark
-    ? './assets/images/icon/settings-white.svg'
-    : './assets/images/icon/settings-icon.svg';
+
+  if (isDark) {
+    settingBtn.src = './assets/images/icon/settings-white.svg';
+} else {
+    settingBtn.src = './assets/images/icon/settings-icon.svg';
+}
+
 }
 
 updateIcon();
