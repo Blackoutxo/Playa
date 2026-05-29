@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8" />
     <title> Tetris </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../../assets/images/game/tetris/Tetris side T.png">
     <link rel="stylesheet" href="tetriStyle.css">
 </head>
 
 <body>
 
-    <h1 class="tetris-title">Tetris</h1>
+    <h1 class="title-tetris">Tetris</h1>
 
-    <div class="game-contaner">
+    <div id="game-container">
         <canvas id="canvas-area" width="300" height="500"></canvas>
     </div>
-</body>
 
-<script src="tetriScript.js" defer></script>
+    <div class="controls-guide">
+        <strong>Controls:</strong> Arrow keys to Move/Rotate | Space to Hard Drop | Enter to Start/Restart
+    </div>
+
+    <script src="tetriScript.js" defer></script>
+</body>
 </html>
