@@ -12,13 +12,20 @@
 
     <h1 class="title-tetris">Tetris</h1>
 
-    <div id="game-container">
-        <canvas id="canvas-area" width="300" height="500"></canvas>
+    <div class="game-area">
+        <div id="game-container">
+            <canvas id="canvas-area" width="300" height="500"></canvas>
+        </div>
+
+        <div class="side-panel"> 
+            <canvas id="panel-canvas" width="80" height=" 80"></canvas>
+        </div>
+
+        <div class="controls-guide">
+            <strong>Controls:</strong> Arrow keys to Move/Rotate | Space to Hard Drop | Enter to Start/Restart
+        </div>
     </div>
 
-    <div class="controls-guide">
-        <strong>Controls:</strong> Arrow keys to Move/Rotate | Space to Hard Drop | Enter to Start/Restart
-    </div>
 
     <script src="tetriScript.js" defer></script>
 </body>
