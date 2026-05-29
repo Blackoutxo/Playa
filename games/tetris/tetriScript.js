@@ -1,6 +1,9 @@
 const canvas = document.getElementById('canvas-area');
-console.log("Canvas Element:", canvas);
 const ctx = canvas.getContext('2d');
+
+// Side panel canvas
+const canvaspanel = document.getElementById('panel-canvas');
+const panelCtx = canvaspanel.getContext('2d');
 
 ctx.scale(2, 2);
 
@@ -8,7 +11,7 @@ const Tetris = {
     x: 0,
     y: 0,
     width: 150,
-    height: 250
+    height: 260
 };
 
 let currentNode = null;   
@@ -65,12 +68,56 @@ class TetrisNode {
     getX() { return this.x; }
     getY() { return this.y; }
 
+
+        // Get Node family
+    getFamily() {
+        return this.familyNodes;
+    }
+
+    // Completely move down
+    moveCompletelyDown() {
+        for(let i = 0; i < 150; i++) {
+            if (this.canGoDown()) {
+                this.moveDown();
+            }
+        }
+    }    
+
+    isInFamily(node) {
+        return this.familyNodes.includes(node);
+    } 
+
+    static getNode(x, y) {
+        for(let node of TetrisNode.nodes) {
+            if (node.getX() === x && node.getY() === y) {
+                return node;
+            }
+        }
+        return null;
+    }    
+    
+    // Clear family
+    clearFamily() {
+        for (let fNode of this.familyNodes) {
+            if (fNode !== this) {
+                TetrisNode.nodes = TetrisNode.nodes.filter(node => node !== fNode);
+            }
+        }
+        this.familyNodes = [this];
+    }    
+
     // Movements
     moveDown() {
         for(let node of this.familyNodes) {
-            node.setX(node.getY() + TetrisNode.multiplier);
+            node.setY(node.getY() + TetrisNode.multiplier);
         }
     }
+
+    moveRight() {
+        for (let node of this.familyNodes) {
+            node.setX(node.getX() + TetrisNode.multiplier);
+        }
+    }    
 
     moveLeft() {
         for(let node of this.familyNodes) {
@@ -78,15 +125,7 @@ class TetrisNode {
         }
     }
 
-    moveRight() {
-        for (let node of this.familyNodes) {
-            node.setY(node.getX() + TetrisNode.multiplier);
-        }
-    }
-
     // Position check
-
-
     canMoveRight() {
         for(let fmNode of this.familyNodes) {
             let nextNode = TetrisNode.getNode(fmNode.getX() + 10, fmNode.getY());
@@ -116,7 +155,7 @@ class TetrisNode {
             }
         }
         return true;
-    }
+    }   
 
     canGoDown() {
         for(let fmNode of this.familyNodes) {
@@ -131,44 +170,7 @@ class TetrisNode {
             }
         }
         return true;
-    }
-
-    isInFamily(node) {
-        return this.familyNodes.includes(node);
-    }
-
-    static getNode(x, y) {
-        for(let node of TetrisNode.nodes) {
-            if (node.getX() === x && node.getY() === y) {
-                return node;
-            }
-        }
-    }   
-    
-    // Get Node family
-    getFamily() {
-        return this.familyNodes;
-    }
-
-    // Completely move down
-    moveCompletelyDown() {
-        for(let i = 0; i < 150; i++) {
-            if (this.canGoDown()) {
-                this.moveDown();
-            }
-        }
-    }
-
-
-    // Clear family
-    clearFamily() {
-        for (let fNode of this.familyNodes) {
-            if (fNode !== this) {
-                TetrisNode.nodes = TetrisNode.nodes.filter(node => node !== fNode);
-            }
-        }
-        this.familyNodes = [this];
-    }
+    } 
 
     setDownPosition() {
         if (this.familyNodes.length < 4) return;
@@ -183,7 +185,7 @@ class TetrisNode {
             if (!this.canGoDown()) {
                 for (let i = 0; i < this.familyNodes.size; i++) {}
                 this.familyNodes.forEach((node, idx) => {
-                    node.downPos = (node.getY() - this.getY()) + this.y;
+                    node.downpos = (node.getY() - this.getY()) + this.y;
                 });
 
                 this.familyNodes.forEach((node, idx) => {
@@ -400,6 +402,7 @@ function setShapes() {
 
 // Remove layer
 const scored = new Audio('../../assets/audio/gain.mp3');
+const animation = document.getElementById('game-container');
 
 function removeLayer() {
     if (!currentNode) return;
@@ -426,10 +429,19 @@ function removeLayer() {
                         TetrisNode.nodes[i4].setY(TetrisNode.nodes[i4].getY() + 10);
                     }
                 }
+                
+                // Score Count
                 score += 5;
+
+                // Score sound & animation
                 scored.play();
+                animation.classList.add('scoreAnim');
+                
                 break;
             }
+
+            if (animation.classList.contains('scoreAnim')) 
+                animation.classList.remove('scoreAnim');
 
             if (TetrisNode.getNode(x1, y1) == null) {
                 break;
@@ -456,10 +468,10 @@ function startGame() {
 // Render wahooo
 function render() {
     // Clear BG
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#222020";
     ctx.fillRect(0, 0, Tetris.width, Tetris.height);
 
-    // Gravity calculation Math loop
+    // Gravity calculation
     let divided = 300 - Math.floor(score / 10);
     if (divided < 10) divided = 10;
 
@@ -478,13 +490,11 @@ function render() {
         if (currentNode && currentNode.canGoDown()) {
             currentNode.moveDown();
         }
-
         lastSec = sec;
     }
 
     // Continuous Input handling
     let sec2 = Math.floor(Date.now() / 40);
-
     if (sec2 !== lastSecMove) {
         if (!gameOver && currentNode != null) {
             if (keysPressed['ArrowRight'] || keysPressed['ArrowLeft'] || keysPressed['ArrowDown']) {
@@ -538,11 +548,11 @@ function render() {
 
         ctx.textAlign = "center"; 
         if (!isFirstGame) {
-            ctx.fillStyle = '#FF0000';
+            ctx.fillStyle = "#FF0000";
             ctx.font = "bold 16px 'Inconsolata', monospace";
             ctx.fillText("Game Over!", xm, ym - 10);
 
-            ctx.fillStyle = '#FFFFFF';
+            ctx.fillStyle = "#FFFFFF";
             ctx.font = "10px 'Inconsolata', monospace";
             ctx.fillText("Final Score: " + score, xm, ym + 10);
         } else {
