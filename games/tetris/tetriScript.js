@@ -1,5 +1,8 @@
 const canvas = document.getElementById('canvas-area');
+console.log("Canvas Element:", canvas);
 const ctx = canvas.getContext('2d');
+
+ctx.scale(2, 2);
 
 const Tetris = {
     x: 0,
@@ -71,7 +74,7 @@ class TetrisNode {
 
     moveLeft() {
         for(let node of this.familyNodes) {
-            node.setX(node.getX() + TetrisNode.multiplier);
+            node.setX(node.getX() - TetrisNode.multiplier);
         }
     }
 
@@ -82,17 +85,7 @@ class TetrisNode {
     }
 
     // Position check
-    isInFamily(node) {
-        return this.familyNodes.includes(node);
-    }
 
-    static getNode(x, y) {
-        for(let node of TetrisNode.nodes) {
-            if (node.getX() === x && node.getY() === y) {
-                return node;
-            }
-        }
-    }
 
     canMoveRight() {
         for(let fmNode of this.familyNodes) {
@@ -140,19 +133,32 @@ class TetrisNode {
         return true;
     }
 
+    isInFamily(node) {
+        return this.familyNodes.includes(node);
+    }
+
+    static getNode(x, y) {
+        for(let node of TetrisNode.nodes) {
+            if (node.getX() === x && node.getY() === y) {
+                return node;
+            }
+        }
+    }   
+    
     // Get Node family
     getFamily() {
         return this.familyNodes;
     }
 
     // Completely move down
-    moveDownInstant() {
+    moveCompletelyDown() {
         for(let i = 0; i < 150; i++) {
             if (this.canGoDown()) {
                 this.moveDown();
             }
         }
     }
+
 
     // Clear family
     clearFamily() {
@@ -175,16 +181,15 @@ class TetrisNode {
             }
 
             if (!this.canGoDown()) {
-                for (let i = 0; i < this.familyNodes.size; i++) {
-                    this.familyNodes.forEach((node, idx) => {
-                        node.downPos = (node.getY() - this.getY()) + this.y;
-                    });
+                for (let i = 0; i < this.familyNodes.size; i++) {}
+                this.familyNodes.forEach((node, idx) => {
+                    node.downPos = (node.getY() - this.getY()) + this.y;
+                });
 
-                    this.familyNodes.forEach((node, idx) => {
-                        node.setY(oldY[idx]);
-                    });
-                    return;
-                }
+                this.familyNodes.forEach((node, idx) => {
+                    node.setY(oldY[idx]);
+                });
+                return;
             }
         }
     }
@@ -195,7 +200,7 @@ class TetrisNode {
 
     rotate() {
         let rot = this.getShape();
-
+    
         if (rot === "O") return;
 
         this.rotation++;
@@ -204,13 +209,12 @@ class TetrisNode {
         let x = this.x;
         let y = this.y;
 
-        // Shape define
         if (rot === "I") {
             if (this.rotation > 2) this.rotation = 1;
-            if (x + 20 > Tetris.width) x -= 20;
+            if (x + 20 > Tetris.width) x -= 20;                
             if (x - 10 < Tetris.x) x += 10;
             this.x = x;
-
+            
             if (this.rotation === 1) {
                 this.addToFamily(new TetrisNode(x, y + 10));
                 this.addToFamily(new TetrisNode(x, y + 20));
@@ -219,8 +223,8 @@ class TetrisNode {
                 this.addToFamily(new TetrisNode(x + 10, y));
                 this.addToFamily(new TetrisNode(x + 20, y));
                 this.addToFamily(new TetrisNode(x - 10, y));
-            }
-            this.setColor("#36EAFF");
+            }   this.setColor("#36EAFF");
+
         } else if (rot === "S") {
             if (this.rotation > 2) this.rotation = 1;
             if (x + 20 > Tetris.width) x -= 10;
@@ -234,8 +238,8 @@ class TetrisNode {
                 this.addToFamily(new TetrisNode(x, y + 10));
                 this.addToFamily(new TetrisNode(x - 10, y));
                 this.addToFamily(new TetrisNode(x - 10, y - 10));
-            }
-            this.setColor("#FF0009");
+            }   this.setColor("#FF0009");
+
         } else if (rot === "Z") {
             if (this.rotation > 2) this.rotation = 1;
             if (x - 10 < Tetris.x) x += 10;
@@ -249,17 +253,17 @@ class TetrisNode {
                 this.addToFamily(new TetrisNode(x + 10, y));
                 this.addToFamily(new TetrisNode(x + 10, y - 10));
                 this.addToFamily(new TetrisNode(x, y + 10));
-            }
-            this.setColor("#00FF2B");
+             } this.setColor("#00FF2B");
+
         } else if (rot === "L") {
             if (this.rotation > 4) this.rotation = 1;
-            
+
             if (this.rotation === 1) {
                 this.addToFamily(new TetrisNode(x, y + 10));
                 this.addToFamily(new TetrisNode(x, y + 20));
-                this.addToFamily(new TetrisNode(x + 10, y + 20));    
+                this.addToFamily(new TetrisNode(x + 10, y + 20));
             } else if (this.rotation === 2) {
-                if (x - 10 < Tetris.x) x+= 10;
+                if (x - 10 < Tetris.x) x += 10;
                 this.x = x;
                 this.addToFamily(new TetrisNode(x + 10, y));
                 this.addToFamily(new TetrisNode(x - 10, y));
@@ -267,12 +271,20 @@ class TetrisNode {
             } else if (this.rotation === 3) {
                 if (x - 10 < Tetris.x) x += 10;
                 this.x = x;
+                this.addToFamily(new TetrisNode(x - 10, y));
+                this.addToFamily(new TetrisNode(x, y + 10));
+                this.addToFamily(new TetrisNode(x, y + 20));
+            } else {
+                if (x - 10 < Tetris.x) x += 10;
+                this.x = x;
                 this.addToFamily(new TetrisNode(x + 10, y));
                 this.addToFamily(new TetrisNode(x + 10, y - 10));
                 this.addToFamily(new TetrisNode(x - 10, y));
-            } 
-            this.setColor("#EC830C");
+            } this.setColor("#EC830C");
+
         } else if (rot === "J") {
+            if (this.rotation > 4) this.rotation = 1;
+
             if (this.rotation === 1) {
                 this.addToFamily(new TetrisNode(x, y + 10));
                 this.addToFamily(new TetrisNode(x, y + 20));
@@ -280,7 +292,6 @@ class TetrisNode {
             } else if (this.rotation === 2) {
                 if (x + 20 > Tetris.width) x -= 20;
                 this.x = x;
-
                 this.addToFamily(new TetrisNode(x, y + 10));
                 this.addToFamily(new TetrisNode(x + 10, y + 10));
                 this.addToFamily(new TetrisNode(x + 20, y + 10));
@@ -294,9 +305,9 @@ class TetrisNode {
                 this.addToFamily(new TetrisNode(x + 10, y));
                 this.addToFamily(new TetrisNode(x - 10, y));
                 this.addToFamily(new TetrisNode(x + 10, y + 10));
-            }
-            this.setColor("#FF19EF");
-        } else if (rot === "T") {        
+            } this.setColor("#FF19EF");
+
+        } else if (rot === "T") {
             if (this.rotation > 4) this.rotation = 1;
 
             if (this.rotation === 1) {
@@ -325,8 +336,7 @@ class TetrisNode {
                 this.addToFamily(new TetrisNode(x + 10, y));
                 this.addToFamily(new TetrisNode(x, y + 10));
                 this.addToFamily(new TetrisNode(x, y - 10));
-            }
-            this.setColor("#9100FF");    
+            } this.setColor("#9100FF");
         }
     }
 }
@@ -375,6 +385,12 @@ function setShapes() {
         n.addToFamily(new TetrisNode(x, y + 10));
         n.addToFamily(new TetrisNode(x, y + 20));
         n.addToFamily(new TetrisNode(x - 10, y + 20));
+        n.setShape("J");
+        n.setColor("#FF19EF");
+    } else {
+        n.addToFamily(new TetrisNode(x + 10, y));
+        n.addToFamily(new TetrisNode(x - 10, y));
+        n.addToFamily(new TetrisNode(x, y + 10));
         n.setShape("T");
         n.setColor("#9100FF");
     }
@@ -382,7 +398,7 @@ function setShapes() {
     currentNode = n;
 }
 
-// remove layer
+// Remove layer
 const scored = new Audio('../../assets/audio/gain.mp3');
 
 function removeLayer() {
@@ -411,7 +427,6 @@ function removeLayer() {
                     }
                 }
                 score += 5;
-                scored.currentTime= 0.5;
                 scored.play();
                 break;
             }
@@ -424,10 +439,10 @@ function removeLayer() {
 }
 
 // Game over
-function gameOver() {
+function GameOver() {
     gameOver = true;
     isFirstGame = false;
-    Tetris.nodes = [];
+    TetrisNode.nodes = [];
     currentNode = null;
 }
 
@@ -456,7 +471,7 @@ function render() {
             setShapes();
 
             if (!currentNode.canGoDown()) {
-                gameOver();
+                GameOver();
             }
         }
 
@@ -467,7 +482,7 @@ function render() {
         lastSec = sec;
     }
 
-    // Input handler
+    // Continuous Input handling
     let sec2 = Math.floor(Date.now() / 40);
 
     if (sec2 !== lastSecMove) {
@@ -485,8 +500,8 @@ function render() {
         lastSecMove = sec2;
     }
 
-    // Draw Hard drop preview
-    if (!gameover && currentNode && currentNode.canGoDown()) {
+    // Draw Hard drop preview outline
+    if (!gameOver && currentNode && currentNode.canGoDown()) {
         currentNode.setDownPosition();
         
         for (let fNode of currentNode.getFamily()) {
@@ -495,7 +510,7 @@ function render() {
 
             ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
             ctx.lineWidth = 1;
-            ctx.strokeRect(tx, ty - Tetris.multiplier, TetrisNode.multiplier, Tetris.multiplier);
+            ctx.strokeRect(tx, ty - TetrisNode.multiplier, TetrisNode.multiplier, TetrisNode.multiplier);
         }
     }
 
@@ -510,10 +525,66 @@ function render() {
         ctx.strokeRect(node.getX(), node.getY() - TetrisNode.multiplier, TetrisNode.multiplier, TetrisNode.multiplier);
     }
 
+    // Score HUD
     if (!gameOver) {
         ctx.fillStyle = '#00FFFF';
         ctx.font = "8px 'Inconsolata', monospace";  
-        ctx.fillText("Score: " );
-
+        ctx.fillText("Score: " + score, 4, 12);
     }
+
+    if (gameOver) {
+        let xm = Tetris.width / 2;
+        let ym = Tetris.height / 2;
+
+        ctx.textAlign = "center"; 
+        if (!isFirstGame) {
+            ctx.fillStyle = '#FF0000';
+            ctx.font = "bold 16px 'Inconsolata', monospace";
+            ctx.fillText("Game Over!", xm, ym - 10);
+
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = "10px 'Inconsolata', monospace";
+            ctx.fillText("Final Score: " + score, xm, ym + 10);
+        } else {
+            ctx.fillStyle = "#00FF2B";
+            ctx.font = "bold 14px 'Inconsolata', monospace";
+            ctx.fillText("Tetris", xm, ym - 10);
+        }
+
+        ctx.fillStyle = "#00FF2B";
+        ctx.font = "9px 'Inconsolata', monospace";
+        ctx.fillText("Press Enter to Play", xm, Tetris.height - 20);
+        ctx.textAlign = "start";
+    }
+
+    requestAnimationFrame(render);
 }
+
+// Input handler
+window.addEventListener('keydown', (e) => {
+    keysPressed[e.key] = true;
+
+    if (e.key === "Enter" && gameOver) { 
+        startGame();
+    }
+
+    if (!currentNode || gameOver) return;
+
+    // Prevent anything default
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault();
+    }
+
+    if (e.key === "ArrowUp") {
+        currentNode.rotate();
+    } else if (e.key === ' ') {
+        currentNode.moveCompletelyDown();
+    }
+});
+
+window.addEventListener('keyup', (e) => {
+    keysPressed[e.key] = false;
+});
+
+// Render the game        
+render();
