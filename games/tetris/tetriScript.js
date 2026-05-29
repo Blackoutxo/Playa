@@ -1,4 +1,4 @@
-const canvas = document.querySelector('.canvas-area');
+const canvas = document.getElementById('canvas-area');
 const ctx = canvas.getContext('2d');
 
 const Tetris = {
@@ -514,6 +514,6 @@ function render() {
         ctx.fillStyle = '#00FFFF';
         ctx.font = "8px 'Inconsolata', monospace";  
         ctx.fillText("Score: " );
-        
+
     }
 }
