@@ -39,11 +39,6 @@ let lastSec = 0;
 let lastSecMove = 0;
 let keysPressed = {};
 
-// Smooth layer removal animation
-let clearingRows = [];
-let isAnimatingClear = false;
-let clearAnimStartTime = 0;
-
 // Next node preview
 let nextShapeIndex = Math.floor(Math.random() * 7);
 
@@ -428,7 +423,7 @@ function setShapes() {
 }
 
 function preview() {
-    panelCtx.fillStyle = "#000000";
+    panelCtx.fillStyle = "#222020";
     panelCtx.fillRect(0, 0, 40, 40);
 
     if (gameOver) return;
@@ -512,13 +507,17 @@ function removeLayer() {
 
                 // Score sound & animation
                 scored.play();
-                animation.classList.toggle('scoreAnim');
+                animation.classList.add('scoreAnim');
                 
                 break;
             }
 
-            if (animation.classList.contains('scoreAnim')) 
-                animation.classList.toggle('scoreAnim');
+            if (animation.classList.contains('scoreAnim')) {
+                setTimeout(() => {
+                    console.log('removing anim class');
+                    animation.classList.remove('scoreAnim');    
+                }, 500);
+            }
 
             if (TetrisNode.getNode(x1, y1) == null) {
                 break;
