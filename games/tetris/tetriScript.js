@@ -1,3 +1,19 @@
+// Load chime
+const audio = new Audio('../../assets/game/tetris/audio/spin complete.mp3');
+const loadScreen = document.querySelector('.load-screen');
+const screenBox = document.querySelector('.screen-box');
+
+window.addEventListener('load', () => {
+    audio.play();
+    screenBox.classList.add('popOutAnim');
+
+    setTimeout(() => {
+        loadScreen.classList.add('disappear');
+    }, 2000);
+});
+
+
+// Game engine
 const canvas = document.getElementById('canvas-area');
 const ctx = canvas.getContext('2d');
 
@@ -6,6 +22,7 @@ const canvaspanel = document.getElementById('panel-canvas');
 const panelCtx = canvaspanel.getContext('2d');
 
 ctx.scale(2, 2);
+panelCtx.scale(2, 2);
 
 const Tetris = {
     x: 0,
@@ -21,6 +38,14 @@ let score = 0;
 let lastSec = 0;
 let lastSecMove = 0;
 let keysPressed = {};
+
+// Smooth layer removal animation
+let clearingRows = [];
+let isAnimatingClear = false;
+let clearAnimStartTime = 0;
+
+// Next node preview
+let nextShapeIndex = Math.floor(Math.random() * 7);
 
 // Tetris Node
 class TetrisNode {
@@ -351,7 +376,9 @@ function setShapes() {
     let x = n.getX();
     let y = n.getY();
 
-    let random = Math.floor(Math.random () * 7);
+    let random = nextShapeIndex;
+    nextShapeIndex = Math.floor(Math.random () * 7);
+    preview();
 
     if (random === 0) {
         n.addToFamily(new TetrisNode(x + 10, y));
@@ -400,8 +427,58 @@ function setShapes() {
     currentNode = n;
 }
 
+function preview() {
+    panelCtx.fillStyle = "#000000";
+    panelCtx.fillRect(0, 0, 40, 40);
+
+    if (gameOver) return;
+
+    let blocks = [];
+    let color = "#FFFFFF";
+
+    switch(nextShapeIndex) {
+        case 0:
+            blocks = [{x: 10, y: 10}, {x:20, y:10}, {x: 10, y:20}, {x: 20, y: 20}];
+            color = "#FFFF00";
+            break;
+        
+        case 1:
+            blocks = [{x: 15, y: 0}, {x: 15, y: 10}, {x: 15, y: 20}, {x:15, y: 30}];
+            color = "#36EAFF";
+            break;
+        case 2:
+            blocks = [{x: 15, y: 10}, {x: 25, Y: 10}, {x: 15, y: 20}, {x: 5, y: 20}];
+            color = "#FF0009";
+            break;
+        case 3:
+            blocks = [{x: 15, y: 10}, {x: 5, y: 10}, {x: 15, y: 20}, {x: 25, y: 20}];
+            color = "#00FF2B";
+            break;
+        case 4:
+            blocks = [{x: 10, y: 5}, {x: 10, y: 15}, {x: 10, y: 25}, {x: 20, y: 25}];
+            color = "#EC830C";
+            break;
+        case 5:
+            blocks = [{x: 20, y: 5}, {x: 20, y: 15}, {x: 20, y: 25}, {x: 10, y: 25}];
+            color = "#FF10EF";
+            break;
+        case 6: 
+            blocks = [{x: 15, y: 10}, {x: 5, y: 10}, {x: 25, y: 10}, {x: 15, y: 20}];
+            color = "#9100FF";
+            break;               
+    }
+
+    panelCtx.fillStyle = color;
+    for (let b of blocks) {
+        panelCtx.fillRect(b.x, b.y, 10, 10);
+        panelCtx.strokeStyle = "#000000";
+        panelCtx.lineWidth = 0.5;
+        panelCtx.strokeRect(b.x, b.y, 10, 10);
+    }
+}
+
 // Remove layer
-const scored = new Audio('../../assets/audio/gain.mp3');
+const scored = new Audio('../../assets/game/tetris/audio/gain.mp3');
 const animation = document.getElementById('game-container');
 
 function removeLayer() {
@@ -435,13 +512,13 @@ function removeLayer() {
 
                 // Score sound & animation
                 scored.play();
-                animation.classList.add('scoreAnim');
+                animation.classList.toggle('scoreAnim');
                 
                 break;
             }
 
             if (animation.classList.contains('scoreAnim')) 
-                animation.classList.remove('scoreAnim');
+                animation.classList.toggle('scoreAnim');
 
             if (TetrisNode.getNode(x1, y1) == null) {
                 break;
@@ -456,6 +533,7 @@ function GameOver() {
     isFirstGame = false;
     TetrisNode.nodes = [];
     currentNode = null;
+    preview();
 }
 
 function startGame() {
@@ -596,5 +674,6 @@ window.addEventListener('keyup', (e) => {
     keysPressed[e.key] = false;
 });
 
-// Render the game        
+// Render the game
+preview();        
 render();
