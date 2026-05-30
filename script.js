@@ -1,9 +1,23 @@
 // Remove the init bar
 const initWindow = document.querySelector('.init-window');
+const engineStart = new Audio('./assets/audio/start-engine.mp3');
 
+// Load screen disappear
 setInterval(() => {
-    initWindow.classList.add('dissapear');
+    initWindow.classList.add('disappear');
 }, 1800);
+
+// Starting the engine vroomm vroom
+window.addEventListener('load', () => {
+    engineStart.currentTime = 0;
+    engineStart.play();
+
+    setTimeout(() => {
+
+        engineStart.currentTime = 9.2;
+        engineStart.play();
+    }, 1200);
+});
 
 // --------- Settings ---------- //
 const settingsBar = document.querySelector('.settings');

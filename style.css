@@ -65,7 +65,7 @@ body {
     z-index: 9999;
 }
 
-.init-window.dissapear {
+.init-window.disappear {
     animation: slideUp 1s ease-in-out forwards;
 }
 
