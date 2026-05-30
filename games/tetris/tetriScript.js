@@ -514,8 +514,7 @@ function removeLayer() {
 
             if (animation.classList.contains('scoreAnim')) {
                 setTimeout(() => {
-                    console.log('removing anim class');
-                    animation.classList.remove('scoreAnim');    
+                    animation.classList.remove('scoreAnim');
                 }, 500);
             }
 
@@ -634,13 +633,13 @@ function render() {
             ctx.fillText("Final Score: " + score, xm, ym + 10);
         } else {
             ctx.fillStyle = "#00FF2B";
-            ctx.font = "bold 14px 'Inconsolata', monospace";
-            ctx.fillText("Tetris", xm, ym - 10);
+            ctx.font = "12px 'Inconsolata', monospace";
+            ctx.fillText("Press enter to play", xm, ym - 10);
         }
 
         ctx.fillStyle = "#00FF2B";
         ctx.font = "9px 'Inconsolata', monospace";
-        ctx.fillText("Press Enter to Play", xm, Tetris.height - 20);
+        ctx.fillText("", xm, Tetris.height - 20);
         ctx.textAlign = "start";
     }
 
@@ -652,6 +651,10 @@ window.addEventListener('keydown', (e) => {
     keysPressed[e.key] = true;
 
     if (e.key === "Enter" && gameOver) { 
+        startGame();
+    }
+
+    if (e.key === "Enter") {
         startGame();
     }
 
