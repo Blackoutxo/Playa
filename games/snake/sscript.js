@@ -1,3 +1,31 @@
+// Loading screen
+const lines = document.querySelectorAll('.line-2, .line-3, .line-4');
+const header = document.querySelector('.header');
+
+header.classList.add('hide');
+
+lines.forEach((line) => {
+    line.classList.add('hide');
+});
+
+setTimeout(() => {
+    document.querySelector('.line-2').classList.remove('hide');    
+}, 500);
+
+setTimeout(() => {
+    document.querySelector('.line-3').classList.remove('hide');
+}, 1000);
+
+setTimeout(() => {
+    document.querySelector('.line-4').classList.remove('hide');
+}, 1500);
+
+setTimeout(() => {
+    header.classList.remove('hide');
+    header.classList.add('anim');
+}, 1600);
+
+// The game
 const canvas = document.getElementById('board-canvas');
 const ctx = canvas.getContext('2d');
 
