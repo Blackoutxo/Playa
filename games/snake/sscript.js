@@ -3,7 +3,10 @@ const ctx = canvas.getContext('2d');
 
 // var
 const width = 680;
-const height = 400;
+const height = 440;
+
+// making this so I dont have to constantly change every body of snake (i just found out that any grid size greater than 20 cause snake go kablow)
+const grid_size = 20;
 
 canvas.width = width;
 canvas.height = height;
@@ -57,13 +60,14 @@ function generateApple() {
         let randomX = Math.floor(Math.random() * 10);
         let randomY = Math.floor(Math.random() * 10);
 
-        appleX = randomX * 20;
-        appleY = randomY * 20;    
+        appleX = randomX * grid_size;
+        appleY = randomY * grid_size;    
 
         for (i2 = 0; i2 < bodyX.length; i2++) {
             if (bodyX[i2] === appleX && bodyY[i2] === appleY) {
                 appleX = 0;
                 appleY = 0;
+                score++;
                 break;
             }
         }
@@ -77,10 +81,6 @@ function generateApple() {
     if (appleX < 0 || appleX >= width || appleY < 0 || appleY >= width) {
         appleX = 0;
         appleY = 0;
-    }
-
-    if (appleX != 0 && appleY != 0) {
-        
     }
 }
 
@@ -105,10 +105,10 @@ setInterval(() => {
 
         // Snake movement
          switch (direction) {
-            case "Up": snakeY += 20; break;
-            case "Down": snakeY -= 20; break;
-            case "Right": snakeX += 20; break;
-            case "Left": snakeX -= 20; break;
+            case "Up": snakeY -= grid_size; break;
+            case "Down": snakeY += grid_size; break;
+            case "Right": snakeX += grid_size; break;
+            case "Left": snakeX -= grid_size; break;
         }
 
          if (bodyX.length !== 0) {
@@ -163,24 +163,24 @@ function render() {
         // Draw score
         //fX + 2, fY + 2
         ctx.fillStyle = "#FFFFFF";
-        ctx.font = "4px 'Comic Relief', monospace";
-        ctx.fillText("Score: " + score,  2, 2);
+        ctx.font = "15px 'Comic Relief', monospace";
+        ctx.fillText("Score: " + score,  30, 15);
 
         // make apple generate or fall down from apple tree
         ctx.fillStyle = "#FF0000";
-        ctx.fillRect(appleX, appleY, 20, 20);
+        ctx.fillRect(appleX, appleY, grid_size, grid_size);
 
         // draw sssnake
         ctx.fillStyle = "#55FF00";
-        ctx.fillRect(snakeX, snakeY, 20, 20);
+        ctx.fillRect(snakeX, snakeY, grid_size, grid_size);
 
         // Them eyes
         ctx.fillStyle = "#000000";
-        ctx.fillRect(snakeX + 3, snakeY + 3, 8, 8);
+        ctx.fillRect(snakeX + 3, snakeY + 3, grid_size - 12, grid_size - 12);
 
         ctx.fillStyle = "#55FF00";
         for (let i = 0; i < bodyX.length; i++) {
-            ctx.fillRect(bodyX[i], bodyY[i], 20, 20);
+            ctx.fillRect(bodyX[i], bodyY[i], grid_size, grid_size);
         }
     }
 
@@ -189,18 +189,18 @@ function render() {
 
         // EHH game ova!
         ctx.fillStyle = "#FF0000";
-        ctx.font = "16px 'Comic Relief', monospace";
-        ctx.fillText("Game Over!", (width / 2) - 60, (height / 2));
+        ctx.font = "50px 'Comic Relief', monospace";
+        ctx.fillText("Game Over!", (width / 2), (height / 2));
 
         // Score
         ctx.fillStyle = "#0BFF03";
-        ctx.font = "8px 'Comic Relief', monospace";
-        ctx.fillText("Score : " + snakeSize, (width / 2) - 28, (height / 2) + 15);
+        ctx.font = "20px 'Comic Relief', monospace";
+        ctx.fillText("Score : " + snakeSize, (width / 2), (height / 2) + 25);
     
         // Click to play text
         ctx.fillStyle = "#FFFFFF";
-        ctx.font = "10px 'Comic Relief', monospace";
-        ctx.fillText( "Click to Play!", (width / 2) - 20, (height / 2) - 10);
+        ctx.font = "20px 'Comic Relief', monospace";
+        ctx.fillText( "Press Enter to play!", (width / 2), height - 20);
 
         isFirstGame = false;
     }
