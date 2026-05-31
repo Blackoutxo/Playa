@@ -2,6 +2,12 @@ const canvas = document.getElementById('board-canvas');
 const ctx = canvas.getContext('2d');
 
 // var
+const width = 680;
+const height = 400;
+
+canvas.width = width;
+canvas.height = height;
+
 let bodyX = [];
 let bodyY = [];
 
@@ -13,101 +19,103 @@ let lastBodyX, lastBodyY;
 let isFirstGame = false;
 let gameOver = true;
 
-let fX, tX, fY, tY;
-
 let score = 0;
 let appleX, appleY;
-let delay = 0;
 let lastSec = 0;
-let direction = "";
+let direction = "Up";
 
-let xM, yM;
+// Start the game
+function startGame() {
+    gameOver = false;
+    snakeX = 100;
+    snakeY = 180;
+    direction = "Up";
+    snakeSize = 1;
+    bodyX = [];
+    bodyY = [];
+    appleX = 0;
+    appleY = 0;
+    generateApple();
+}
 
-let x = window.innerWidth / 2.5;
-let y = window.innerHeight / 4;
+// End the game
+function GameOver() {
+    if (!gameOver) {
+        gameOver = true;
+        bodyX = [];
+        bodyY = [];
+        lastSnakeX = 0;
+        lastSnakeY = 0;
+        appleX = 0;
+        appleY = 0;
+    }
+}
 
-let keysPressed = [];
+// Generate the plump, juicy, red apple yyum
+function generateApple() {
+    for (i = 0; i < 100; i++) {
+        let randomX = Math.floor(Math.random() * 10);
+        let randomY = Math.floor(Math.random() * 10);
 
-// Draw
-function render() {
+        appleX = randomX * 20;
+        appleY = randomY * 20;    
 
-    // From
-    fX = x;
-    fY = y;
-
-    // To
-    tX = fX + 200;
-    tY = fY + 200;
-
-    // Mid vales
-    xM = tX - (200 / 2);
-    yM = tY - (200 / 2);
-
-    // Rect
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(fX - 1, fY - 1, tX + 1, tY + 1);
-
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(fX, fY, tX, tY);
-
-    if (snakeX < x || snakeX >= x + 200 || snakeY < y || snakeY >= y + 200) {
-        GameOver();
+        for (i2 = 0; i2 < bodyX.length; i2++) {
+            if (bodyX[i2] === appleX && bodyY[i2] === appleY) {
+                appleX = 0;
+                appleY = 0;
+                break;
+            }
+        }
     }
 
+    if (snakeX === appleX && snakeY === appleY) {
+        appleX = 0;
+        appleY = 0;
+    }
+
+    if (appleX < 0 || appleX >= width || appleY < 0 || appleY >= width) {
+        appleX = 0;
+        appleY = 0;
+    }
+
+    if (appleX != 0 && appleY != 0) {
+        
+    }
+}
+
+// Game mechanism
+setInterval(() => {
     if (!gameOver) {
+
+        if (snakeX < 0 || snakeX >= width || snakeY < 0 || snakeY >= height) { 
+            GameOver();
+            return;
+        }
+
         // Die if body collide
-        for (i = 0; i < bodyX.size; i++) {
-            if (bodyX.size[i] === snakeX) {
-                if (bodyY.length[i] ==- snakeY) {
+        for (let i = 0; i < bodyX.length; i++) {
+            if (bodyX[i] === snakeX) {
+                if (bodyY[i] === snakeY) {
                     GameOver();
                     return;
                 }
             }
         }
 
-        // Draw score
-        //fX + 2, fY + 2
-        ctx.fillStyle = "#FFFFFF";
-        ctx.font = "4px 'Comic Relief', monospace";
-        ctx.fillText("Score: " + score, fX + 2, fY + 2);
-
-        // Generate apple Yum yum nom nom
-        if (appleX === 0 || appleY === 0) {
-            generateApple();
+        // Snake movement
+         switch (direction) {
+            case "Up": snakeY += 20; break;
+            case "Down": snakeY -= 20; break;
+            case "Right": snakeX += 20; break;
+            case "Left": snakeX -= 20; break;
         }
 
-        // make apple generate or fall down from apple tree
-        ctx.fillStyle = "#FF0000";
-        ctx.fillRect(appleX, appleY, appleX + 20, appleY + 20);
-        
-   
-        let divided = 250 - Math.floor(score / 10);
-        if (divided < 10) divided = 10;
-    
-        let sec = Math.floor(Date.now() / divided);
-        if (sec != lastSec) {
-            delay = 0;
-
-            // Snake movement
-            if (!gameOver && currentNode != null) {
-                if (keysPressed['ArrowUp']) {
-                    snakeY = snakeY - 20;
-                } else if (keysPressed['ArrowDown']) {
-                    snakeY = snakeY + 20;
-                } else if (keysPressed['ArrowLeft']) {
-                    snakeX = snakeX - 20;          
-                } else if (keysPressed['ArrowRight']) {
-                    snakeX = snakeX + 20;
-                }
-            }
-
-            if (!bodyX.length === 0) {
-                bodyX.shift(bodyX.get(0));
-                bodyY.shift(bodyY.get(0));
-                bodyX.push(lastSnakeX);
-                bodyY.push(lastSnakeY);
-            }
-            lastSec = sec; 
+         if (bodyX.length !== 0) {
+            bodyX.shift();
+            bodyY.shift();
+            bodyX.push(lastSnakeX);
+            bodyY.push(lastSnakeY);
         }
 
         // Snake eat apple yummmm!
@@ -125,117 +133,114 @@ function render() {
                 bodyX.push(lastBodyX);
                 bodyY.push(lastBodyY);
             }
+
+            // Yum yum nom nom sweet sweet apple
+            generateApple();
         }
 
         lastSnakeX = snakeX;
         lastSnakeY = snakeY;
 
-        if (!bodyX.length === 0) {
+        if (bodyX.length > 0) {
             lastBodyX = bodyX[bodyX.length - 1];
             lastBodyY = bodyY[bodyY.length - 1];
         }
+    }
+}, 150);
+
+// Render engine
+function render() {
+    // Rect
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, width, height);
+
+    if (!gameOver) {
+        // Generate apple Yum yum nom nom
+        if (appleX === 0 || appleY === 0) {
+            generateApple();
+        }         
+
+        // Draw score
+        //fX + 2, fY + 2
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "4px 'Comic Relief', monospace";
+        ctx.fillText("Score: " + score,  2, 2);
+
+        // make apple generate or fall down from apple tree
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(appleX, appleY, 20, 20);
 
         // draw sssnake
         ctx.fillStyle = "#55FF00";
-        ctx.fillRect(snakeX, snakeY, snakeX + 20, snakeY + 20);
+        ctx.fillRect(snakeX, snakeY, 20, 20);
 
+        // Them eyes
         ctx.fillStyle = "#000000";
-        ctx.fillRect(snakeX + 3, snakeY + 3, snakeX + 8, snakeY + 8);
+        ctx.fillRect(snakeX + 3, snakeY + 3, 8, 8);
 
-        for (i = 0; i < bodyX.length; i++) {
-            ctx.fillStyle = "#55FF00";
-            ctx.fillRect(bodyX.get(i), bodyY.get(i), bodyX.get(i) + 20, bodyY.get(i) + 20);
+        ctx.fillStyle = "#55FF00";
+        for (let i = 0; i < bodyX.length; i++) {
+            ctx.fillRect(bodyX[i], bodyY[i], 20, 20);
         }
     }
 
     if (gameOver) {
+        ctx.textAlign = "center";
 
         // EHH game ova!
         ctx.fillStyle = "#FF0000";
         ctx.font = "16px 'Comic Relief', monospace";
-        ctx.filltext("Game Over!", xM - 60, yM);
+        ctx.fillText("Game Over!", (width / 2) - 60, (height / 2));
 
         // Score
         ctx.fillStyle = "#0BFF03";
         ctx.font = "8px 'Comic Relief', monospace";
-        ctx.fillText("Score : " + snakeSize, xM - 28, yM + 15);
+        ctx.fillText("Score : " + snakeSize, (width / 2) - 28, (height / 2) + 15);
     
         // Click to play text
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "10px 'Comic Relief', monospace";
-        ctx.fillText( "Click to Play!", xM - 40, tY - 10);
+        ctx.fillText( "Click to Play!", (width / 2) - 20, (height / 2) - 10);
 
         isFirstGame = false;
     }
-}
 
-function GameOver() {
-    gameOver = true;
-    bodyX.length = 0;
-    bodyY.length = 0;
-    lastSnakeX = 0;
-    lastSnakeY = 0;
-    appleX = 0;
-    appleY = 0;
-}
-
-function generateApple() {
-    for (i = 0; i < 100; i++) {
-        let randomX = Math.random(1, 10);
-        let randomY = Math.random(1, 10);
-
-        appleX = x + randomX * 20;
-        appleY = y + randomY * 20;    
-
-        for (i2 = 0; i2 < bodyX.length; i2++) {
-            if (!body.length === 0 && bodyX.length[i2] === appleX && bodyY.length[i2] === appleY) {
-                appleX = 0;
-                appleY = 0;
-                break;
-            }
-        }
-    }
-
-    if (snakeX === appleX && snakeY === appleY) {
-        appleX = 0;
-        appleY = 0;
-    }
-
-    if (appleX < 140 || appleX > 340 || appleY < 140 || appleY > 340) {
-        appleX = 0;
-        appleY = 0;
-    }
-
-    if (appleX != 0 && appleY != 0) {
-        
-    }
-}
-
-function startGame() {
-    gameOver = false;
-    snakeX = x + 100;
-    snakeY = y + 180;
-    direction = "Up";
-    snakeSize = 1;
+    requestAnimationFrame(render);
 }
 
 // Input handler
 window.addEventListener('keydown', (e) => {
+
     if (e.key === "Enter") {
         startGame();
     } 
 
-    if (e.key === "ArrowUp") {
-        console.log('up');
-        direction = "Up";
-    } else if (e.key === "ArrowDown") {
-        console.log('down');
-        direction = "Down";
-    } else if (e.key === "ArrowLeft") {
-        console.log('left');
-        direction = "Left";
-    } else if (e.key === "ArrowRight") {
-        console.log('rght');
-        direction = "Right";
+    switch(e.key) {
+        case "ArrowUp":
+        case "w":
+        case "W":
+            direction = "Up";
+            break;
+
+        case "ArrowDown":
+        case "s":
+        case "S":
+            direction = "Down";
+            break;
+            
+        case "ArrowLeft":
+        case "a":
+        case "A":
+            direction = "Left";
+            break;
+
+        case "ArrowRight":
+        case "d":
+        case "D":
+            direction = "Right";
+            break;
     }
 });
+
+// Render
+render();
