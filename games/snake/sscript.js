@@ -51,6 +51,7 @@ let snakeSize = 0;
 let snakeX, snakeY;
 let lastX, lastY;
 let lastBodyX, lastBodyY;
+let speed = 20;
 
 let isFirstGame = false;
 let gameOver = true;
@@ -60,13 +61,20 @@ let appleX, appleY;
 let lastSec = 0;
 let direction = "Up";
 
+// Check first game
+window.addEventListener('load', () => {
+    isFirstGame = true;
+});
+
 // Start the game
 function startGame() {
     gameOver = false;
+    isFirstGame = false;
     snakeX = 100;
     snakeY = 180;
-    direction = "Up";
+    direction = "Right";
     snakeSize = 1;
+    score = 0;
     bodyX = [];
     bodyY = [];
     appleX = 0;
@@ -78,6 +86,7 @@ function startGame() {
 function GameOver() {
     if (!gameOver) {
         gameOver = true;
+        isFirstGame = false;
         bodyX = [];
         bodyY = [];
         lastSnakeX = 0;
@@ -90,17 +99,16 @@ function GameOver() {
 // Generate the plump, juicy, red apple yyum
 function generateApple() {
     for (i = 0; i < 100; i++) {
-        let randomX = Math.floor(Math.random() * 10);
-        let randomY = Math.floor(Math.random() * 10);
+        let randomX = Math.floor(Math.random() * (width / speed - 2)) + 1;
+        let randomY = Math.floor(Math.random() * (height / speed - 2)) + 1;
 
-        appleX = randomX * grid_size;
-        appleY = randomY * grid_size;    
+        appleX = randomX * speed;
+        appleY = randomY * speed;    
 
         for (i2 = 0; i2 < bodyX.length; i2++) {
             if (bodyX[i2] === appleX && bodyY[i2] === appleY) {
                 appleX = 0;
                 appleY = 0;
-                score++;
                 break;
             }
         }
@@ -109,9 +117,10 @@ function generateApple() {
     if (snakeX === appleX && snakeY === appleY) {
         appleX = 0;
         appleY = 0;
+        score++;
     }
 
-    if (appleX < 0 || appleX >= width || appleY < 0 || appleY >= width) {
+    if (appleX < 0 || appleX >= width || appleY < 0 || appleY >= height) {
         appleX = 0;
         appleY = 0;
     }
@@ -128,20 +137,18 @@ setInterval(() => {
 
         // Die if body collide
         for (let i = 0; i < bodyX.length; i++) {
-            if (bodyX[i] === snakeX) {
-                if (bodyY[i] === snakeY) {
-                    GameOver();
-                    return;
-                }
+            if (bodyX[i] === snakeX && bodyY[i] === snakeY) {
+                GameOver();
+                return;
             }
         }
 
         // Snake movement
          switch (direction) {
-            case "Up": snakeY -= grid_size; break;
-            case "Down": snakeY += grid_size; break;
-            case "Right": snakeX += grid_size; break;
-            case "Left": snakeX -= grid_size; break;
+            case "Up": snakeY -= speed; break;
+            case "Down": snakeY += speed; break;
+            case "Right": snakeX += speed; break;
+            case "Left": snakeX -= speed; break;
         }
 
          if (bodyX.length !== 0) {
@@ -179,7 +186,7 @@ setInterval(() => {
             lastBodyY = bodyY[bodyY.length - 1];
         }
     }
-}, 150);
+}, 140);
 
 // Render engine
 function render() {
@@ -194,10 +201,9 @@ function render() {
         }         
 
         // Draw score
-        //fX + 2, fY + 2
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "15px 'Comic Relief', monospace";
-        ctx.fillText("Score: " + score,  30, 15);
+        ctx.fillText("Score: " + snakeSize,  40, 15);
 
         // make apple generate or fall down from apple tree
         ctx.fillStyle = "#FF0000";
@@ -217,7 +223,16 @@ function render() {
         }
     }
 
-    if (gameOver) {
+    if (isFirstGame) {
+        ctx.textAlign = "center";
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "20px 'Comic Relief', monospace";
+        ctx.fillText( "Press Enter to play!", (width / 2), (height / 2));
+    }
+
+
+    if (gameOver && !isFirstGame) {
         ctx.textAlign = "center";
 
         // EHH game ova!
@@ -234,8 +249,6 @@ function render() {
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "20px 'Comic Relief', monospace";
         ctx.fillText( "Press Enter to play!", (width / 2), height - 20);
-
-        isFirstGame = false;
     }
 
     requestAnimationFrame(render);
