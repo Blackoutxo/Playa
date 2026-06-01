@@ -1,11 +1,10 @@
 // Loading screen
 const loadingScreen = document.querySelector('.loading-screen');
-const lines = document.querySelectorAll('.line-2, .line-3, .line-4');
+const lines = document.querySelectorAll('.line-1, .line-2, .line-3, .line-4');
 const header = document.querySelector('.header');
 
-setInterval(() => {
-    loadingScreen.classList.add('disappear');
-}, 2500);
+const loaded = new Audio('../../assets/game/snake/audio/arcade sound.mp3');
+const bleep = new Audio('../../assets/game/snake/audio/arcade bleep.mp3');
 
 header.classList.add('hide');
 
@@ -13,22 +12,44 @@ lines.forEach((line) => {
     line.classList.add('hide');
 });
 
+//loadingScreen.addEventListener('click', () => {
+document.querySelector('.perm').classList.add('hide');
+
+setInterval(() => {
+    loadingScreen.classList.add('disappear');
+}, 2500);
+
+setTimeout(() => {
+    document.querySelector('.line-1').classList.remove('hide');
+}, 0);
+
 setTimeout(() => {
     document.querySelector('.line-2').classList.remove('hide');    
+    bleep.currentTime = 0.2;
+    bleep.play();
 }, 500);
 
 setTimeout(() => {
     document.querySelector('.line-3').classList.remove('hide');
+    bleep.currentTime = 0.2;
+    bleep.play();
 }, 1000);
 
 setTimeout(() => {
     document.querySelector('.line-4').classList.remove('hide');
+    bleep.currentTime = 0.2;
+    bleep.play();
 }, 1500);
+
+setTimeout(() => {
+    loaded.play();
+}, 2000)
 
 setTimeout(() => {
     header.classList.remove('hide');
     header.classList.add('anim');
 }, 1600);
+//});
 
 // The game
 const canvas = document.getElementById('board-canvas');

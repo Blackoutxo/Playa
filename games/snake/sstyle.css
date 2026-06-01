@@ -36,9 +36,10 @@ body {
 @keyframes disappear {
     0% {
         transform: translateY(0);
+        opacity: 1;
     }
     100% {
-        transform: translateY(-100%);
+        transform: translateY(-120%);
     }
 }
 
@@ -46,9 +47,9 @@ body {
 .header {
     position: absolute;
     top: 42%;
-    left: 39%;
+    left: 40%;
 
-    font-size: 5rem;
+    font-size: 5vw;
     color: rgb(255, 255, 255);
 
     transition: 0.2s ease-in-out;
@@ -73,6 +74,24 @@ body {
 }
 
 .header.hide {
+    opacity: 0;
+}
+
+/* Ask for permission sob */
+.perm {
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    
+    font-size: 5vw;
+
+    color: white;
+    text-shadow: 0.4vw 0.4vw 0 rgb(255, 104, 104);
+
+    transision: 0.2s ease-in-out;
+}
+
+.perm.hide {
     opacity: 0;
 }
 
