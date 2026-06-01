@@ -1,6 +1,11 @@
 // Loading screen
+const loadingScreen = document.querySelector('.loading-screen');
 const lines = document.querySelectorAll('.line-2, .line-3, .line-4');
 const header = document.querySelector('.header');
+
+setInterval(() => {
+    loadingScreen.classList.add('disappear');
+}, 2500);
 
 header.classList.add('hide');
 

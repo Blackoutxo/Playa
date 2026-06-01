@@ -29,6 +29,19 @@ body {
     z-index: 9999;
 }
 
+.loading-screen.disappear {
+    animation: disappear 0.5s ease-in-out forwards;
+}
+
+@keyframes disappear {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
 /* HEADER */
 .header {
     position: absolute;
@@ -52,7 +65,7 @@ body {
         transform: scale(1);
     }
     50% {
-        transform: scale(1.2);
+        transform: scale(1.03);
     }
     100% {
         transform: scale(1);
