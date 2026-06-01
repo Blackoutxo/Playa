@@ -55,6 +55,10 @@ setTimeout(() => {
 const canvas = document.getElementById('board-canvas');
 const ctx = canvas.getContext('2d');
 
+// Game audio
+const over = new Audio('../../assets/game/game over.mp3');
+const eat = new Audio('../../assets/game/snake/audio/eat.mp3');
+
 // var
 const width = 680;
 const height = 440;
@@ -114,6 +118,7 @@ function GameOver() {
         lastSnakeY = 0;
         appleX = 0;
         appleY = 0;
+        over.play();
     }
 }
 
@@ -181,6 +186,7 @@ setInterval(() => {
 
         // Snake eat apple yummmm!
         if (snakeX === appleX && snakeY === appleY) {
+            eat.play();
             snakeSize++;
             
             appleX = 0;
