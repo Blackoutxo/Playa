@@ -21,6 +21,13 @@ const ctx = canvas.getContext('2d');
 const canvaspanel = document.getElementById('panel-canvas');
 const panelCtx = canvaspanel.getContext('2d');
 
+// Audio
+const theme = new Audio('../../assets/game/tetris/audio/tetris classical.mp3');
+const over = new Audio('../../assets/game/game over.mp3');
+
+// Button
+const level = document.querySelector('.level-button');
+
 ctx.scale(2, 2);
 panelCtx.scale(2, 2);
 
@@ -35,9 +42,28 @@ let currentNode = null;
 let gameOver = true;
 let isFirstGame = true;
 let score = 0;
+let layersCleared = 0;
+let previousLayersCleared = 0;
 let lastSec = 0;
 let lastSecMove = 0;
 let keysPressed = {};
+
+let pressCount = 0;
+let scoreUp = false;
+
+// click score up button
+level.addEventListener('click', () => {
+    level.classList.add('clicked');
+    scoreUp = true;
+    pressCount++;
+
+    if (pressCount >= 2) {
+        if (level.classList.contains('clicked')) {
+            level.classList.remove('clicked');
+            pressCount = 0;
+        }
+    }
+});
 
 // Next node preview
 let nextShapeIndex = Math.floor(Math.random() * 7);
@@ -502,8 +528,12 @@ function removeLayer() {
                     }
                 }
                 
+                // Get previous count
+                previousLayersCleared = layersCleared;
+
                 // Score Count
                 score += 5;
+                layersCleared += 1;
 
                 // Score sound & animation
                 scored.play();
@@ -532,6 +562,9 @@ function GameOver() {
     TetrisNode.nodes = [];
     currentNode = null;
     preview();
+    over.play();
+    theme.pause();
+    theme.currentTime = 0;
 }
 
 function startGame() {
@@ -539,6 +572,7 @@ function startGame() {
     score = 0;
     TetrisNode.nodes = [];
     setShapes();
+    theme.play();
 }
 
 // Render wahooo
@@ -549,7 +583,13 @@ function render() {
 
     // Gravity calculation
     let divided = 300 - Math.floor(score / 10);
+
     if (divided < 10) divided = 10;
+
+    if (scoreUp) {
+        if (layersCleared >= previousLayersCleared) divided -= 0.3;
+    }
+
 
     let sec = Math.floor(Date.now() / divided);
     if(sec !== lastSec && !gameOver) {
