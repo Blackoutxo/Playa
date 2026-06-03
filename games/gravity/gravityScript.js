@@ -1,6 +1,5 @@
-// Game engine
-const canvas = document.getElementById('game-area');
-const ctx = canvas.getContext('2d');
+// var
+const gameOver = false;
 
 // Plugin
 Matter.use(MatterAttractors);
@@ -34,7 +33,7 @@ Matter.Events.on(render, 'beforeRender', function() {
     context.shadowBlur = 25;
 });
 
-// create two bodes
+// create movable body
 var circle = Bodies.circle(100, 400, 30, {
     mass: 80, 
     shadowColor: '#3155cc42',
@@ -44,8 +43,6 @@ var circle = Bodies.circle(100, 400, 30, {
 });
 
 Body.setVelocity(circle, {x: 10, y: 0})
-
-var boxB = Bodies.rectangle(450, 50, 80, 80);
 
 // create attractive body
 var attractiveBody = Bodies.circle(600, 200, 50, {
@@ -69,10 +66,31 @@ Matter.Events.on(render, 'afterRender', function() {
     context.save(); 
 });
 
+
 Matter.Body.setMass(attractiveBody, 10000);
 
 // add all of the bodies to the world
-Composite.add(engine.world, [attractiveBody, boxB, circle]);
+Composite.add(engine.world, [attractiveBody, circle]);
+
+Matter.Events.on(engine, 'afterUpdate', function() {
+
+    if (isNaN(circle.position.x) || !isFinite(circle.position.x)) {
+                
+        Composite.remove(engine.world, circle);
+
+        circle = Bodies.circle(100, 400, 30, {
+            mass: 80, 
+            shadowColor: '#3155cc42',
+            render: {
+                fillStyle: '#3155cc'
+            }
+        });
+
+        Body.setVelocity(circle, {x: 10, y: 0});
+
+        Composite.add(engine.world, circle);
+    }
+});
 
 // No gravity
 engine.gravity.scale = 0;
