@@ -1,8 +1,36 @@
-// var
-const gameOver = false;
-
 // Plugin
 Matter.use(MatterAttractors);
+
+// Define game levels
+const gameLevels = [
+    {
+        levelID: 1,
+        startPos: { x: 0, y: 300},
+        velocity: { x: 6.5, y: 0},
+        goalPos: {x: 600, y: 200},
+        heavenlyPos: [
+            { x: 500, y: 100, radius: 55, mass: 10000}
+        ],
+        allotedHeavenlyBodies: 2
+    }, 
+    {
+        levelID: 2,
+        startPos: { x: 50, y: 300},
+        velocity: { x: 7, y: 0},
+        goalPos: {x: 600, y: 200},
+        heavenlyPos: [
+            { x: 500, y: 100, radius: 50, mass: 6500},
+            { x: 800, y: 500, radius: 40, mass: 5000}
+        ],
+        allotedHeavenlyBodies: 4
+    }
+];
+
+// var
+const gameOver = false;
+let currentLevel = 0;
+let comet;
+let placeableHeavenlyBodies = 0;
 
 // module aliases
 var Engine = Matter.Engine,
@@ -13,93 +41,107 @@ var Engine = Matter.Engine,
 
 const Body = Matter.Body;
 
+    var engine = Engine.create();
+
+    // create a renderer
+    var render = Render.create({
+        element: document.body,
+        engine: engine,
+        options: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            wireframes: false
+        }
+    });
+
+    // run the renderer
+    Render.run(render);
+
+    // create runner
+    var runner = Runner.create();
+
+    // run the engine
+    Runner.run(runner, engine);
+
 // create an engine
-var engine = Engine.create();
+function initialize() {
+    // 0 Gravity 
+    engine.gravity.scale = 0;
+    
+    loadLevel(currentLevel);
+}
 
-// create a renderer
-var render = Render.create({
-    element: document.body,
-    engine: engine,
-    options: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        wireframes: false
-    }
-});
+function loadLevel(index) {
+    Composite.clear(engine.world, false);
 
-// global shadow
-Matter.Events.on(render, 'beforeRender', function() {
-    var context = render.context;
-    context.shadowBlur = 25;
-});
+    const levelData = gameLevels[index];
 
-// create movable body
-var circle = Bodies.circle(100, 400, 30, {
-    mass: 80, 
-    shadowColor: '#3155cc42',
-    render: {
-        fillStyle: '#3155cc'
-    }
-});
+    // Comet and velocity
+    comet = Bodies.circle(levelData.startPos.x, levelData.startPos.y, 25, {
+        mass: 1,
+        density: 0.001,
+        friction: 0,
+        frictionAir: 0,
+        render: {
+            fillStyle: '#3155cc',
+            strokeStyle: '#3155cc',
+            lineWidth: 3
+        }
+    });
+    
+    Body.setVelocity(comet, levelData.velocity);
 
-Body.setVelocity(circle, {x: 10, y: 0})
+    // Heavenly bodies
+    levelData.heavenlyPos.forEach(planet => {
+        createHeavenlyBodies(planet.x, planet.y, planet.radius, planet.mass);
+    });
 
-// create attractive body
-var attractiveBody = Bodies.circle(600, 200, 50, {
-    isStatic: true,
-    plugin: {
-        attractors: [
-            MatterAttractors.Attractors.gravity
-        ]
-    },
-    shadowColor: '#c92222af',
-    render: {
-        fillStyle: '#c92222',
+    // Add all bodies
+    Composite.add(engine.world, comet);
+}
 
-    }
-});
+function createHeavenlyBodies(x, y, radius, mass) {
+    // Place down planets
+    window.addEventListener('mousedown', (e) => {
+        placePlanet(e.clientX, e.clientY);
+    });
 
-Matter.Events.on(render, 'afterRender', function() {
-    var context = render.context;
-    var bodies = Composite.allBodies(engine.world);
+    let planet = Bodies.circle(x, y, radius, {
+        isStatic: true,
+        mass: mass,
+        plugin: {
+            attractors: [
+                MatterAttractors.Attractors.gravity
+            ]
+        },
+        render: {
+            fillStyle: "#c92222"
+        }
+    });
 
-    context.save(); 
-});
+    Composite.add(engine.world, planet);
+}
 
+function placePlanet(x, y) {
+    let planetP = Bodies.circle(x, y, 45, {
+        mass: 5000,
+        isStatic: true,
+        plugin: {
+            attractors: [
+                MatterAttractors.Attractors.gravity
+            ]
+        },
+        render: {
+            fillStyle: '#2fc1db',
+            strokeStyle: '#2fc1db',
+            lineWidth: 3
+        }
+    });
 
-Matter.Body.setMass(attractiveBody, 10000);
+    planetP.gravityMass = 5000;
 
-// add all of the bodies to the world
-Composite.add(engine.world, [attractiveBody, circle]);
+    Composite.add(engine.world, planetP);
+}
 
-Matter.Events.on(engine, 'afterUpdate', function() {
-
-    if (isNaN(circle.position.x) || !isFinite(circle.position.x)) {
-                
-        Composite.remove(engine.world, circle);
-
-        circle = Bodies.circle(100, 400, 30, {
-            mass: 80, 
-            shadowColor: '#3155cc42',
-            render: {
-                fillStyle: '#3155cc'
-            }
-        });
-
-        Body.setVelocity(circle, {x: 10, y: 0});
-
-        Composite.add(engine.world, circle);
-    }
-});
-
-// No gravity
-engine.gravity.scale = 0;
-
-// run the renderer
-Render.run(render);
-
-// create runner
-var runner = Runner.create();
-
-// run the engine
-Runner.run(runner, engine);
+// Functions
+initialize();
