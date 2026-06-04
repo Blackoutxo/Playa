@@ -33,6 +33,14 @@ let currentLevel = 0;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
+// Const docs
+const dnf = document.querySelector('.dnf');
+const lvlComplete = document.querySelector('.level-completed');
+
+// hide
+dnf.classList.add('hide');
+lvlComplete.classList.add('hide');
+
 // module aliases
 var Engine = Matter.Engine,
     Render = Matter.Render,
@@ -77,7 +85,7 @@ function initialize() {
 Matter.Events.on(render, 'beforeRender', function() {
     var context = render.context;
     context.shadowBlur = 25;
-    context.shadowColor = "#ffffff60";
+    context.shadowColor = "#0db4ca60";
 });
 
 // Load levels
@@ -119,10 +127,11 @@ function loadLevel(index) {
     });
 
     // Place down planets
+    let click = levelData.allotedHeavenlyBodies;
     window.addEventListener('mousedown', (e) => {
-        if (placeableHeavenlyBodies !== 0 && !launched) {
+        if (placeableHeavenlyBodies === 0) return;
             placePlanet(e.clientX, e.clientY, 6500);
-        }
+        
     });
 
     // Heavenly bodies
@@ -132,8 +141,9 @@ function loadLevel(index) {
 
     // Add all bodies
     window.addEventListener('keydown', (e) => {
-        console.log(e.key);
         if (e.key === " " && !launched) {
+            gameOver = false;
+        
             Composite.add(engine.world, comet);
 
             launched = true;
@@ -142,12 +152,13 @@ function loadLevel(index) {
             
             window.addEventListener('keydown', (e) => {
                 if (e.key === "Enter" && launched && gameStarted) {
-                    resetAllotedPlanets(currentLevel);
+                    placeableHeavenlyBodies = levelData.allotedHeavenlyBodies;
                     loadLevel(currentLevel);
            
                     setTimeout(() => {
                         launched = false;
-                        gameStarted = false;                
+                        gameStarted = false;   
+                        gameOver = true;             
                     }, 500);
                 }
             });
@@ -195,17 +206,10 @@ function placePlanet(x, y, mass) {
         }
     });
 
-    // Reduce alloted bodies
-    placeableHeavenlyBodies--;
-
     // Spawn the planet
     Composite.add(engine.world, planetP);
-}
 
-function resetAllotedPlanets(levelIndex) {
-    const lvlData = gameLevels[levelIndex];
-
-    placeableHeavenlyBodies = lvlData.allotedHeavenlyBodies;
+    placeableHeavenlyBodies--;
 }
 
 Events.on(engine, 'collisionStart', function(event) {
@@ -215,28 +219,46 @@ Events.on(engine, 'collisionStart', function(event) {
         const pair = pairs[i];
         
         if (pair.bodyA === comet && pair.bodyB !== goal) {
-
+            setTimeout(() => {
+                launched = false;
+                gameStarted = false;  
+                gameOver = true; 
+                handleGameOver();
+                
+                loadLevel(currentLevel);
+            }, 100);
         }
 
         if (pair.bodyA === comet && pair.bodyB === goal) {
             gameStarted = false;
             launched = false;
             currentLevel++;
-
+            
+            handleLevelComplete(currentLevel);
+            
             setTimeout(() => {
                 loadLevel(currentLevel);        
-            }, 1000);
+            }, 2000);
         }
     }
 });
 
-// After render
-Events.on(render, 'afterRender', function() {
-    var context = render.context;
-    var bodies = Composite.allBodies(engine.world);
+function handleGameOver() {
+    dnf.classList.remove('hide');
 
-    context.restore(); 
-});
+    setTimeout(() => {
+        dnf.classList.add('hide');
+        gameOver = false;
+    }, 500);
+}
+
+function handleLevelComplete(levelIndex) {
+    lvlComplete.classList.toggle('hide');    
+    setTimeout(() => {
+        lvlComplete.classList.toggle('hide');
+        gameOver = false;
+    }, 500);
+}
 
 // Functions
 initialize();
