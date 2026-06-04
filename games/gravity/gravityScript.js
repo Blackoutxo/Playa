@@ -160,6 +160,7 @@ function loadLevel(index) {
 
 function createHeavenlyBodies(x, y, radius, mass) {
     let planet = Bodies.circle(x, y, radius, {
+        label: 'heavenlybody',
         isStatic: true,
         mass: mass,
         shadowColor: "#c922225d",
@@ -178,6 +179,7 @@ function createHeavenlyBodies(x, y, radius, mass) {
 
 function placePlanet(x, y, mass) {
     let planetP = Bodies.circle(x, y, 45, {
+        label: 'planet',
         isStatic: true,
         mass: mass,
         shadowColor: '#2fc1db3b',
@@ -212,7 +214,11 @@ Events.on(engine, 'collisionStart', function(event) {
     for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i];
         
-        if (pair.bodyA === comet || pair.bodyB === comet) {
+        if (pair.bodyA === comet && pair.bodyB !== goal) {
+
+        }
+
+        if (pair.bodyA === comet && pair.bodyB === goal) {
             gameStarted = false;
             launched = false;
             currentLevel++;
@@ -228,38 +234,6 @@ Events.on(engine, 'collisionStart', function(event) {
 Events.on(render, 'afterRender', function() {
     var context = render.context;
     var bodies = Composite.allBodies(engine.world);
-
-    context.save(); 
-
-    for (var i = 0; i < bodies.length; i++) {
-        var body = bodies[i];
-        
-        // Skip bodies that don't have a custom shadow color defined
-        if (!body.plugin || !body.plugin.shadowColor) continue;
-
-        // Skip static boundaries or hidden items if needed
-        if (body.isStatic) continue; 
-
-        var vertices = body.vertices;
-
-        // Configure canvas shadow settings for this specific body
-        context.shadowColor = body.plugin.shadowColor;
-        context.shadowBlur = 15;
-        context.shadowOffsetX = 5;
-        context.shadowOffsetY = 8;
-
-        // Draw a path tracking the body's physical vertices
-        context.beginPath();
-        context.moveTo(vertices[0].x, vertices[0].y);
-        for (var j = 1; j < vertices.length; j++) {
-            context.lineTo(vertices[j].x, vertices[j].y);
-        }
-        context.closePath();
-
-        // Match the background color of the body to prevent visual clipping
-        context.fillStyle = body.render.fillStyle || '#ffffff';
-        context.fill();
-    }
 
     context.restore(); 
 });
