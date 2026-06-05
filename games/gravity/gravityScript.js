@@ -41,7 +41,7 @@ const lvlComplete = document.querySelector('.level-completed');
 dnf.classList.add('hide');
 lvlComplete.classList.add('hide');
 
-// module aliases
+// Modules
 var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
@@ -50,10 +50,8 @@ var Engine = Matter.Engine,
     Events = Matter.Events;
 
 const Body = Matter.Body;
-
 var engine = Engine.create();
 
-// create a renderer
 var render = Render.create({
     element: document.body,
     engine: engine,
@@ -64,22 +62,9 @@ var render = Render.create({
      }
 });
 
-// run the renderer
 Render.run(render);
-
-// create runner
 var runner = Runner.create();
-
-// run the engine
 Runner.run(runner, engine);
-
-// create an engine
-function initialize() {
-    // 0 Gravity 
-    engine.gravity.scale = 0;
-
-    loadLevel(currentLevel);
-}
 
 // Before Render
 Matter.Events.on(render, 'beforeRender', function() {
@@ -88,16 +73,73 @@ Matter.Events.on(render, 'beforeRender', function() {
     context.shadowColor = "#0db4ca60";
 });
 
-// Load levels
+// ------ Game handler ------ //
+
+// Place
+function handlePlace(e) {
+    if (placeableHeavenlyBodies !== 0) {
+        placePlanet(e.clientX, e.clientY, 6500);
+    }
+}
+
+// Launch
+function handleLaunch(e) {
+    if (e.key === " ") {
+        Composite.add(engine.world, comet);
+        launched = true;
+        gameStarted = true;
+    }
+}
+
+// Game over
+function handleGameOver() {
+    dnf.classList.remove('hide');
+
+    setTimeout(() => {
+        dnf.classList.add('hide');
+    }, 500);
+}
+
+// Level complete
+function handleLevelComplete(levelIndex) {
+    lvlComplete.classList.toggle('hide');    
+
+    setTimeout(() => {
+        lvlComplete.classList.toggle('hide');
+    }, 500);
+}
+
+// Restart
+function handleRestart(e) {
+    if (e.key === "Enter") {
+        loadLevel(currentLevel);
+    }
+}
+
+// Register Global event listener once
+window.addEventListener('keydown', handleLaunch);
+window.addEventListener('keydown', handleRestart);
+window.addEventListener('mousedown', handlePlace);
+
+// Initialize
+function initialize() {
+    // 0 Gravity 
+    engine.gravity.scale = 0;
+
+    loadLevel(currentLevel);
+}
+
+// ------ Load levels ------ //
 function loadLevel(index) {
     Composite.clear(engine.world, false);
 
+    // Fetch level data
     const levelData = gameLevels[index];
 
     // Allot the placeable bodies
     placeableHeavenlyBodies = levelData.allotedHeavenlyBodies;
 
-    // Comet and velocity
+    // Comet 
     comet = Bodies.circle(levelData.startPos.x, levelData.startPos.y, 25, {
         label: 'comet',
         mass: 80,
@@ -114,7 +156,7 @@ function loadLevel(index) {
     // Set comet velocity
     Body.setVelocity(comet, levelData.velocity);
 
-    // Place down goal sensor
+    // Goal sensor
     goal = Bodies.circle(levelData.goalPos.x, levelData.goalPos.y, 50, {
         label: 'goal',
         isSensor: true,
@@ -126,49 +168,25 @@ function loadLevel(index) {
         }
     });
 
-    // Place down planets
-    let click = levelData.allotedHeavenlyBodies;
-    window.addEventListener('mousedown', (e) => {
-        if (placeableHeavenlyBodies === 0) return;
-            placePlanet(e.clientX, e.clientY, 6500);
-        
-    });
-
     // Heavenly bodies
     levelData.heavenlyPos.forEach(planet => {
         createHeavenlyBodies(planet.x, planet.y, planet.radius, planet.mass);
-    });
-
-    // Add all bodies
-    window.addEventListener('keydown', (e) => {
-        if (e.key === " " && !launched) {
-            gameOver = false;
-        
-            Composite.add(engine.world, comet);
-
-            launched = true;
-            gameStarted = true;
-
-            
-            window.addEventListener('keydown', (e) => {
-                if (e.key === "Enter" && launched && gameStarted) {
-                    placeableHeavenlyBodies = levelData.allotedHeavenlyBodies;
-                    loadLevel(currentLevel);
-           
-                    setTimeout(() => {
-                        launched = false;
-                        gameStarted = false;   
-                        gameOver = true;             
-                    }, 500);
-                }
-            });
-        }
     });
 
     // Add goal
     Composite.add(engine.world, goal);
 }
 
+// ------ HUD ------ //
+function renderHUD() {
+    var ctx = render.context;
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "50px 'Inconsolata', monospace";
+    ctx.fillText("Level: " + (currentLevel + 1), 400, 200);
+}
+
+// ------ Heavenly Body ------ //
 function createHeavenlyBodies(x, y, radius, mass) {
     let planet = Bodies.circle(x, y, radius, {
         label: 'heavenlybody',
@@ -188,7 +206,8 @@ function createHeavenlyBodies(x, y, radius, mass) {
     Composite.add(engine.world, planet);
 }
 
-function placePlanet(x, y, mass) {
+// ------ Place planet ------ //
+function placePlanet(x, y, mass) {  
     let planetP = Bodies.circle(x, y, 45, {
         label: 'planet',
         isStatic: true,
@@ -210,8 +229,10 @@ function placePlanet(x, y, mass) {
     Composite.add(engine.world, planetP);
 
     placeableHeavenlyBodies--;
+    console.log(placeableHeavenlyBodies);
 }
 
+// ------ Collision check ------ //
 Events.on(engine, 'collisionStart', function(event) {
     const pairs = event.pairs;
     
@@ -226,7 +247,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 handleGameOver();
                 
                 loadLevel(currentLevel);
-            }, 100);
+            }, 200);
         }
 
         if (pair.bodyA === comet && pair.bodyB === goal) {
@@ -238,27 +259,11 @@ Events.on(engine, 'collisionStart', function(event) {
             
             setTimeout(() => {
                 loadLevel(currentLevel);        
-            }, 2000);
+            }, 100);
         }
     }
 });
 
-function handleGameOver() {
-    dnf.classList.remove('hide');
-
-    setTimeout(() => {
-        dnf.classList.add('hide');
-        gameOver = false;
-    }, 500);
-}
-
-function handleLevelComplete(levelIndex) {
-    lvlComplete.classList.toggle('hide');    
-    setTimeout(() => {
-        lvlComplete.classList.toggle('hide');
-        gameOver = false;
-    }, 500);
-}
-
-// Functions
+// Function call
 initialize();
+renderHUD();
