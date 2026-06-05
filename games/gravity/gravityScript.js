@@ -17,10 +17,10 @@ const gameLevels = [
         levelID: 2,
         startPos: { x: 50, y: 300},
         velocity: { x: 7, y: 0},
-        goalPos: {x: 600, y: 200},
+        goalPos: {x: 900, y: 200},
         heavenlyPos: [
             { x: 500, y: 100, radius: 50, mass: 10000},
-            { x: 800, y: 500, radius: 40, mass: 5000}
+            { x: 800, y: 500, radius: 40, mass: 1000}
         ],
         allotedHeavenlyBodies: 4
     }
@@ -75,6 +75,13 @@ Matter.Events.on(render, 'beforeRender', function() {
 
 // ------ Game handler ------ //
 
+// Load info panel
+function loadPanel(e) {
+    if (e.key === "i") {
+        document.querySelector('.info-panel').classList.add('')
+    }
+}
+
 // Place
 function handlePlace(e) {
     if (placeableHeavenlyBodies !== 0) {
@@ -97,16 +104,18 @@ function handleGameOver() {
 
     setTimeout(() => {
         dnf.classList.add('hide');
-    }, 500);
+    }, 800);
 }
 
 // Level complete
 function handleLevelComplete(levelIndex) {
-    lvlComplete.classList.toggle('hide');    
+    lvlComplete.classList.toggle('hide');
+    document.querySelector('.lvl-count').textContent = currentLevel + 1;    
+    document.querySelector('.lvl-count-bar').textContent = currentLevel + 1;;
 
     setTimeout(() => {
         lvlComplete.classList.toggle('hide');
-    }, 500);
+    }, 800);
 }
 
 // Restart
@@ -233,24 +242,19 @@ function placePlanet(x, y, mass) {
 }
 
 // ------ Collision check ------ //
+let handlingCollision = false;
 Events.on(engine, 'collisionStart', function(event) {
+    if (handlingCollision) return;
+
     const pairs = event.pairs;
     
     for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i];
-        
-        if (pair.bodyA === comet && pair.bodyB !== goal) {
-            setTimeout(() => {
-                launched = false;
-                gameStarted = false;  
-                gameOver = true; 
-                handleGameOver();
-                
-                loadLevel(currentLevel);
-            }, 200);
-        }
 
         if (pair.bodyA === comet && pair.bodyB === goal) {
+            handlingCollision = true;
+            Body.setStatic(comet, true);
+
             gameStarted = false;
             launched = false;
             currentLevel++;
@@ -258,12 +262,29 @@ Events.on(engine, 'collisionStart', function(event) {
             handleLevelComplete(currentLevel);
             
             setTimeout(() => {
-                loadLevel(currentLevel);        
-            }, 100);
+                loadLevel(currentLevel);
+                handlingCollision = false;      
+            }, 500);
+        } 
+        
+        if (pair.bodyA === comet && pair.bodyB !== goal) {
+            handlingCollision = true;
+           Body.setStatic(comet, true);
+
+            setTimeout(() => {
+                handlingCollision = false;
+
+                launched = false;
+                gameStarted = false;  
+                gameOver = true; 
+                handleGameOver();
+                
+                loadLevel(currentLevel);
+            }, 500);
         }
     }
 });
-
+ 
 // Function call
 initialize();
 renderHUD();
