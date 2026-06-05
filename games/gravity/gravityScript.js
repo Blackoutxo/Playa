@@ -78,7 +78,7 @@ Matter.Events.on(render, 'beforeRender', function() {
 // Load info panel
 function loadPanel(e) {
     if (e.key === "i") {
-        document.querySelector('.info-panel').classList.add('')
+        document.querySelector('.info-panel').classList.toggle('hide');
     }
 }
 
@@ -128,6 +128,7 @@ function handleRestart(e) {
 // Register Global event listener once
 window.addEventListener('keydown', handleLaunch);
 window.addEventListener('keydown', handleRestart);
+window.addEventListener('keydown', loadPanel);
 window.addEventListener('mousedown', handlePlace);
 
 // Initialize
