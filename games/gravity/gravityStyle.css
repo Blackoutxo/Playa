@@ -199,6 +199,8 @@ body {
   right: 8%;
 
   color: white;
+
+  transition: 0.2s ease-in-out;
 }
 
 /* Info panel*/
