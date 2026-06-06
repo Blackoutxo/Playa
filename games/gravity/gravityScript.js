@@ -70,9 +70,45 @@ const gameLevels = [
         velocity: { x: 0, y: -6},
         goalPos: { x: ((width / 3) - 200), y: ((height / 2))},
         heavenlyPos: [
-            { x: ((width / 2) - 100), y: 400, radius: 55, mass: 10000}
+            { x: ((width / 2) - 100), y: ((height / 2) + 100), radius: 55, mass: 10000}
         ],
         allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 7,
+        startPos: { x: 0, y: (height / 2)},
+        velocity: { x: 7, y: 0},
+        goalPos: { x: (width - 150), y: (height / 3.5)},
+        heavenlyPos: [
+            { x: (width / 3), y: (height / 2), radius: 60, mass: 10000},
+            { x: (width / 2.3), y: ((height / 2) - 220), radius: 50, mass: 6000},
+            { x: (width / 2.7), y: (height - 50), radius: 40, mass: 5000}
+        ],
+        allotedHeavenlyBodies: 3
+    },
+
+    {
+        levelID: 8,
+        startPos: { x: 0, y: (height)},
+        velocity: { x: 10, y: -10},
+        goalPos: { x: (width / 1.05), y: (height / 1.1)},
+        heavenlyPos: [
+            { x: (width / 2), y: (height / 3), radius: 60, mass: 70000},
+
+        ],
+        allotedHeavenlyBodies: 4
+    },
+
+    {
+        levelID: 9,
+        startPos: { x: 0, y: (height / 2)},
+        velocity: { x: 3, y: 0.02},
+        goalPos: { x: (width / 2), y: (height / 5)},
+        heavenlyPos: [
+            { x: (width / 3), y: (height / 2), radius: 55, mass: 9000},
+        ],
+        allotedHeavenlyBodies: 10
     }
 ];
 
@@ -82,7 +118,7 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 5;
+let currentLevel = 8;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
@@ -145,7 +181,7 @@ function handlePlace(e) {
 
 // Launch
 function handleLaunch(e) {
-    if (e.key === " ") {
+    if (e.key === " " && !launched) {
         Composite.add(engine.world, comet);
         launched = true;
         gameStarted = true;
