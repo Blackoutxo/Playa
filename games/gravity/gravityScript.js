@@ -9,27 +9,62 @@ const gameLevels = [
         velocity: { x: 6.5, y: 0},
         goalPos: {x: 1000, y: 300},
         heavenlyPos: [
+            { x: 1500, y: 300, radius: 60, mass: 15000}
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 2,
+        startPos: { x: 0, y: 300},
+        velocity: { x: 6.5, y: 0},
+        goalPos: {x: 1000, y: 300},
+        heavenlyPos: [
             { x: 500, y: 100, radius: 60, mass: 15000}
         ],
         allotedHeavenlyBodies: 2
     }, 
+
     {
-        levelID: 2,
-        startPos: { x: 50, y: 300},
+        levelID: 3,
+        startPos: { x: 0, y: 300},
         velocity: { x: 7, y: 0},
-        goalPos: {x: 900, y: 200},
+        goalPos: {x: 1000, y: 400},
         heavenlyPos: [
             { x: 500, y: 100, radius: 50, mass: 10000},
             { x: 800, y: 500, radius: 40, mass: 1000}
         ],
         allotedHeavenlyBodies: 4
-    }
+    },
+
+    {
+        levelID: 4,
+        startPos: { x: 0, y: 300},
+        velocity: { x: 7, y: 0},
+        goalPos: {x: 1000, y: 350},
+        heavenlyPos: [
+            { x: 600, y: 300, radius: 50, mass: 10000}
+        ],
+        allotedHeavenlyBodies: 4
+    },
+
+    {
+        levelID: 5,
+        startPos: { x: 0, y: 300},
+        velocity: { x: 5, y: 0},
+        goalPos: {x: 1000, y: 400}, 
+        heavenlyPos: [
+            { x: 600, y: 200, radius: 50, mass: 10000},
+            { x: 800, y: 150, radius: 40, mass: 7000}
+        ],
+        allotedHeavenlyBodies: 4
+    },
 ];
 
 // var
 let gameOver = false;
 let gameStarted = false, launched = false;
-let currentLevel = 0;
+let currentLevel = 4;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
@@ -69,6 +104,7 @@ Runner.run(runner, engine);
 // Before Render
 Matter.Events.on(render, 'beforeRender', function() {
     var context = render.context;
+    
     context.shadowBlur = 25;
     context.shadowColor = "#0db4ca60";
 });
@@ -84,9 +120,11 @@ function loadPanel(e) {
 
 // Place
 function handlePlace(e) {
-    if (placeableHeavenlyBodies !== 0) {
+    if (placeableHeavenlyBodies !== 0 && !launched) {
         placePlanet(e.clientX, e.clientY, 6500);
     }
+
+    document.querySelector('.count').textContent = placeableHeavenlyBodies;
 }
 
 // Launch
@@ -111,7 +149,7 @@ function handleGameOver() {
 function handleLevelComplete(levelIndex) {
     lvlComplete.classList.toggle('hide');
     document.querySelector('.lvl-count').textContent = currentLevel + 1;    
-    document.querySelector('.lvl-count-bar').textContent = currentLevel + 1;;
+    document.querySelector('.lvl-count-bar').textContent = currentLevel + 1;
 
     setTimeout(() => {
         lvlComplete.classList.toggle('hide');
@@ -137,6 +175,7 @@ function initialize() {
     engine.gravity.scale = 0;
 
     loadLevel(currentLevel);
+    document.querySelector('.count').textContent = placeableHeavenlyBodies;   
 }
 
 // ------ Load levels ------ //
@@ -187,15 +226,6 @@ function loadLevel(index) {
     Composite.add(engine.world, goal);
 }
 
-// ------ HUD ------ //
-function renderHUD() {
-    var ctx = render.context;
-
-    ctx.fillStyle = "#FFFFFF";
-    ctx.font = "50px 'Inconsolata', monospace";
-    ctx.fillText("Level: " + (currentLevel + 1), 400, 200);
-}
-
 // ------ Heavenly Body ------ //
 function createHeavenlyBodies(x, y, radius, mass) {
     let planet = Bodies.circle(x, y, radius, {
@@ -242,6 +272,10 @@ function placePlanet(x, y, mass) {
     console.log(placeableHeavenlyBodies);
 }
 
+// ------ After Updates ------ //
+Events.on(engine, 'beforeUpdates', function(event) {
+});
+
 // ------ Collision check ------ //
 let handlingCollision = false;
 Events.on(engine, 'collisionStart', function(event) {
@@ -279,7 +313,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 gameStarted = false;  
                 gameOver = true; 
                 handleGameOver();
-                
+
                 loadLevel(currentLevel);
             }, 500);
         }
@@ -288,4 +322,3 @@ Events.on(engine, 'collisionStart', function(event) {
  
 // Function call
 initialize();
-renderHUD();
