@@ -134,7 +134,7 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 9;
+let currentLevel = 0;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
