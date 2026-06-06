@@ -43,7 +43,7 @@ const gameLevels = [
 
     {
         levelID: 4,
-        startPos: { x: 0, y: (height / 2)},
+        startPos: { x: -100, y: (height / 2)},
         velocity: { x: 7, y: 0},
         goalPos: {x: (width / 1.6), y: ((height / 2) + 50)},
         heavenlyPos: [
@@ -54,9 +54,9 @@ const gameLevels = [
 
     {
         levelID: 5,
-        startPos: { x: 0, y: 300},
+        startPos: { x: -100, y: (height / 2)},
         velocity: { x: 5, y: 0},
-        goalPos: {x: 1000, y: 150},
+        goalPos: {x: (width / 1.5), y: (height / 3.5)},
         heavenlyPos: [
             { x: ((width / 2 ) - 100), y: ((height / 2) - 50), radius: 50, mass: 10000},
             { x: ((width / 2) + 50), y: (height / 3), radius: 40, mass: 7000}
@@ -77,7 +77,7 @@ const gameLevels = [
 
     {
         levelID: 7,
-        startPos: { x: 0, y: (height / 2)},
+        startPos: { x: -100, y: (height / 2)},
         velocity: { x: 7, y: 0},
         goalPos: { x: (width - 150), y: (height / 3.5)},
         heavenlyPos: [
@@ -102,13 +102,29 @@ const gameLevels = [
 
     {
         levelID: 9,
-        startPos: { x: 0, y: (height / 2)},
+        startPos: { x: -100, y: (height / 2)},
         velocity: { x: 3, y: 0.02},
-        goalPos: { x: (width / 2), y: (height / 5)},
+        goalPos: { x: (width - 100), y: (height / 2)},
         heavenlyPos: [
             { x: (width / 3), y: (height / 2), radius: 55, mass: 9000},
+            { x: (width / 2), y: (height / 5), radius: 40, mass: 6000},
+            { x: (width / 2.3), y: (height / 1.2), radius: 45, mass: 8000},
+            { x: (width / 1.3), y: (height / 2.5), radius : 45, mass: 8000}
         ],
-        allotedHeavenlyBodies: 10
+        allotedHeavenlyBodies: 3
+    },
+
+    {
+        levelID: 10,
+        startPos: { x: -100, y: -100},
+        velocity: { x: 6, y: 5},
+        goalPos: { x: (width - 100), y: (height / 1.2)},
+        heavenlyPos: [
+            { x: (width / 1.8), y: (height / 5), radius: 60, mass: 50000},
+            { x: (width / 10), y: (height / 1.8), radius: 55, mass: 10000},
+            { x: (width - 300), y: (height / 1.7), radius: 40, mass: 9000}
+        ],
+        allotedHeavenlyBodies: 4
     }
 ];
 
@@ -118,7 +134,7 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 8;
+let currentLevel = 9;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
