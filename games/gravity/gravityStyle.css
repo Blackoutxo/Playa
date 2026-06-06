@@ -24,6 +24,134 @@ body {
   overflow: hidden;
 }
 
+/* Loading screen */
+.loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+
+  background-color: rgb(70, 87, 129);
+
+  z-index: 9999;
+
+  animation: disappear 6s ease-in-out forwards;
+}
+
+@keyframes disappear {
+  0% {
+    transform: translateY(0%);
+  }
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-200%);
+  }
+}
+
+.heavenly-body {
+  position: absolute;
+  top: 20%;
+  left: 22%;
+
+  width: 60%;
+  height: 60%;
+
+  margin: 0;
+
+  animation: scaleUp 4s ease-in-out forwards;
+}
+
+.header {
+  position: absolute;
+  top: 48%;
+  left: 48.5%;
+
+  font-size: 2.2vw;
+  font-weight: 800;
+  color: #fff;
+  text-shadow:
+      1px 1px 0px #ccc,
+      2px 2px 0px #bbb,
+      3px 3px 0px rgba(0,0,0,0.4);
+
+  animation: fadeInText 4s ease-in-out forwards;
+}
+
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.orbit-1 {
+  position: absolute;
+  top: 20%;
+  left: 22%;
+
+  width: 60%;
+  height: 60%;
+
+  margin: 0;
+  
+  animation: rotateLeft 4s ease-in-out forwards;
+}
+
+.orbit-2 {
+  position: absolute;
+  top: 20%;
+  left: 22%;
+
+  width: 60%;
+  height: 60%;
+
+  margin: 0;
+
+  animation: rotateRight 4s ease-in-out forwards;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+@keyframes rotateRight {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+
+@keyframes rotateLeft {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg) scale(1.5);
+  }
+}
+
+/* game Area*/
 #game-area {
   position: absolute;
   top: 0;
@@ -33,6 +161,44 @@ body {
 
   width: 100%;
   height: 100%;
+}
+
+/* Item count */
+.item-count {
+  position: absolute;
+  right: 2%;
+  top: 2%;
+
+  width: 3%;
+  height: 3%;
+
+  padding: 0.1vw 0.5vw;
+  background-color: rgb(0, 0, 0);
+  outline: 0.1vw solid white;
+  box-shadow: 0.2vw 0.2vw 0 0 white;
+
+  z-index: 8999;
+}
+
+.planet {
+  position: absolute;
+  top: 0.3vw;
+  left: 0.5vw;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 1vw;
+
+  background-color: aqua;
+  box-shadow: 0 0 1vw 0.1vw aqua;
+}
+
+.count {
+  position: absolute;
+  right: 8%;
+
+  color: white;
 }
 
 /* Info panel*/
