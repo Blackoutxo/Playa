@@ -1,72 +1,88 @@
 // Plugin
 Matter.use(MatterAttractors);
 
+// Window Dimension
+let width = window.innerWidth;
+let height = window.innerHeight;
+
 // Define game levels
 const gameLevels = [
     {
         levelID: 1,
-        startPos: { x: 0, y: 300},
+        startPos: { x: 0, y: (height / 2) },
         velocity: { x: 6.5, y: 0},
-        goalPos: {x: 1000, y: 300},
+        goalPos: {x: (width - 200), y: (height / 2)},
         heavenlyPos: [
-            { x: 1500, y: 300, radius: 60, mass: 15000}
+            { x: width * 2, y: 300, radius: 60, mass: 15000}
         ],
         allotedHeavenlyBodies: 2
     },
 
     {
         levelID: 2,
-        startPos: { x: 0, y: 300},
+        startPos: { x: 0, y: (height / 2)},
         velocity: { x: 6.5, y: 0},
-        goalPos: {x: 1000, y: 300},
+        goalPos: {x: (width - 300), y: (height / 2)},
         heavenlyPos: [
-            { x: 500, y: 100, radius: 60, mass: 15000}
+            { x: (width / 3), y: (height / 5), radius: 60, mass: 15000}
         ],
         allotedHeavenlyBodies: 2
     }, 
 
     {
         levelID: 3,
-        startPos: { x: 0, y: 300},
+        startPos: { x: 0, y: (height / 2)},
         velocity: { x: 7, y: 0},
-        goalPos: {x: 1000, y: 400},
+        goalPos: {x: (width / 1.5), y: (height / 2) + 100 },
         heavenlyPos: [
-            { x: 500, y: 100, radius: 50, mass: 10000},
-            { x: 800, y: 500, radius: 40, mass: 1000}
+            { x: (width / 3), y: (height / 5), radius: 50, mass: 10000},
+            { x: (width / 1.8), y: (height - 200), radius: 40, mass: 1000}
         ],
-        allotedHeavenlyBodies: 4
+        allotedHeavenlyBodies: 3
     },
 
     {
         levelID: 4,
-        startPos: { x: 0, y: 300},
+        startPos: { x: 0, y: (height / 2)},
         velocity: { x: 7, y: 0},
-        goalPos: {x: 1000, y: 350},
+        goalPos: {x: (width / 1.6), y: ((height / 2) + 50)},
         heavenlyPos: [
-            { x: 600, y: 300, radius: 50, mass: 10000}
+            { x: (width / 2), y: (height / 2), radius: 50, mass: 10000}
         ],
-        allotedHeavenlyBodies: 4
+        allotedHeavenlyBodies: 3
     },
 
     {
         levelID: 5,
         startPos: { x: 0, y: 300},
         velocity: { x: 5, y: 0},
-        goalPos: {x: 1000, y: 400}, 
+        goalPos: {x: 1000, y: 150},
         heavenlyPos: [
-            { x: 600, y: 200, radius: 50, mass: 10000},
-            { x: 800, y: 150, radius: 40, mass: 7000}
+            { x: ((width / 2 ) - 100), y: ((height / 2) - 50), radius: 50, mass: 10000},
+            { x: ((width / 2) + 50), y: (height / 3), radius: 40, mass: 7000}
         ],
-        allotedHeavenlyBodies: 4
+        allotedHeavenlyBodies: 3
     },
+
+    {
+        levelID: 6,
+        startPos: { x: (width / 2 + 100), y: (height + 200)},
+        velocity: { x: 0, y: -6},
+        goalPos: { x: ((width / 3) - 200), y: ((height / 2))},
+        heavenlyPos: [
+            { x: ((width / 2) - 100), y: 400, radius: 55, mass: 10000}
+        ],
+        allotedHeavenlyBodies: 2
+    }
 ];
 
 // var
 let gameOver = false;
 let gameStarted = false, launched = false;
-let currentLevel = 4;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
+
+let currentLevel = 5;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
@@ -121,7 +137,7 @@ function loadPanel(e) {
 // Place
 function handlePlace(e) {
     if (placeableHeavenlyBodies !== 0 && !launched) {
-        placePlanet(e.clientX, e.clientY, 6500);
+        placePlanet(e.clientX, e.clientY, 8000);
     }
 
     document.querySelector('.count').textContent = placeableHeavenlyBodies;
@@ -160,6 +176,9 @@ function handleLevelComplete(levelIndex) {
 function handleRestart(e) {
     if (e.key === "Enter") {
         loadLevel(currentLevel);
+        launched = false;
+        gameOver = false;
+        gameStarted = false;
     }
 }
 
@@ -175,7 +194,6 @@ function initialize() {
     engine.gravity.scale = 0;
 
     loadLevel(currentLevel);
-    document.querySelector('.count').textContent = placeableHeavenlyBodies;   
 }
 
 // ------ Load levels ------ //
@@ -187,6 +205,7 @@ function loadLevel(index) {
 
     // Allot the placeable bodies
     placeableHeavenlyBodies = levelData.allotedHeavenlyBodies;
+    document.querySelector('.count').textContent = placeableHeavenlyBodies;
 
     // Comet 
     comet = Bodies.circle(levelData.startPos.x, levelData.startPos.y, 25, {
