@@ -357,6 +357,28 @@ const gameLevels = [
             { x: (width / 2), y: (height - 55), radius: 50, mass: 8000}
         ],
         allotedHeavenlyBodies: 3
+    },
+
+    {
+        levelID: 29,
+        startPos: { x: -50, y: (height / 2)},
+        velocity: { x: 6, y: -6},
+        goalPos: { x: (width - 100), y: (height / 10)},
+        heavenlyPos: [
+            { x: (width / 2), y: (height / 2), radius: 100, mass: 150000}
+        ],
+        allotedHeavenlyBodies: 5
+    },
+
+    {
+        levelID: 30,
+        startPos: { x: -100, y: (height / 1.5)},
+        velocity: { x: 8, y: -4},
+        goalPos: {},
+        heavenlyPos: [
+            {}
+        ],
+        allotedHeavenlyBodies: NaN
     }
 ];
 
@@ -366,7 +388,7 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 27;
+let currentLevel = 29;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
