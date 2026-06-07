@@ -9,7 +9,7 @@ let height = window.innerHeight;
 const gameLevels = [
     {
         levelID: 1,
-        startPos: { x: 0, y: (height / 2) },
+        startPos: { x: -100, y: (height / 2) },
         velocity: { x: 6.5, y: 0},
         goalPos: {x: (width - 200), y: (height / 2)},
         heavenlyPos: [
@@ -20,7 +20,7 @@ const gameLevels = [
 
     {
         levelID: 2,
-        startPos: { x: 0, y: (height / 2)},
+        startPos: { x: -100, y: (height / 2)},
         velocity: { x: 6.5, y: 0},
         goalPos: {x: (width - 300), y: (height / 2)},
         heavenlyPos: [
@@ -31,7 +31,7 @@ const gameLevels = [
 
     {
         levelID: 3,
-        startPos: { x: 0, y: (height / 2)},
+        startPos: { x: -100, y: (height / 2)},
         velocity: { x: 7, y: 0},
         goalPos: {x: (width / 1.5), y: (height / 2) + 100 },
         heavenlyPos: [
@@ -204,6 +204,159 @@ const gameLevels = [
             { x: (width / 2), y: (height / 1.4), radius: 50, mass: 8000}
         ],
         allotedHeavenlyBodies: 1
+    },
+
+    {
+        levelID: 17,
+        startPos: { x: -100, y: (height / 2)},
+        velocity: { x: 7, y: 0},
+        goalPos: { x: (width - 60), y: (height / 2)},
+        heavenlyPos: [
+            { x: (width / 3), y: (height / 2), radius: 55, mass: 20000},
+            { x: (width / 2.5), y: (height / 5), radius: 46, mass: 16000},
+            { x: (width / 1.6), y: (height / 2), radius: 49, mass: 10000}
+        ],
+        allotedHeavenlyBodies: 1
+    },
+
+    {
+        levelID: 18,
+        startPos: { x: (width + 100), y: -100},
+        velocity: { x: -7, y: 7},
+        goalPos: { x: 100, y: 100},
+        heavenlyPos: [
+            { x: (width / 1.5), y: (height / 2), radius: 50, mass: 50000},
+            { x: (width - 100), y: (height / 1.3), radius: 50, mass: 45000},
+        ],
+        allotedHeavenlyBodies: 3
+    },
+
+    {
+        levelID: 19,
+        startPos: { x: 30, y: -100},
+        velocity: { x: 0, y: 5},
+        goalPos: { x: (width / 2), y: (height / 4)},
+        heavenlyPos: [
+            { x: (width / 5), y: (height / 4), radius: 60, mass: 16000}
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 20,
+        startPos: { x: (width + 100), y: (height / 3)},
+        velocity: { x: -5.7, y: 0},
+        goalPos: { x: (width - 65), y: (height - 65)},
+        heavenlyPos: [
+            { x: -100, y: -100, radius: 60, mass: 1},
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 21,
+        startPos: { x: -100, y: (height / 4)},
+        velocity: { x: 6, y: 0},
+        goalPos: { x: (width / 1.2), y: (height / 2)},
+        heavenlyPos: [
+            { x: (width / 3.5), y: (height / 2), radius: 55, mass: 20000},
+            { x: (width / 2), y: (height / 5), radius: 55, mass: 20000},
+            { x: (width / 2), y: (height / 1.1), radius: 55, mass: 20000},
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 22,
+        startPos: { x: -100, y: -100},
+        velocity: { x: 2.6, y: 2},
+        goalPos: { x: (width / 2.6), y: (height / 1.5)},
+        heavenlyPos: [
+            { x: (width / 4), y: (height / 2.4), radius: 60, mass: 10000},
+            { x: (width / 3), y: (height / 8), radius: 50, mass: 8000}
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 23,
+        startPos: { x: -55, y: -55},
+        velocity: { x: 2.8, y: 2.1},
+        goalPos: { x: (width / 2), y: (height / 1.5)},
+        heavenlyPos: [
+            { x: (width / 6.4), y: (height / 2.4), radius: 50, mass: 6000},
+            { x: (width / 3.4), y: (height / 1.7), radius: 50, mass: 6000},
+            { x: (width / 2.4), y: (height / 2.4), radius: 50, mass: 6000},
+            { x: (width / 3.4), y: (height / 4), radius: 50, mass: 6000},
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 24,
+        startPos: { x: -55, y: (height / 2)},
+        velocity: { x: 3, y: -1.1},
+        goalPos: { x: (width / 2.5), y: (height / 10)},
+        heavenlyPos: [
+            { x: (width / 5.2), y: (height / 2.8), radius: 50, mass: 7200},
+            { x: (width / 2.7), y: (height / 2), radius: 50, mass: 7200},
+            { x: (width / 1.8), y: (height / 1.6), radius: 45, mass: 7200},
+        ],
+        allotedHeavenlyBodies: 1
+    },
+
+    {
+        levelID: 25,
+        startPos: { x: -55, y: (height / 1.2)},
+        velocity: { x: 2.6, y: -2.9},
+        goalPos: { x: (width - 100), y: (height / 7)},
+        heavenlyPos: [
+            { x: (width / 2), y: (height / 2), radius: 100, mass: 60000},
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 26,
+        startPos: { x: 55, y: 440},
+        velocity: { x: 3.6, y: -1.1},
+        goalPos: { x: (width / 2), y: (height / 2)},
+        heavenlyPos: [
+            { x: (width / 2), y: (height / 5), radius: 45, mass: 6000},
+            { x: (width / 2.7), y: (height / 2.5), radius: 45, mass: 6000},
+            { x: (width / 2.5), y: (height / 1.4), radius: 45, mass: 6000},
+            { x: (width / 1.7), y: (height / 1.4), radius: 45, mass: 6000},
+            { x: (width / 1.6), y: (height / 2.5), radius: 45, mass: 6000},
+            { x: (width / 10), y: (height / 2.2), radius: 45, mass: 6000}
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 27,
+        startPos: { x: -100, y: 0},
+        velocity: { x: 6,  y: 0},
+        goalPos: { x: (width - 100), y: (height - 100)},
+        heavenlyPos: [
+            { x: (width / 6), y: (height / 4), radius: 50, mass: 15000},
+            { x: (width / 3), y: (height / 1.5), radius: 50, mass: 10000},
+            { x: (width /1.72), y: (height / 2), radius: 45, mass: 9000},
+            { x: (width / 1.5), y: (height / 1.2), radius: 45, mass: 9000}
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 28,
+        startPos: { x: (width / 1.6), y: (height + 200)},
+        velocity: { x: 0, y: -6.8},
+        goalPos: { x: (width / 10), y: (height - 55)},
+        heavenlyPos: [
+            { x: (width / 1.3), y: (height - 100), radius: 50, mass: 10000},
+            { x: (width / 4), y: (height / 1.7), radius: 50, mass: 8000},
+            { x: (width / 2), y: (height - 55), radius: 50, mass: 8000}
+        ],
+        allotedHeavenlyBodies: 3
     }
 ];
 
@@ -213,7 +366,7 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 15;
+let currentLevel = 27;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
