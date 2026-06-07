@@ -125,6 +125,85 @@ const gameLevels = [
             { x: (width - 300), y: (height / 1.7), radius: 40, mass: 9000}
         ],
         allotedHeavenlyBodies: 4
+    },
+
+    {
+        levelID: 11,
+        startPos: { x: -100, y: (height / 2)},
+        velocity: { x: 5, y: 0},
+        goalPos: { x: (width - 90), y: (height / 2)},
+        heavenlyPos: [
+            { x: (width / 4), y: (height / 2), radius: 60, mass: 20000},
+            { x: (width / 5.5), y: (height / 5), radius: 50, mass: 10000},
+            { x: (width / 1.2), y: (height / 6), radius: 45, mass: 8000},
+            { x: (width / 1.6), y: (height / 2), radius: 45, mass: 8000}
+        ],
+        allotedHeavenlyBodies: 3
+    },
+
+    {
+        levelID: 12,
+        startPos: { x: (width + 100), y: (height /2)},
+        velocity: { x: -7, y: 0},
+        goalPos: { x: 100, y: height - 350},
+        heavenlyPos: [
+            { x: (width / 1.5), y: (height / 6), radius: 60, mass: 15000},
+            { x: (width / 2), y: (height / 2.5), radius: 55, mass: 16000},
+            { x: (width / 4), y: (height / 1.3), radius: 50, mass: 9000},
+            { x: (width - 100), y: (height / 1.2), radius: 46, mass: 9000}
+            
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 13,
+        startPos: { x: (width + 100), y: (height + 100)},
+        velocity: {x: -5, y: -5},
+        goalPos: { x: (width / 2), y: (height / 1.3)},
+        heavenlyPos: [
+            { x: (width / 1.5), y: (height / 1.3), radius: 60, mass: 13000},
+            { x: (width / 1.3), y: (height / 3), radius: 50, mass: 10000},
+            { x: (width / 2.2), y: (height / 2.5), radius: 50, mass: 16000}
+            
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 14,
+        startPos: { x: -100, y: (height / 2)},
+        velocity: { x: 6, y: 0},
+        goalPos: { x: (width - 100), y: (height / 5)},
+        heavenlyPos: [
+            { x: (width / 10), y: (height / 2.5), radius: 60, mass: 15000}
+        ],
+        allotedHeavenlyBodies: 3
+    },
+
+    {
+        levelID: 15,
+        startPos: { x: (width / 2), y: -100},
+        velocity: { x: 0, y: 6.5},
+        goalPos: { x: (width / 10), y: (height / 1.2)},
+        heavenlyPos: [
+            { x: (width / 1.3), y: (height / 8), radius: 60, mass: 15000},
+            { x: (width / 2.3), y: (height / 2), radius: 50, mass: 10000}
+        ],
+        allotedHeavenlyBodies: 2
+    },
+
+    {
+        levelID: 16,
+        startPos: { x: -100, y: (height / 4)},
+        velocity: { x: 6, y: 1},
+        goalPos: { x: (width / 2), y: (height / 2)},
+        heavenlyPos: [
+            { x: (width / 3), y: (height / 2), radius: 60, mass: 15000},
+            { x: (width / 4), y: (height / 3.5), radius: 50, mass: 8000},
+            { x: (width / 2), y: (height / 1.4), radius: 50, mass: 8000}
+        ],
+        allotedHeavenlyBodies: 1
     }
 ];
 
@@ -134,7 +213,7 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 0;
+let currentLevel = 15;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
@@ -188,7 +267,7 @@ function loadPanel(e) {
 
 // Place
 function handlePlace(e) {
-    if (placeableHeavenlyBodies !== 0 && !launched) {
+    if (placeableHeavenlyBodies !== 0) {
         placePlanet(e.clientX, e.clientY, 8000);
     }
 
@@ -245,6 +324,7 @@ function initialize() {
     // 0 Gravity 
     engine.gravity.scale = 0;
 
+    // Load map
     loadLevel(currentLevel);
 }
 
@@ -258,6 +338,8 @@ function loadLevel(index) {
     // Allot the placeable bodies
     placeableHeavenlyBodies = levelData.allotedHeavenlyBodies;
     document.querySelector('.count').textContent = placeableHeavenlyBodies;
+
+    // Initialize level count
 
     // Comet 
     comet = Bodies.circle(levelData.startPos.x, levelData.startPos.y, 25, {
