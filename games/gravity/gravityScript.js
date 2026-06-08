@@ -363,22 +363,24 @@ const gameLevels = [
         levelID: 29,
         startPos: { x: -50, y: (height / 2)},
         velocity: { x: 6, y: -6},
-        goalPos: { x: (width - 100), y: (height / 10)},
+        goalPos: { x: (width - 100), y: (height / 1.2)},
         heavenlyPos: [
-            { x: (width / 2), y: (height / 2), radius: 100, mass: 150000}
+            { x: (width / 6), y: (height / 2), radius: 60, mass: 15000},
+            { x: (width / 2), y: (height / 9), radius: 60, mass: 10000},
+            { x: (width / 2), y: (height / 2), radius: 60, mass: 10000}
         ],
-        allotedHeavenlyBodies: 5
+        allotedHeavenlyBodies: 3
     },
 
     {
         levelID: 30,
         startPos: { x: -100, y: (height / 1.5)},
         velocity: { x: 8, y: -4},
-        goalPos: {},
+        goalPos: { x: (width - 100), y: 100},
         heavenlyPos: [
-            {}
+            { x: (width / 2), y: (height / 2), radius: 100, mass: 150000}
         ],
-        allotedHeavenlyBodies: NaN
+        allotedHeavenlyBodies: 7
     }
 ];
 
@@ -388,7 +390,7 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 29;
+let currentLevel = 0;
 
 // Const docs
 const dnf = document.querySelector('.dnf');
@@ -647,6 +649,6 @@ Events.on(engine, 'collisionStart', function(event) {
         }
     }
 });
- 
+
 // Function call
 initialize();
