@@ -15,7 +15,7 @@ const gameLevels = [
         heavenlyPos: [
             { x: width * 2, y: 300, radius: 60, mass: 15000}
         ],
-        allotedHeavenlyBodies: 2
+        allotedHeavenlyBodies: 0
     },
 
     {
@@ -38,7 +38,7 @@ const gameLevels = [
             { x: (width / 3), y: (height / 5), radius: 50, mass: 10000},
             { x: (width / 1.8), y: (height - 200), radius: 40, mass: 1000}
         ],
-        allotedHeavenlyBodies: 3
+        allotedHeavenlyBodies: 2
     },
 
     {
@@ -61,7 +61,7 @@ const gameLevels = [
             { x: ((width / 2 ) - 100), y: ((height / 2) - 50), radius: 50, mass: 10000},
             { x: ((width / 2) + 50), y: (height / 3), radius: 40, mass: 7000}
         ],
-        allotedHeavenlyBodies: 3
+        allotedHeavenlyBodies: 2
     },
 
     {
@@ -85,7 +85,7 @@ const gameLevels = [
             { x: (width / 2.3), y: ((height / 2) - 220), radius: 50, mass: 6000},
             { x: (width / 2.7), y: (height - 50), radius: 40, mass: 5000}
         ],
-        allotedHeavenlyBodies: 3
+        allotedHeavenlyBodies: 2
     },
 
     {
@@ -392,9 +392,10 @@ let placeableHeavenlyBodies = 0;
 
 let currentLevel = 0;
 
-// Const docs
+// Docs and audio
 const dnf = document.querySelector('.dnf');
 const lvlComplete = document.querySelector('.level-completed');
+const intrd = new Audio('../../assets/game/gravity/audio/gravity intro.mp3');
 
 // hide
 dnf.classList.add('hide');
@@ -434,6 +435,12 @@ Matter.Events.on(render, 'beforeRender', function() {
 });
 
 // ------ Game handler ------ //
+
+// Play audio on reload
+window.addEventListener('load', () => {
+    intrd.currentTime = 0;
+    intrd.play();
+});
 
 // Load info panel
 function loadPanel(e) {
@@ -562,7 +569,7 @@ function createHeavenlyBodies(x, y, radius, mass) {
         label: 'heavenlybody',
         isStatic: true,
         mass: mass,
-        shadowColor: "#c922225d",
+        shadowColor: "#c922225d", 
         plugin: {
             attractors: [
                 MatterAttractors.Attractors.gravity
@@ -601,10 +608,6 @@ function placePlanet(x, y, mass) {
     placeableHeavenlyBodies--;
     console.log(placeableHeavenlyBodies);
 }
-
-// ------ After Updates ------ //
-Events.on(engine, 'beforeUpdates', function(event) {
-});
 
 // ------ Collision check ------ //
 let handlingCollision = false;
