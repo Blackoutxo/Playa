@@ -39,7 +39,7 @@ body {
 
   z-index: 9999;
 
-  animation: disappear 6s ease-in-out forwards;
+  animation: disappear 8s ease-in-out forwards;
 }
 
 @keyframes disappear {
@@ -64,7 +64,7 @@ body {
 
   margin: 0;
 
-  animation: scaleUp 4s ease-in-out forwards;
+  animation: scaleUp 5s ease-in-out forwards;
 }
 
 .header {
@@ -80,7 +80,7 @@ body {
       2px 2px 0px #bbb,
       3px 3px 0px rgba(0,0,0,0.4);
 
-  animation: fadeInText 4s ease-in-out forwards;
+  animation: fadeInText 5s ease-in-out forwards;
 }
 
 @keyframes fadeInText {
@@ -105,7 +105,7 @@ body {
 
   margin: 0;
   
-  animation: rotateLeft 4s ease-in-out forwards;
+  animation: rotateLeft 5s ease-in-out forwards;
 }
 
 .orbit-2 {
@@ -118,7 +118,7 @@ body {
 
   margin: 0;
 
-  animation: rotateRight 4s ease-in-out forwards;
+  animation: rotateRight 5s ease-in-out forwards;
 }
 
 @keyframes scaleUp {
