@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 .comic-relief-regular {
   font-family: "Comic Relief", system-ui;
@@ -151,7 +152,7 @@ body {
   }
 }
 
-/* game Area*/
+/* ------ game Area ------ */
 #game-area {
   position: absolute;
   top: 0;
@@ -203,71 +204,39 @@ body {
   color: white;
 }
 
-/* Info panel*/
+/* ----- INFO PANEL ----- */
 .info-panel {
   position: absolute;
-  left: 39.5%;
-  top: 20%;
+  left: 0;
+  top: 0;
 
-  width: 23%;
-  height: 70%;
-  color:antiquewhite;
+  width: 20%;
+  height: 100%;
 
-  background-color: rgb(58, 60, 61);
-  box-shadow: 0.5vw 0.5vw 0 0 rgb(31, 126, 204);
-  outline: 0.3vw solid rgb(25, 161, 161);
-
-  transition: 0.5s ease-in-out;
+  background-color: rgb(20, 21, 31);
+  outline: 0.2vw solid rgb(34, 34, 34);
+  box-shadow: 0 0 2vw 0 rgb(71, 71, 201);
 }
 
-.info-panel.hide {
-  transform: translateY(-200%);
-}
+.enter-sct {
+  display: flex;
+  flex-direction: column;
 
-.panel-header {
   position: absolute;
-  left: 18%;
+  top: 0;
+  left: 0;
 
-  font-size: 3vw;
-  font-weight: 600;
+  width: 50%;
+  height: 20%;
+
+  color: white;
 }
 
-.enter {
-  position: absolute;
-  top: 15%;
-  left: 23%;
+.enter-img {
 
-  font-size: 1.2vw;
-  font-weight: 600;
 }
 
-.space {
-  position: absolute;
-  top: 25%;
-  left: 18%;
-
-  font-size: 1.2vw;
-  font-weight: 600;
-}
-
-.click {
-  position: absolute;
-  top: 35%;
-  left: 2%;
-
-  font-size: 1.2vw;
-  font-weight: 600;
-}
-
-.i {
-  position: absolute;
-  top: 47%;
-  left: 18%;
-
-  font-size: 1.2vw;
-  font-weight: 600;
-}
-
+/* Top-mid level bar */
 .level-bar {
   position: absolute;
   top: 2%;
@@ -287,6 +256,7 @@ body {
   outline: 0.1vw solid rgb(167, 161, 161);
 }
 
+/* DNF screen */
 .dnf {
   position: absolute;
   top: 45%;
@@ -308,6 +278,7 @@ body {
   z-index: -1; 
 }
 
+/* Level Completed screen */
 .level-completed {
   position: absolute;
   top: 40%;
