@@ -8,10 +8,13 @@
 
 
     <body>
+        <!---Game area canvas--->
         <canvas id="game-area"></canvas>
 
+        <!---Item count--->
         <div class="item-count"> <div class="planet"></div><span class="count">0</span></div>
 
+        <!---Loading screen--->
         <div class="loading-screen">
             <div class="header"> Gravity </div>
             <img class="heavenly-body" src="../../assets/game/gravity/image/heavenly-body.svg" />
@@ -19,6 +22,7 @@
             <img class="orbit-2" src="../../assets/game/gravity/image/orbit-2.svg" />
         </div>
 
+        <!---Info panel--->
         <div class="info-panel">
             <span class="panel-header"> Info Panel </span>
             <span class="enter">Enter • Restarts Game </span>
@@ -27,12 +31,15 @@
             <span class="i"> i • Opens/Closes this panel </span>
         </div>
 
+        <!---Level Island--->
         <div class="level-bar">Level: <span class="lvl-count-bar">1</span></div>
+        
+        <!---Game DNF / Level'd up screen (Css cuz its stylish)--->
         <div class="level-completed">Level: <span class="lvl-count">0</span></div>
         <div class="dnf">DNF!</div>
     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js"></script>
-        <script src="https://unpkg.com/matter-attractors@0.1.6/build/matter-attractors.min.js"></script>
-        <script src="gravityScript.js" defer></script>    
+        <script src="https://cdn.jsdelivr.net/npm/matter-attractors@0.1.6/build/matter-attractors.min.js"></script>
+        <script src="gravityScript.js" defer></script>
     </body>
 </html>
