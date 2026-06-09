@@ -15,19 +15,20 @@ let toggle = 0;
 settingsBar.classList.add('hidden');
 
 settingBtn.addEventListener('click', () => {
-    settingsBar.classList.add('hidden');
+    // Show side bar
+    settingsBar.classList.remove('hidden');
 
-    // Animation settings icon
-    settingBtn.classList.remove('clickedRev');
-    settingBtn.classList.add('clicked');
+    // Toggle increment
     toggle += 1;
 
-    if(toggle === 2) {
-        settingBtn.classList.remove('clicked');
+    // Condition
+    if (toggle === 1) {
+        settingBtn.classList.add('clicked');
+        if (settingBtn.classList.contains('clickedRev')) settingBtn.classList.remove('clickedRev');
+    } else if (toggle === 2) {
         settingBtn.classList.add('clickedRev');
-
-        settingsBar.classList.remove('hidden');
-
+        settingBtn.classList.remove('clicked');
+        settingsBar.classList.add('hidden');
         toggle = 0;
     }
 });
