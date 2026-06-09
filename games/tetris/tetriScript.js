@@ -582,14 +582,13 @@ function render() {
     ctx.fillRect(0, 0, Tetris.width, Tetris.height);
 
     // Gravity calculation
-    let divided = 300 - Math.floor(score / 10);
+    let fastCount = 0;
+
+    if (scoreUp && layersCleared >= previousLayersCleared) fastCount += 0.3;
+
+    let divided = (300 - fastCount) - Math.floor(score / 10);
 
     if (divided < 10) divided = 10;
-
-    if (scoreUp) {
-        if (layersCleared >= previousLayersCleared) divided -= 0.3;
-    }
-
 
     let sec = Math.floor(Date.now() / divided);
     if(sec !== lastSec && !gameOver) {
