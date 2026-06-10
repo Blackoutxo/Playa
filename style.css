@@ -516,3 +516,55 @@ body {
     text-transform: uppercase;
     font-weight: 600;
 }
+
+/* PI game */
+.PI-sequencing-game {
+    position: absolute;
+    top: 54%;
+    left: 7%;
+
+    width: 20%;
+    height: 40%;
+    border-radius: 0.4vw;
+
+    text-align: center;
+    text-decoration: none;
+
+    background-color: rgb(255, 255, 255, 0.15);
+    outline: 0.2vw solid var(--border-color);
+    box-shadow: 0.7vw 0.7vw 0px 0px var(--border-color);
+
+    transition: 0.2s ease-in-out;
+}
+
+.PI-sequencing-game:hover {
+    transform: translate(0.2vw, 0.2vw);
+    box-shadow: 0.5vw 0.5vw 0px 0px var(--border-color);
+}
+
+.PI-sequencing-game:active {
+    transform: translate(0.7vw, 0.7vw);
+    box-shadow: none;
+}
+
+.PI-img {
+    width: 100%;
+    height: 85%;
+
+    color: black;
+    font-size: 8vw;
+}
+
+.PI-title {
+    position: absolute;
+    top: 76%;
+    left: 40%;
+
+    font-family: "Comic Relief";
+
+    color: black;
+
+    font-size: 2.5vw;
+    text-transform: uppercase;
+    font-weight: 600;
+}
