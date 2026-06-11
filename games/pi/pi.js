@@ -11,7 +11,7 @@ let hearts = 3;
 // Documents
 const visible = document.querySelector('.eye');
 const restartbtn = document.querySelector('.cross');
-const sequence = document.querySelector('.sequence-after');
+const sequence = document.querySelector('.sequence-before');
 const clue = document.querySelector('.clue-text');
 const retry = document.querySelector('.display-bg');
 
