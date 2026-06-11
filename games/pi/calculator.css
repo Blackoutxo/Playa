@@ -67,7 +67,7 @@ body {
     font-family: "Inconsolata";
     font-size: 20vw;
 
-    animation: animateText 5s ease-in-out forwards;
+    animation: animateText 4s ease-in-out forwards;
 }
 
 @keyframes animateText {

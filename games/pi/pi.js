@@ -23,7 +23,7 @@ sequence.textContent = "3.14";
 // Remove screen
 setTimeout(() => {
     loadingScreen.classList.toggle('disappear');
-}, 6500);
+}, 4000);
 
 // Sequencing
 function numpad() {
