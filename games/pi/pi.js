@@ -8,7 +8,13 @@ let numpadInput = NaN;
 let visibility = false;
 let hearts = 3;
 
+let score = 0;
+let highScore = 0;
+
 // Documents
+const cScore = document.querySelector('.current-score');
+const hScore = document.querySelector('.high-score');
+
 const loadingScreen = document.querySelector('.loading-screen');
 const sqnceShake = document.querySelector('.sequence');
 const visible = document.querySelector('.eye');
@@ -37,12 +43,14 @@ function numpad() {
 
             if (numpadInput === pi[index]) {
                 number += numpadInput.toString();
+                score++;
                 index++;
             } else if (numpadInput !== 'X' && numpadInput !== 'visibility') {
                 hearts--;
             }
 
             heart();
+            displayScore();
 
             showClue(index);
             sequence.textContent = "3.14" + number;
@@ -62,11 +70,13 @@ window.addEventListener('keydown',
     function handleNumAccept(e) {
         if (e.key === pi[index]) {
             number += e.key;
+            score++;
             index++;
         } else {
             hearts--;
         }
         
+        displayScore();
         heart();
 
         showClue(index);
@@ -124,6 +134,12 @@ function heart() {
     } 
 }
 
+// Show score
+function displayScore() {
+    cScore.textContent = score;
+    hScore.textContent = highScore;
+}
+
 // Restart Button
 function restartButton() {
     // Toggle on
@@ -140,9 +156,14 @@ function restartButton() {
 
 // Restart
 function restart() {
+    highScore = score > highScore ? score : highScore;
+    score = 0;
+    displayScore();
+
     hearts = 3;
     index = 0;
     number = "";
+
     sequence.textContent = "3.14";
     clue.textContent = "";
     showClue(index);

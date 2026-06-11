@@ -195,6 +195,21 @@ body {
     }
 }
 
+/* SCORE */
+.score {
+    position: absolute;
+    right: 3%;
+    bottom: 1%;
+
+    width: 40%;
+    height: 20%;
+
+    font-size: 1.6vw;
+    font-weight: 800;
+    text-align: right;
+    text-shadow: 0.15vw 0.15vw rgba(0, 0, 0, 0.219);
+}
+
 /* Sequence */
 .sequence {
     position: absolute;
