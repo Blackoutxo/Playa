@@ -9,6 +9,7 @@ let visibility = false;
 let hearts = 3;
 
 // Documents
+const sqnceShake = document.querySelector('.sequence');
 const visible = document.querySelector('.eye');
 const restartbtn = document.querySelector('.cross');
 const sequence = document.querySelector('.sequence-before');
@@ -51,8 +52,9 @@ window.addEventListener('keydown',
         if (e.key === pi[index]) {
             number += e.key;
             index++;
-        } else 
+        } else {
             hearts--;
+        }
         
         heart();
 
@@ -83,11 +85,31 @@ const heart_2 = document.querySelector('.heart-2');
 const heart_3 = document.querySelector('.heart-3');;
 
 function heart() {
-    if (hearts === 2) heart_1.classList.add('down');
-    if (hearts === 1) heart_2.classList.add('down');
+    if (hearts === 2) {
+        sqnceShake.classList.toggle('shake');
+        heart_1.classList.add('down');
+        setTimeout(() => {
+            sqnceShake.classList.toggle('shake');
+        }, 210);
+    }
+
+    if (hearts === 1) {
+        heart_2.classList.add('down');
+        sqnceShake.classList.toggle('shake');
+
+        setTimeout(() => {
+            sqnceShake.classList.toggle('shake');
+        }, 210);
+    }
+
     if (hearts === 0) {
+        sqnceShake.classList.toggle('shake');
         heart_3.classList.add('down');
         restart();
+
+        setTimeout(() => {
+            sqnceShake.classList.toggle('shake');
+        }, 210);
     } 
 }
 

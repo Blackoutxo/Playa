@@ -153,6 +153,25 @@ body {
     font-weight: 600;
 }
 
+.sequence.shake {
+    animation: shake 0.2s ease-in-out;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(0px, 0px);
+    }
+    25% {
+        transform: translate(-5px, 5px);
+    }
+    50% {
+        transform: translate(-7px, 0px);
+    }
+    100% {
+        transform: translate(0px, 0px);
+    }
+}
+
 .sequence-before {
     position: absolute;
     right: 50%;
