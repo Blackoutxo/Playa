@@ -45,6 +45,7 @@ body {
 
 .loading-screen.disappear {
     opacity: 0;
+    z-index: -1;
 }
 
 .pi-text {
@@ -97,8 +98,8 @@ body {
     height: 80%;
 
     background-color: rgb(77, 77, 77);
-    box-shadow: 10px 10px 0 0 rgba(0, 0, 0, 0.397);
-    border-radius: 10px;
+    box-shadow: 0.7vw 0.7vw 0 0 rgba(0, 0, 0, 0.397);
+    border-radius: 1vw;
 }
 
 /* DISPLAY */
@@ -109,8 +110,8 @@ body {
     top: 3%;
     left: 3%;
 
-    border-radius: 10px;
-    border: 1px solid rgba(73, 189, 73, 0.199);
+    border-radius: 0.7vw;
+    border: 0.1vw solid rgba(73, 189, 73, 0.199);
 
     overflow: hidden;
 
@@ -131,7 +132,6 @@ body {
 
     font-size: 2vw;
     font-weight: 600;
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.247);
     text-align: center;
 
     margin: 0;
@@ -158,7 +158,7 @@ body {
     flex-direction: row;
 
     font-size: 2vw;
-    gap: 6px;
+    gap: 1%;
 }
 
 .heart-1, .heart-2, .heart-3 {
@@ -185,7 +185,7 @@ body {
     }
     100% {
         transform: scale(1);
-        text-shadow: 2px 2px rgba(0, 0, 0, 0.219);
+        text-shadow: 0.2vw 0.2vw rgba(0, 0, 0, 0.219);
 
         font-variation-settings:
         'FILL' 0,
@@ -205,7 +205,7 @@ body {
     height: 100%;
     overflow: visible;
     
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.219);
+    text-shadow: 0.2vw 0.2vw rgba(0, 0, 0, 0.219);
     font-size: 2vw;
     font-weight: 600;
 }
@@ -219,10 +219,10 @@ body {
         transform: translate(0px, 0px);
     }
     25% {
-        transform: translate(-5px, 5px);
+        transform: translate(-0.5vw, 0.5vw);
     }
     50% {
-        transform: translate(-7px, 0px);
+        transform: translate(-0.7vw, 0px);
     }
     100% {
         transform: translate(0px, 0px);
@@ -288,17 +288,17 @@ body {
     font-weight: 800;
 
     display: grid;
-    grid-template-rows: 70px 70px 70px;
-    grid-template-columns: 96px 96px 96px;
-    gap: 1rem;
+    grid-template-rows: 22% 22% 22%;
+    grid-template-columns: 28% 28% 28%;
+    gap: 1.2vw;
 }
 
 .num-0, .num-1, .num-2, .num-3, .num-4, .num-5, .num-6, .num-7, .num-8, .num-9 {
     background-color: rgb(138, 138, 138);
 
-    padding: 23px 43px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.397);
+    padding: 24% 45%;
+    border-radius: 0.5vw;
+    box-shadow: 0.5vw 0.5vw 0 0 rgba(0, 0, 0, 0.397);
 
     transition: 0.2s ease-in-out;
 }
@@ -312,30 +312,30 @@ body {
         transform: translate(0px, 0px);
     }
     50% {
-        transform: translate(5px, 5px);
+        transform: translate(0.5vw, 0.5vw);
         box-shadow: none;
     }
     100% {
         transform: (0px, 0px);
-        box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.397);
+        box-shadow: 0.5vw 0.5vw 0 0 rgba(0, 0, 0, 0.397);
     }
 }
 
 .cross {
     background-color: rgb(218, 60, 60);
-    padding: 23px 43px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.397);
+    padding: 24% 45%;
+    border-radius: 0.5vw;
+    box-shadow: 0.5vw 0.5vw 0 0 rgba(0, 0, 0, 0.397);
 
     color: transparent;
-    -webkit-text-stroke: 1px;
+    -webkit-text-stroke: 0.1vw;
     -webkit-text-stroke-color: black;
 
     transition: 0.2s ease-in-out;
 }
 
 .cross.clicked {
-    transform: translate(5px, 5px);
+    transform: translate(0.5vw, 0.5vw);
     box-shadow: none;
     
     animation: fillIN 0.5s ease-in-out;
@@ -357,11 +357,17 @@ body {
 
 .eye {
     background-color: rgb(245, 231, 35);
-    padding: 25px 40px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.397);
+    padding: 24% 41%;
+    border-radius: 0.5vw;
+    box-shadow: 0.5vw 0.5vw 0 0 rgba(0, 0, 0, 0.397);
 
     transition: 0.2s ease-in-out;
+
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 100
 }
 
 .material-symbols-outlined.eye.anim {

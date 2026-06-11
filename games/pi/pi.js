@@ -31,7 +31,8 @@ function numpad() {
 
     nums.forEach(num => {
         num.addEventListener('click', (e) => {
-            num.classList.toggle('clicked');
+            num.classList.add('clicked');
+
             numpadInput = num.textContent;
 
             if (numpadInput === pi[index]) {
@@ -45,6 +46,10 @@ function numpad() {
 
             showClue(index);
             sequence.textContent = "3.14" + number;
+        
+            setTimeout(() => {
+                num.classList.remove('clicked');
+            }, 300);
         });
     });
 }
