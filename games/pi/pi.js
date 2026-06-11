@@ -9,6 +9,7 @@ let visibility = false;
 let hearts = 3;
 
 // Documents
+const loadingScreen = document.querySelector('.loading-screen');
 const sqnceShake = document.querySelector('.sequence');
 const visible = document.querySelector('.eye');
 const restartbtn = document.querySelector('.cross');
@@ -18,6 +19,11 @@ const retry = document.querySelector('.display-bg');
 
 // Add initial text contents
 sequence.textContent = "3.14";
+
+// Remove screen
+setTimeout(() => {
+    loadingScreen.classList.toggle('disappear');
+}, 6500);
 
 // Sequencing
 function numpad() {
