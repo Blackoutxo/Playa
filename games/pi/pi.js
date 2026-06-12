@@ -109,28 +109,17 @@ function heart() {
     if (hearts === 2) {
         sqnceShake.classList.add('shake');
         heart_1.classList.add('down');
-        setTimeout(() => {
-            sqnceShake.classList.remove('shake');
-        }, 210);
     }
 
     if (hearts === 1) {
         heart_2.classList.add('down');
         sqnceShake.classList.add('shake');
-
-        setTimeout(() => {
-            sqnceShake.classList.remove('shake');
-        }, 210);
     }
 
     if (hearts === 0) {
         sqnceShake.classList.add('shake');
         heart_3.classList.add('down');
         restart();
-
-        setTimeout(() => {
-            sqnceShake.classList.remove('shake');
-        }, 210);
     } 
 }
 
