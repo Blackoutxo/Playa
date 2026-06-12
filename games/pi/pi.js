@@ -6,7 +6,7 @@ let index = 0;
 let numpadInput = NaN;
 
 let visibility = false;
-let hearts = 3;
+let hearts = 4;
 
 let score = 0;
 let highScore = 0;
@@ -46,6 +46,7 @@ function numpad() {
                 score++;
                 index++;
             } else if (numpadInput !== 'X' && numpadInput !== 'visibility') {
+                shake();
                 hearts--;
             }
 
@@ -73,6 +74,7 @@ window.addEventListener('keydown',
             score++;
             index++;
         } else {
+            shake();
             hearts--;
         }
         
@@ -105,22 +107,28 @@ const heart_1 = document.querySelector('.heart-1');
 const heart_2 = document.querySelector('.heart-2');
 const heart_3 = document.querySelector('.heart-3');;
 
+let played = false;
+
 function heart() {
-    if (hearts === 2) {
-        sqnceShake.classList.add('shake');
-        heart_1.classList.add('down');
-    }
+    if (hearts === 3) heart_1.classList.add('down');
+    if (hearts === 2) heart_2.classList.add('down');    
+    if (hearts === 1) heart_3.classList.add('down');
+    if (hearts === 0) restart();
+}
 
-    if (hearts === 1) {
-        heart_2.classList.add('down');
-        sqnceShake.classList.add('shake');
-    }
-
-    if (hearts === 0) {
-        sqnceShake.classList.add('shake');
-        heart_3.classList.add('down');
-        restart();
-    } 
+// Animate shake
+function shake() {
+    sequence.animate(
+        [
+            { transform: "translateX(0)    translateY(0)"    },
+            { transform: "translateX(0.8vw)  translateY(0)"    },
+            { transform: "translateX(-0.8vw) translateY(0.8vw)"  },
+            { transform: "translateX(0.4vw)  translateY(-0.4vw)" },
+            { transform: "translateX(0)    translateY(-0.8vw)" },
+        ], { 
+            duration: 100
+        }
+    );
 }
 
 // Show score
@@ -149,7 +157,7 @@ function restart() {
     score = 0;
     displayScore();
 
-    hearts = 3;
+    hearts = 4;
     index = 0;
     number = "";
 
