@@ -221,37 +221,37 @@ body {
     overflow: visible;
     
     text-shadow: 0.2vw 0.2vw rgba(0, 0, 0, 0.219);
-    font-size: 2vw;
+    font-size: 3vw;
     font-weight: 600;
 }
 
 .sequence-before {
     position: absolute;
     right: 50%;
-    top: 40%;
+    top: 35%;
 
     white-space: nowrap;
     direction: rtl; 
 
     text-align: left;
-    font-size: 2vw;
+    font-size: 3vw;
     font-weight: 600;
 }
 
 .blink-cursor {
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 35%;
 
-    width: 7%;
-    height: 28%;
+    width: 9%;
+    height: 40%;
 
     text-align: center;
 
     background-color: rgba(8, 8, 8, 0.651);
 
     transition: 0.2s ease-in-out;
-    animation: blink 0.7s ease-in-out infinite;
+    animation: blink 1s ease-in-out infinite;
 }
 
 .clue-text {
