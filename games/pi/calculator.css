@@ -157,7 +157,6 @@ body {
     display: flex;
     flex-direction: row;
 
-    font-size: 2vw;
     gap: 1%;
 }
 
@@ -168,7 +167,7 @@ body {
     'FILL' 1,
     'wght' 400,
     'GRAD' 0,
-    'opsz' 40
+    'opsz' 80
 }
 
 .heart-1.down, .heart-2.down, .heart-3.down {
