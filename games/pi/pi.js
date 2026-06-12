@@ -12,10 +12,14 @@ let score = 0;
 let highScore = 0;
 
 // Documents
+const calculator = document.querySelector('.calculator');
+const display = document.querySelector('.display');
+const numPad = document.querySelector('.num-pad');
 const cScore = document.querySelector('.current-score');
 const hScore = document.querySelector('.high-score');
 
 const loadingScreen = document.querySelector('.loading-screen');
+
 const sqnceShake = document.querySelector('.sequence');
 const visible = document.querySelector('.eye');
 const restartbtn = document.querySelector('.cross');
@@ -28,6 +32,9 @@ sequence.textContent = "3.14";
 
 // Remove screen
 setTimeout(() => {
+    calculatorShowUp();
+    showDisplay();
+
     loadingScreen.classList.toggle('disappear');
 }, 4000);
 
@@ -182,6 +189,45 @@ function restart() {
 function showClue(indx) {
     if (visibility) clue.textContent = pi[index];
     else clue.textContent = "";
+}
+
+// Animations
+function calculatorShowUp() {
+    calculator.animate(
+        [
+            { width: '1%', height: '1%' },
+            { width: '25%', height: '1%'},
+            { width: '25%', height: '80%'},
+        ] , {
+            duration: 2000
+        }
+    );
+}
+
+function showDisplay() {
+    display.animate(
+        [
+            { opacity: 0},
+            { opacity: 0},
+            { opacity: 0},
+            { opacity: 0},
+            { opacity: 1}
+        ], {
+            duration: 3000
+        }
+    );
+
+    numPad.animate(
+        [
+            { opacity: 0},
+            { opacity: 0},
+            { opacity: 0},
+            { opacity: 0},
+            { opacity: 1}
+        ], {
+            duration: 3000
+        }
+    );
 }
 
 // Functions
