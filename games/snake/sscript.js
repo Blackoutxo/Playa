@@ -6,6 +6,11 @@ const header = document.querySelector('.header');
 const loaded = new Audio('../../assets/game/snake/audio/arcade sound.mp3');
 const bleep = new Audio('../../assets/game/snake/audio/arcade bleep.mp3');
 
+const theme = localStorage.getItem('theme');
+if (theme === '1') {
+    document.documentElement.classList.add('dark');
+}
+
 header.classList.add('hide');
 
 lines.forEach((line) => {

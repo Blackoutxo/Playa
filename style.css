@@ -90,9 +90,9 @@ body {
 
     padding: 15px 10px;
 
-    background-color: var(--accent-color);
-    outline: 0.3vw solid var(--border-color);
-    box-shadow: 0.9vw 0.9vw 0px 0px var(--border-color);
+    background-color: rgb(32, 128, 192);
+    outline: 0.3vw solid rgb(0, 0, 0);
+    box-shadow: 0.9vw 0.9vw 0px 0px rgb(0, 0, 0);
 
     animation: bounce 1s ease-in-out infinite;
 
@@ -121,8 +121,8 @@ body {
     height: 4%;
 
     background-color: white;
-    outline: 0.3vw solid var(--border-color);
-    box-shadow: 0.7vw 0.7vw 0px 0px var(--border-color);
+    outline: 0.3vw solid rgb(0, 0, 0);
+    box-shadow: 0.7vw 0.7vw 0px 0px rgb(0, 0, 0);
 
     z-index: 9999;
 }

@@ -38,9 +38,20 @@ const toggleTrack = document.querySelector('.toggle-button');
 const toggleknob = document.querySelector('.toggleable-button');
 let toggleTheme = 0;
 
-toggleTrack.addEventListener('click', () => {
-    console.log('clicked toggle button');
+const storedTheme = localStorage.getItem('theme');
+if (storedTheme === '1') {
+    toggleTheme = 1;
+    document.documentElement.classList.add('dark');
+    toggleknob.classList.add('clicked');
+} else {
+    toggleTheme = 0;
+    document.documentElement.classList.remove('dark');
+    toggleknob.classList.remove('clicked');
+}
 
+updateIcon();
+
+toggleTrack.addEventListener('click', () => {
     if (toggleTheme === 0) {
         toggleknob.classList.add('clicked');
         document.documentElement.classList.add('dark');
@@ -51,6 +62,7 @@ toggleTrack.addEventListener('click', () => {
         toggleTheme = 0;
     }
 
+    localStorage.setItem('theme', toggleTheme ? '1' : '0');
     updateIcon();
 });
 

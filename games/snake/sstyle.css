@@ -1,16 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
-.comic-relief-regular {
-  font-family: "Comic Relief", system-ui;
+/* IMPL font */
+.space-grotesk {
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
+:root {
+    --bg-color: rgb(236, 236, 236);
+    --text-color: rgb(0, 0, 0);
+
+    --outline-accent: rgb(32, 128, 192);
+    --shadow: rgb(0, 0, 0);
+
+
+}
+
+:root.dark {
+    --bg-color: rgb(0, 0, 0);
+    --text-color: rgb(255, 255, 255);
+
+    --outline-accent: rgb(32, 128, 192);
+    --shadow: rgb(4, 80, 131);
+}
+
 body {
-    background-color: rgb(90, 87, 87);
+    background-color: var(--bg-color);
     overflow: hidden;
 
-    font-family: "Comic Relief";
+    font-family: "Space Grotesk";
 }
 
 /* loading screen */
@@ -24,7 +44,7 @@ body {
     width: 100%;
     height: 100%;
 
-    background-color: rgb(31, 29, 29);
+    background-color: var(--bg-color);
 
     z-index: 9999;
 }
@@ -50,7 +70,8 @@ body {
     left: 40%;
 
     font-size: 5vw;
-    color: rgb(255, 255, 255);
+    font-weight: 800;
+    color: var(--text-color);
 
     transition: 0.2s ease-in-out;
 
@@ -85,7 +106,7 @@ body {
     
     font-size: 5vw;
 
-    color: white;
+    color: var(--text-color);
     text-shadow: 0.4vw 0.4vw 0 rgb(255, 104, 104);
 
     transision: 0.2s ease-in-out;
@@ -104,8 +125,8 @@ body {
     width: 51%;
     height: 2%;
 
-    background-color: greenyellow;
-    box-shadow: 0.7vw 0.7vw 0 0 rgb(255, 255, 255);
+    background-color: var(--outline-accent);
+    box-shadow: 0.7vw 0.7vw 0 0 var(--shadow);
 
     transform-origin: right;
     
@@ -135,8 +156,8 @@ body {
     width: 1.5%;
     height: 60%;
 
-    background-color: greenyellow;
-    box-shadow: 0.7vw 0.9vw 0 0 rgb(255, 255, 255);
+    background-color: var(--outline-accent);
+    box-shadow: 0.7vw 0.9vw 0 0 var(--shadow);
 
     transform-origin: bottom;
     
@@ -168,8 +189,8 @@ body {
     width: 50%;
     height: 2%;
 
-    background-color: greenyellow;
-    box-shadow: 0.7vw 0.7vw 0 0 rgb(255, 255, 255);
+    background-color: var(--outline-accent);
+    box-shadow: 0.7vw 0.7vw 0 0 var(--shadow);
 
     transform-origin: left;
     
@@ -201,8 +222,8 @@ body {
     width: 1.5%;
     height: 62%;
 
-    background-color: greenyellow;
-    box-shadow: 0.7vw 0.7vw 0 0 rgb(255, 255, 255);
+    background-color: var(--outline-accent);
+    box-shadow: 0.7vw 0.7vw 0 0 var(--shadow);
 
     transform-origin: top;
     
@@ -242,7 +263,7 @@ body {
 
     font-size: 3.6vw;
 
-    text-shadow: 0.2vw 0.2vw 0 rgb(255, 255, 255, 0.2);
+    text-shadow: 0.2vw 0.2vw 0 rgba(0, 0, 0, 0.2);
 }
 
 .snake-board {
@@ -254,8 +275,8 @@ body {
     height: 70%;
 
     background-color: transparent;
-    outline: 1vw solid rgb(103, 114, 101);
-    box-shadow: 1.5vw 1.5vw 0px 0px rgb(255, 255, 255);
+    outline: 1vw solid var(--outline-accent);
+    box-shadow: 1.5vw 1.5vw 0px 0px var(--shadow);
 }
 
 .board-canvas {
