@@ -9,7 +9,63 @@
 }
 
 body {
+    font-family: "Space Grotesk";
+
     margin: 0;
 
-    background-color: aliceblue;
+    overflow: hidden;
+
+    background-image: url("../../assets/game/flappybird/image/Flappy_bg.png");
+    background-size: contain;
+    background-attachment: fixed;
+}
+
+/* First screen */
+.first-screen {
+    opacity: 1;
+
+    transition: 1s ease-in-out;
+}
+
+.first-screen.hide {
+    opacity: 0;
+}
+
+/* Button */
+.start-button {
+    position: absolute;
+    left: 47%;
+    top: 50%;
+
+    cursor: pointer;
+
+    font-size: 2.5vw;
+    font-weight: 600;
+    color: transparent;
+    letter-spacing: 0.1vw;
+
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 0.05vw;
+
+    padding: 0 1vw;
+    background-color: rgb(126, 126, 241);
+    outline: 0.25vw solid black;
+    box-shadow: 0 0.7vw 0 0 black;
+
+    transition: 0.2s ease-in-out;
+}
+
+.start-button:active {
+    color: rgb(0, 0, 0);
+    transform: translate(0, 0.7vw);
+    box-shadow: none;
+}
+
+.text-header {
+    position: absolute;
+    top: 20%;
+    left: 27%;
+
+    font-size: 8vw;
+    font-weight: 800;
 }
