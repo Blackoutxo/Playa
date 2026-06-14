@@ -11,16 +11,16 @@ const levels = [
     {
         levelID: "1",
         objectFPos: [
-            {x: (WIDTH / 2), y: (HEIGHT / 2), width: 40, height: 10, angle: 180},
+            {x: (WIDTH / 2), y: (HEIGHT / 2), width: (WIDTH / 2), height: 10, angle: 180},
             {x: (WIDTH / 2), y: (HEIGHT / 5), width: 40, height: 10, angle: 180}
         ],
 
         objectCPos: [
-            {x: 0, y: 0, radius: 0},
+            {x: 0, y: 0, radius: 2},
         ],
 
         objectTPos: [
-            {x: 0, y: 0, radius: 0, sides: 3}
+            {x: 0, y: 0, radius: 2, sides: 3}
         ],
 
         obstaclePos: [
@@ -81,7 +81,8 @@ window.addEventListener('mouseup', (e) => {
 // Initialize
 function initialize() {
     // No gravity area
-    engine.gravity.scale = 0;
+    engine.gravity.x = 0;
+    engine.gravity.y = 0;
 
     loadLevel(currentLevel);
 }
@@ -100,21 +101,25 @@ function loadLevel(levelIndex) {
 function loadObjectT(levelInfo) {
     
     // Rectangle
-    levelInfo.objectTPos.forEach(object => {
+    levelInfo.objectFPos.forEach(object => {
         Composite.add(engine.world, Bodies.rectangle(object.x, object.y, object.width, object.height, {
-            restitution: 0.8,
-            angle: object.angle,
+            angle: object.angle * (Math.PI / 180),
+            friction: 0,
+            frictionAir: 0,
+            restitution: 1,
             isStatic: true,
             render: {
                 fillStyle: "#ffffff"
-            }
+            },
         }));    
-    })
+    });
 
     // Circle
     levelInfo.objectCPos.forEach(object => {
         Composite.add(engine.world, Bodies.circle(object.x, object.y, object.radius, {
-            restitution: 0.8,
+            restitution: 1,
+            friction: 0,
+            frictionAir: 0,
             isStatic: true,
             render: {
                 fillStyle: "#ffffff"
@@ -125,21 +130,23 @@ function loadObjectT(levelInfo) {
     // Triangle
     levelInfo.objectTPos.forEach(object => {
         Composite.add(engine.world, Bodies.polygon(object.x, object.y,  {
-            restitution: 0.8,
-            angle: object.angle,
+            angle: object.angle * (Math.PI / 180),
             isStatic: true,
+            friction: 0,
+            frictionAir: 0,
+            restitution: 1,
             render: {
                 fillStyle: "#ffffff"
-            }
+            },
         })); 
     });
 }
 
 // Handle placing & directional velocity
 function place(e) {
-    ball = Bodies.circle(e.clientX, e.clientY, 20, {
+    ball = Bodies.circle(e.clientX, e.clientY, 10, {
         isStatic: true,
-        mass: 0,
+        mass: 80,
         friction: 0,
         frictionAir: 0,
         render: {
@@ -147,12 +154,14 @@ function place(e) {
         }
     });
 
+    ball.restitution = 1;
+
     Composite.add(engine.world, ball);
 }
 
 function handleVelocity(e) {
     const angle = Math.atan2(e.clientY - ball.position.y, e.clientX - ball.position.x);
-    const speed = 15;
+    const speed = 8;
 
     Body.setVelocity(ball, {
         x: Math.cos(angle) * speed,
