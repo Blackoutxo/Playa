@@ -42,6 +42,11 @@ setTimeout(() => {
     loadingScreen.classList.toggle('disappear');
 }, 4000);
 
+// ------ Continuous Run ------ //
+setInterval(() => {
+    highScore = score >= highScore ? score : highScore;
+}, 100);
+
 // ------ Sequencing ------ //
 function numpad() {
     const nums = document.querySelectorAll('.num-0, .num-1, .num-2, .num-3, .num-4, .num-5, .num-6, .num-7, .num-8, .num-9');
@@ -145,6 +150,7 @@ function shake() {
 // ------ Show score ------ //
 function displayScore() {
     cScore.textContent = score;
+    highScore = score >= highScore ? score : highScore;
     hScore.textContent = highScore;
 }
 
@@ -158,7 +164,7 @@ function loadTheme() {
 
 // ------ Restart ------ //
 function restart() {
-    highScore = score > highScore ? score : highScore;
+    highScore = score >= highScore ? score : highScore;
     localStorage.setItem("HighScore", highScore);
 
     score = 0;
