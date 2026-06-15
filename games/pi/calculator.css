@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
+:root {
+    --bg-color: rgb(255, 255, 255);
+    --txt-color: rgb(0, 0, 0);
+}
+
+:root.dark {
+    --bg-color: rgb(0, 0, 0);
+    --txt-color: rgb(255, 255, 255);
+}
+
 /* Font */
 .space-grotesk {
   font-family: "Space Grotesk", sans-serif;
@@ -15,7 +25,7 @@ body {
     margin: 0;
     overflow: hidden;
 
-    background-color: rgb(56, 56, 56);
+    background-color: rgb(54, 54, 54);
 }
 
 /* Google icon impl */
@@ -36,7 +46,7 @@ body {
     width: 100%;
     height: 100%;
 
-    background-color: rgb(252, 247, 247);
+    background-color: var(--bg-color);
 
     z-index: 9999;
 
@@ -56,10 +66,10 @@ body {
     width: 20vw;
     height: 20vw;
 
-    stroke: black;
-    fill: black;
+    stroke: var(--txt-color);
+    fill: var(--txt-color);
 
-    stroke-width: 0.3vw;
+    stroke-width: 0.2vw;
     stroke-dasharray: 6000;
     stroke-dashoffset: 6000;
     color: transparent;

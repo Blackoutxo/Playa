@@ -9,7 +9,7 @@ let visibility = false;
 let hearts = 4;
 
 let score = 0;
-let highScore = 0;
+let highScore = Number(localStorage.getItem("HighScore"));
 
 // Documents
 const calculator = document.querySelector('.calculator');
@@ -30,15 +30,19 @@ const retry = document.querySelector('.display-bg');
 // Add initial text contents
 sequence.textContent = "3.14";
 
+// Load theme
+loadTheme();
+
 // Remove screen
 setTimeout(() => {
     calculatorShowUp();
     showDisplay();
+    displayScore();
 
     loadingScreen.classList.toggle('disappear');
 }, 4000);
 
-// Sequencing
+// ------ Sequencing ------ //
 function numpad() {
     const nums = document.querySelectorAll('.num-0, .num-1, .num-2, .num-3, .num-4, .num-5, .num-6, .num-7, .num-8, .num-9');
 
@@ -73,7 +77,7 @@ function numpad() {
 // Click handler
 numpad();
 
-// Keyboard input listner
+// ------ input listner ------ //
 window.addEventListener('keydown', 
     function handleNumAccept(e) {
         if (e.key === pi[index]) {
@@ -93,7 +97,7 @@ window.addEventListener('keydown',
     }
 );
 
-// visibility animation
+// ------ visibility animation ------ //
 visible.addEventListener('click', () => {
     visible.classList.toggle('clicked');
     visible.classList.toggle('anim');
@@ -123,7 +127,7 @@ function heart() {
     if (hearts === 0) restart();
 }
 
-// Animate shake
+// ------ Shake animation ------ //
 function shake() {
     sequence.animate(
         [
@@ -138,29 +142,25 @@ function shake() {
     );
 }
 
-// Show score
+// ------ Show score ------ //
 function displayScore() {
     cScore.textContent = score;
     hScore.textContent = highScore;
 }
 
-// Restart Button
-function restartButton() {
-    // Toggle on
-    restartbtn.addEventListener('click', () => {
-        restartbtn.classList.toggle('clicked');
-        restart();
-    });
+// ------ Theme ------//
+function loadTheme() {
+    const theme = localStorage.getItem('theme');
 
-    // Toggle off on animation end
-    restartbtn.addEventListener('animationend', () => {
-        restartbtn.classList.toggle('clicked');
-    });
+    if (theme === "1") document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
 }
 
-// Restart
+// ------ Restart ------ //
 function restart() {
     highScore = score > highScore ? score : highScore;
+    localStorage.setItem("HighScore", highScore);
+
     score = 0;
     displayScore();
 
@@ -185,13 +185,26 @@ function restart() {
     heart_3.classList.remove('down');
 }
 
-// Show clue
+function restartButton() {
+    // Toggle on
+    restartbtn.addEventListener('click', () => {
+        restartbtn.classList.toggle('clicked');
+        restart();
+    });
+
+    // Toggle off on animation end
+    restartbtn.addEventListener('animationend', () => {
+        restartbtn.classList.toggle('clicked');
+    });
+}
+
+// ------ Show clue ------ //
 function showClue(indx) {
     if (visibility) clue.textContent = pi[index];
     else clue.textContent = "";
 }
 
-// Animations
+// ------ Initial Animations ------ //
 function calculatorShowUp() {
     calculator.animate(
         [
