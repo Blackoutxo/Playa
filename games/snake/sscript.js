@@ -87,6 +87,7 @@ let isFirstGame = false;
 let gameOver = true;
 
 let score = 0;
+let highScore = Number(localStorage.getItem("Snake_HS"));
 let appleX, appleY;
 let lastSec = 0;
 let direction = "Up";
@@ -115,6 +116,8 @@ function startGame() {
 // End the game
 function GameOver() {
     if (!gameOver) {
+        highScore = score > highScore ? score : highScore;
+        score = 0;
         gameOver = true;
         isFirstGame = false;
         bodyX = [];
@@ -124,6 +127,7 @@ function GameOver() {
         appleX = 0;
         appleY = 0;
         over.play();
+        localStorage.setItem("Snake_HS", highScore);
     }
 }
 
@@ -193,6 +197,8 @@ setInterval(() => {
         if (snakeX === appleX && snakeY === appleY) {
             eat.play();
             snakeSize++;
+
+            score = snakeSize;
             
             appleX = 0;
             appleY = 0;
@@ -217,6 +223,8 @@ setInterval(() => {
             lastBodyX = bodyX[bodyX.length - 1];
             lastBodyY = bodyY[bodyY.length - 1];
         }
+
+        highScore = score > highScore ? score : highScore;
     }
 }, 140);
 
@@ -235,7 +243,8 @@ function render() {
         // Draw score
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "15px 'Comic Relief', monospace";
-        ctx.fillText("Score: " + snakeSize,  40, 15);
+        ctx.fillText("HighScore: " + highScore, 55, 15);
+        ctx.fillText("Score: " + snakeSize,  40, 30);
 
         // make apple generate or fall down from apple tree
         ctx.fillStyle = "#FF0000";
