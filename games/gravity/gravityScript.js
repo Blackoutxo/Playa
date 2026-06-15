@@ -390,16 +390,45 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let currentLevel = 0;
+let highestLevel = Number(localStorage.getItem("Highest_Level"));
+let currentLevel = Number(localStorage.getItem("Current_Level"));
 
 // Docs and audio
 const dnf = document.querySelector('.dnf');
 const lvlComplete = document.querySelector('.level-completed');
 const intrd = new Audio('../../assets/game/gravity/audio/gravity intro.mp3');
 
+const prevButton = document.querySelector(".level-previous");
+const nextButton = document.querySelector(".level-next");
+
+const leftArea = document.querySelector('.left-area');
+const rightArea = document.querySelector('.right-area');
+
 // hide
 dnf.classList.add('hide');
 lvlComplete.classList.add('hide');
+prevButton.classList.add('hide');
+nextButton.classList.add('hide');
+
+leftArea.addEventListener('mouseover', () => {
+    prevButton.classList.remove('hide');
+    prevButton.classList.add('anim');
+});
+
+leftArea.addEventListener('mouseout', () => {
+    prevButton.classList.add('hide');
+    prevButton.classList.remove('anim');
+});
+
+rightArea.addEventListener('mouseover', () => {
+    nextButton.classList.remove('hide');
+    nextButton.classList.add('anim');
+});
+
+rightArea.addEventListener('mouseout', () => {
+    nextButton.classList.add('hide');
+    nextButton.classList.remove('anim');
+});
 
 // Modules
 var Engine = Matter.Engine,
@@ -470,6 +499,7 @@ function handleLaunch(e) {
 // Game over
 function handleGameOver() {
     dnf.classList.remove('hide');
+    highestLevel = currentLevel > highestLevel ? currentLevel : highestLevel;
 
     setTimeout(() => {
         dnf.classList.add('hide');
@@ -609,6 +639,11 @@ function placePlanet(x, y, mass) {
     console.log(placeableHeavenlyBodies);
 }
 
+// ------ Mouse Area Check ------ //
+function isMouseInArea() {
+
+}
+
 // ------ Collision check ------ //
 let handlingCollision = false;
 Events.on(engine, 'collisionStart', function(event) {
@@ -628,7 +663,14 @@ Events.on(engine, 'collisionStart', function(event) {
             currentLevel++;
             
             handleLevelComplete(currentLevel);
+
+            // Store current level
+            localStorage.setItem("Current_level", currentLevel);
             
+            // Highest level calculations and storing
+            highestLevel = currentLevel > highestLevel ? currentLevel : highestLevel;
+            localStorage.setItem("Highest_level", highestLevel);
+
             setTimeout(() => {
                 loadLevel(currentLevel);
                 handlingCollision = false;      
