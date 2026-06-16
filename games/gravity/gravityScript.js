@@ -390,8 +390,8 @@ let gameStarted = false, launched = false;
 let comet, goal;
 let placeableHeavenlyBodies = 0;
 
-let highestLevel = Number(localStorage.getItem("Highest_Level"));
-let currentLevel = Number(localStorage.getItem("Current_Level"));
+let highestLevel = Number(localStorage.getItem("Highest_level"));
+let currentLevel = Number(localStorage.getItem("Current_level"));
 
 // Docs and audio
 const dnf = document.querySelector('.dnf');
@@ -410,25 +410,8 @@ lvlComplete.classList.add('hide');
 prevButton.classList.add('hide');
 nextButton.classList.add('hide');
 
-leftArea.addEventListener('mouseover', () => {
-    prevButton.classList.remove('hide');
-    prevButton.classList.add('anim');
-});
-
-leftArea.addEventListener('mouseout', () => {
-    prevButton.classList.add('hide');
-    prevButton.classList.remove('anim');
-});
-
-rightArea.addEventListener('mouseover', () => {
-    nextButton.classList.remove('hide');
-    nextButton.classList.add('anim');
-});
-
-rightArea.addEventListener('mouseout', () => {
-    nextButton.classList.add('hide');
-    nextButton.classList.remove('anim');
-});
+// Hover
+hoverCheck();
 
 // Modules
 var Engine = Matter.Engine,
@@ -471,6 +454,17 @@ window.addEventListener('load', () => {
     intrd.play();
 });
 
+// Level Previous / Next Button
+prevButton.addEventListener('click', () => {
+    if (currentLevel >= 0 && currentLevel - 1 !== -1) currentLevel--;
+    loadLevel(currentLevel);
+});
+
+nextButton.addEventListener('click', () => {
+    if ((currentLevel + 1) <= highestLevel) currentLevel++;
+    loadLevel(currentLevel);
+});
+
 // Load info panel
 function loadPanel(e) {
     if (e.key === "i") {
@@ -509,12 +503,17 @@ function handleGameOver() {
 // Level complete
 function handleLevelComplete(levelIndex) {
     lvlComplete.classList.toggle('hide');
-    document.querySelector('.lvl-count').textContent = currentLevel + 1;    
-    document.querySelector('.lvl-count-bar').textContent = currentLevel + 1;
+    updateCount();
 
     setTimeout(() => {
         lvlComplete.classList.toggle('hide');
     }, 800);
+}
+
+// Update display count
+function updateCount() {
+    document.querySelector('.lvl-count').textContent = currentLevel + 1;    
+    document.querySelector('.lvl-count-bar').textContent = currentLevel + 1;
 }
 
 // Restart
@@ -548,6 +547,9 @@ function loadLevel(index) {
 
     // Fetch level data
     const levelData = gameLevels[index];
+
+    // Update count
+    updateCount();
 
     // Allot the placeable bodies
     placeableHeavenlyBodies = levelData.allotedHeavenlyBodies;
@@ -640,8 +642,26 @@ function placePlanet(x, y, mass) {
 }
 
 // ------ Mouse Area Check ------ //
-function isMouseInArea() {
+function hoverCheck() {
+    leftArea.addEventListener('mouseover', () => {
+        prevButton.classList.remove('hide');
+        prevButton.classList.add('anim');
+    });
 
+    leftArea.addEventListener('mouseout', () => {
+        prevButton.classList.add('hide');
+        prevButton.classList.remove('anim');
+    });
+
+    rightArea.addEventListener('mouseover', () => {
+        nextButton.classList.remove('hide');
+        nextButton.classList.add('anim');
+    });
+
+    rightArea.addEventListener('mouseout', () => {
+        nextButton.classList.add('hide');
+        nextButton.classList.remove('anim');
+    });
 }
 
 // ------ Collision check ------ //
