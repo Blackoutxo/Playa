@@ -1,5 +1,6 @@
-const BOARD_SIZE = 10;
-const MINES = 10;
+const ROW = 13;
+const COLM = 27;
+const MINES = 20;
 
 let board = [];
 let gameOver = false;
@@ -11,21 +12,21 @@ function init() {
     grid.innerHTML = '';
     board = [];
     gameOver = false;
-}
 
-// Grid coordinate
-function generateGridCord() {
-    for (let r = 0; r < BOARD_SIZE; r++) {
+    grid.style.gridTemplateColumns = `repeat(${COLM}, 2.1vw)`;
+    grid.style.gridTemplateRows = `repeat(${ROW}, 2.1vw)`;
+
+    for (let r = 0; r < ROW; r++) {
         board[r] = [];
 
-        for (let c = 0; c < BOARD_SIZE; r++) {
+        for (let c = 0; c < COLM; c++) {
             board[r][c] = {
                 row: r,
                 col: c,
                 isMine: false,
                 isFlagged: false,
                 neighbourMines: 0,
-                element = null
+                element: null
             };
         }
     }
@@ -34,12 +35,42 @@ function generateGridCord() {
     let minesPlanted =  0;
 
     while(minesPlanted < MINES) {
-        let r = Math.floor(Math.random() * BOARD_SIZE);
-        let c = Math.floor(Math.random() * BOARD_SIZE);
+        let r = Math.floor(Math.random() * ROW);
+        let c = Math.floor(Math.random() * COLM);
 
         if(!board[r][c].isMine) {
             board[r][c].isMine = true;
             minesPlanted++;
+        }
+    }
+
+    // Check each and every neightbour's cell
+    for (let r = 0; r < ROW; r++) {
+        for (let c = 0; c < COLM; c++) {
+            if (!board[r][c].isMine) {
+                board[r][c].neighbourMines = countMineNeighbour(r, c);
+            }
+        }
+    }
+
+    // Render the elements
+    for (let r = 0; r < ROW; r++) {
+        for (let c = 0; c < COLM; c++) {
+            const cellElements = document.createElement('div');
+            cellElements.classList.add('cell');
+
+            board[r][c].element = cellElements;
+            
+            // Left Click listner
+            cellElements.addEventListener('click', () => revealCell(r, c));
+
+            // Right Click listner
+            cellElements.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                flagged(r, c);
+            });
+
+            grid.appendChild(cellElements);
         }
     }
 }
@@ -50,12 +81,14 @@ function countMineNeighbour(r, c) {
     let count = 0;
 
     for (let i = -1; i <= 1; i++) {
-        let newRow = r + i;
-        let newColm = c + i;
+        for (let j = -1; j <= 1; j++) {
+            let newRow = r + i;
+            let newColm = c + j;
 
-        // Ensure neighbour cell inside of board
-        if ((newRow >= 0 && newR < BOARD_SIZE) && (newColm >= 0 && newColm < BOARD_SIZE)) {
-            if(board[newRow][newColm].isMine) count++;
+            // Ensure neighbour cell inside of board
+            if ((newRow >= 0 && newRow < ROW) && (newColm >= 0 && newColm < COLM)) { 
+                if(board[newRow][newColm].isMine) count++;
+            }
         }
     }
 
@@ -71,27 +104,77 @@ function revealCell(r, c) {
     cell.element.classList.add('Revealed');
 
     if (cell.isMine) {
-
+        endGame(false);
         return;
     }
 
     if (cell.neighbourMines > 0) {
         cell.element.textContent = cell.neighbourMines;
+        cell.element.setAttribute('data-count', cell.neighborMines);
     } else {
         revealNeighbours(r, c);
     }
+
+    checkWinCondition();
 }
 
+// reveal neighbours
 function revealNeighbours(r, c) {
     for (let i = -1; i <= 1; i++) {
-        let newRow = r + i;
-        let newColm = c + i;
-
-        // Ensure neighbour cell inside of board
-        if ((newRow >= 0 && newR < BOARD_SIZE) && (newColm >= 0 && newColm < BOARD_SIZE)) {
-            if(!board[newRow][newColm].isRevealed) {
-                revealCell(newRow, newColm);
+        for (let j = -1; j <= 1; j++) {
+            let newRow = r + i;
+            let newColm = c + j;
+     
+            // Ensure neighbour cell inside of board
+            if (newRow >= 0 && newRow < ROW && newColm >= 0 && newColm < COLM) {
+                if(!board[newRow][newColm].isRevealed) {
+                    revealCell(newRow, newColm);
+                }
             }
         }
     }
 }
+
+// reveal flagged
+function flagged(r, c) {
+    if (gameOver || board[r][c].isRevealed) return;
+
+    let cell = board[r][c];
+    
+    cell.isFlagged = !cell.isFlagged;
+
+    if (cell.isFlagged) {
+        cell.element.classList.add('flagged');
+    } else {
+        cell.element.classList.remove('flagged');
+    }
+}
+
+// Game over handling
+function endGame(win) {
+    gameOver = true;
+
+    for(let r = 0; r < ROW; r++) {
+        for (let c = 0; c < COLM; c++) {
+            if(board[r][c].isMine) {
+                board[r][c].element.classList.add('mine');
+            }
+        }
+    }
+    //setTimeout(() => alert(win ? 'You won!' : 'Gameover!'), 10);
+}
+
+// Check conditions
+function checkCondition() {
+    for(let r = 0; r < ROW; r++) {
+        for (let c = 0; c < COLM; c++) {
+            if (!board[r][c].isMine && !board[r][c].isRevealed) {
+                return;
+            }
+        }
+    }
+    endGame(true);
+}
+
+// Initialize the game
+init();
