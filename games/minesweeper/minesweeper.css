@@ -10,9 +10,22 @@
 
 :root {
     --bg-color: rgb(255, 255, 255);
-    --gn-txt-color: rgb(0, 0, 0);
+    --txt-color: rgb(0, 0, 0);
 
     --shadow-color: rgb(0, 0, 0);
+    --border-color: rgb(0, 0, 0);
+
+    --bg-min-color: rgb(0, 0, 0);
+    --shadow-min-box: rgb(65, 65, 65);
+}
+
+:root.dark {
+    --bg-color: rgb(0, 0, 0);
+    --txt-color: rgb(255, 255, 255);
+
+    --border-color: rgb(32, 128, 192);
+    --shadow-color: rgb(36, 103, 148);
+
 }
 
 body {
@@ -30,8 +43,54 @@ body {
     width: 59.6%;
     height: 63.5%;
 
-    outline: 0.2vw solid black;
+    background-color: white;
+
+    outline: 0.2vw solid var(--border-color);
     box-shadow: 0.7vw 0.7vw 0 0 var(--shadow-color);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    font-size: 3vw;
+
+    font-weight: 800;
+
+    transition: 0.2s ease-in-out;
+
+    color: var(--txt-color);
+}
+
+.header:hover {
+    transform: translate(-0.3vw, -0.3vw);
+    text-shadow: 0.3vw 0.3vw rgba(40, 57, 209, 0.616);
+}
+
+/* Display Counts */
+.score {
+    position: absolute;
+    top: 90%;
+    left: 30%;
+
+    font-size: 3vw;
+    font-weight: 800;
+
+    color: var(--txt-color);
+
+    transition: 0.5s ease-in-out;
+}
+
+.mines {
+    position: absolute;
+    top: 90%;
+    left: 55%;
+
+    font-size: 3vw;
+    font-weight: 800;
+
+    color: var(--txt-color);
+
+    transition: 0.5s ease-in-out;
 }
 
 /* GRID layout */
@@ -54,9 +113,9 @@ body {
     width: 2.1vw;
     height: 2.1vw;
 
-    border: 0.2vw solid rgb(0, 0, 0);
-    background-color: rgb(0, 0, 0);
-    box-shadow: 0.2vw 0.2vw 0 0 rgb(65, 65, 65);
+    border: 0.2vw solid var(--border-color);
+    background-color: var(--bg-min-color);
+    box-shadow: 0.2vw 0.2vw 0 0 var(--shadow-min-box);
 
     transition: 0.2s ease-in-out;
 }
@@ -71,6 +130,9 @@ body {
 
 .cell.mine {
     background-color: red;
+
+    transform: translate(0.2vw, 0.2vw);
+    box-shadow: none;
 }
 
 .cell.flagged {

@@ -3,9 +3,19 @@ const COLM = 27;
 const MINES = 40;
 
 let board = [];
+let score = 0;
 let gameOver = false;
 
 const grid = document.getElementById('grid');
+const mineCount = document.querySelector('.mine-count');
+const scoreCount = document.querySelector('.score-count');
+
+// Toggle theme
+const theme = localStorage.getItem('theme');
+
+if (theme === '1') {
+    document.documentElement.classList.add('dark');
+}
 
 // ------ Good game innit? ------ //
 function init() {
@@ -42,6 +52,8 @@ function init() {
             board[r][c].isMine = true;
             minesPlanted++;
         }
+
+        animateCounter(minesPlanted, mineCount);
     }
 
     // Check each and every neightbour's cell
@@ -175,6 +187,24 @@ function checkCondition() {
         }
     }
     endGame(true);
+}
+
+// Animate counter
+function animateCounter(i, elm) {
+    const target = i;
+    const duration = 2000;
+    const start = performance.now();
+
+    function update(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - t, 3);
+        elm.textContent = Math.round(ease * target);
+
+        if (t < 1) requestAnimationFrame(update);
+        else elm.textContent = target;
+    }
+
+    requestAnimationFrame(update);
 }
 
 // Initialize the game
