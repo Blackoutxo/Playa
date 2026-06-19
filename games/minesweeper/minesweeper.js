@@ -1,6 +1,6 @@
 const ROW = 13;
 const COLM = 27;
-const MINES = 40;
+const MINES = 20;
 
 let board = [];
 let score = 0;
@@ -36,7 +36,7 @@ function init() {
                 isMine: false,
                 isFlagged: false,
                 neighbourMines: 0,
-                element: null 
+                element: null
             };
         }
     }
@@ -113,7 +113,7 @@ function revealCell(r, c) {
 
     let cell = board[r][c];
     cell.isRevealed = true;
-    cell.element.classList.add('revealed');
+    cell.element.classList.add('Revealed');
 
     if (cell.isMine) {
         endGame(false);
@@ -123,12 +123,11 @@ function revealCell(r, c) {
     if (cell.neighbourMines > 0) {
         cell.element.textContent = cell.neighbourMines;
         cell.element.setAttribute('data-count', cell.neighborMines);
-        checkCondition();
-        return;
+    } else {
+        revealNeighbours(r, c);
     }
 
-    revealNeighbours(r, c);
-    checkCondition();
+    checkWinCondition();
 }
 
 // reveal neighbours
