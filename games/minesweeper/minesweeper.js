@@ -21,7 +21,7 @@ const levels = [
 
         GRIDW: 35.5,
         GRIDH: 68,
-        LEFT: 30,
+        LEFT: 32,
         TOP: 14,
     },
 
@@ -161,16 +161,20 @@ function init() {
             cellElements.classList.add('cell');
 
             board[r][c].element = cellElements;
+
+            if (cellElements.classList.contains('mine')) {
+                gameOver = true;
+                gameStarted = false;
+            }
             
-            // Left Click listner
+            // Left Click listener
             cellElements.addEventListener('click', () => {
                 gameStarted = true;
-                gameOver = false;
 
                 revealCell(r, c);
             });
 
-            // Right Click listner
+            // Right Click listener
             cellElements.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
                 flagged(r, c);
@@ -264,12 +268,10 @@ function BackButtonPressed(btn) {
 
 // score
 var intv = setInterval(function() {
-    if (!gameStarted) return;
+    if (!gameStarted || gameOver) return;
 
-    scoreCount.textContent = score;
     score++;
-
-    if (gameOver) clearInterval(intv);
+    scoreCount.textContent = score;
 }, 1000);
 
 // update Screen
@@ -371,12 +373,11 @@ function flagged(r, c) {
 
 // Restart
 function restart() {
-    gameOver = false;
     gameStarted = false;
 
-    scoreCount.textContent = 0;
+    score = 0;
+    scoreCount.textContent = score;
 
-    endGame(false);
     init();
 }
 
