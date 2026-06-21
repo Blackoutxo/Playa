@@ -361,13 +361,21 @@ function flagged(r, c) {
     if (gameOver || board[r][c].isRevealed) return;
 
     let cell = board[r][c];
-    
+
     cell.isFlagged = !cell.isFlagged;
+
+    var img = document.createElement('img');
+    img.src = "../../assets/game/minesweeper/images/minesweeper-icon.svg";
+    img.width = 25;
+    img.height = 25;
 
     if (cell.isFlagged) {
         cell.element.classList.add('flagged');
+        cell.element.style.backgroundImage = "url('../../assets/game/minesweeper/images/minesweeper-icon.svg')";
+        cell.element.style.backgroundSize = "25px 25px";
     } else {
         cell.element.classList.remove('flagged');
+        cell.element.style.backgroundImage = null;
     }
 }
 
