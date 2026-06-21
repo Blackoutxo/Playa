@@ -64,6 +64,9 @@ const grid = document.getElementById('grid');
 const mineCount = document.querySelector('.mine-count');
 const scoreCount = document.querySelector('.score-count');
 
+const buttons = document.querySelectorAll('.beginner, .intermediate, .expert');
+const restartButton = document.querySelector('.new-game');
+
 // Toggle theme
 const theme = localStorage.getItem('theme');
 
@@ -165,6 +168,33 @@ function init() {
         }
     }
 }
+
+// Loading screen buttons
+function checkButtonClick() {
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            button.classList.add('clicked');
+        
+            // Set the level
+            level = button.getAttribute('data-level');
+
+            // Init game when selected a level
+            init();
+        });
+
+        button.addEventListener('animationend', () => {
+            button.classList.remove('clicked');
+        });
+    });
+}
+
+// Restart button
+restartButton.addEventListener('click', () => {
+    init();
+});
+
+// Animate upon level selection 
+
 
 // score
 var intv = setInterval(function() {
@@ -325,5 +355,5 @@ function animateCounter(i, elm) {
     requestAnimationFrame(update);
 }
 
-// Initialize the game
-init();
+// Check which level the user selected
+checkButtonClick();
