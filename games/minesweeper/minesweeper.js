@@ -63,13 +63,14 @@ const gameArea = document.querySelector('.game-area');
 const grid = document.getElementById('grid');
 const mineCount = document.querySelector('.mine-count');
 const scoreCount = document.querySelector('.score-count');
+const icon = document.querySelector('.icon');
 
 // Header and loading screen it self
 const header = document.querySelector('.header');
 const loadingScreen = document.querySelector('.loading-screen');
 
 // loading screen buttons
-const buttons = document.querySelectorAll('.beginner, .intermediate, .expert');
+const buttons = document.querySelectorAll('.beginner, .intermediate, .expert, .back-home');
 
 // Restart and back button
 const restartArea = document.querySelector('.restart-btn-area');
@@ -240,6 +241,10 @@ function LevelSelected(btn) {
 
     header.classList.remove('back');
     header.classList.add('enter-game');
+
+    icon.classList.remove('back');
+    icon.classList.add('enter-game');
+
     loadingScreen.classList.remove('slideIn');
     loadingScreen.classList.add('slideOut');
 }
@@ -249,6 +254,10 @@ function BackButtonPressed(btn) {
 
     header.classList.add('back');
     header.classList.remove('enter-game');
+
+    icon.classList.remove('enter-game');
+    icon.classList.add('back');
+
     loadingScreen.classList.add('slideIn');
     loadingScreen.classList.remove('slideOut');
 }

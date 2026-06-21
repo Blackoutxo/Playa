@@ -111,6 +111,75 @@ body {
     }
 }
 
+.icon {
+    position: absolute;
+    top: 22%;
+    left: 48%;
+
+    width: 10%;
+    height: 20%;
+
+    z-index: 9999;
+}
+
+.icon.enter-game {
+    animation: IconAnimate 2s ease-in-out forwards;
+}
+
+.icon.back {
+    animation: MoveBack 1s ease-in-out forwards;
+}
+
+@keyframes IconAnimate {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(12vw, 8vw);
+        width: 5%;
+        height: 10%;
+    }
+    100% {
+        transform: translate(12vw, -9.5vw);
+        width: 5%;
+        height: 10%;
+    }
+}
+
+@keyframes MoveBack {
+    0% {
+        transform: translate(12vw, -10vw);
+        width: 5%;
+        height: 10%;
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.back-home {
+    position: absolute;
+    top: 85%;
+    left: 51%;
+
+    width: 3%;
+    height: 7%;
+
+    background-color: var(--button-bg);
+    outline: 0.2vw solid var(--button-border);
+    box-shadow: 0.3vw 0.3vw 0 0 var(--button-shadow);
+
+    transition: 0.2s ease-in-out;
+}
+
+.back-home.fade {
+    animation: RemoveButton 0.2s ease-in-out forwards;
+}
+
+.back-home.clicked {
+    animation: ButtonClick 0.4s ease-in-out;
+}
+
 .beginner {
     position: absolute;
     top: 70%;
@@ -252,7 +321,7 @@ body {
 @keyframes moveBack {
     0% {
         font-size: 3vw;
-        transform: translate(10vw, -16vw);
+        transform: translate(7vw, -16vw);
         text-shadow: 0.2vw 0.2vw var(--txt-shadow);
     }
     50% {
