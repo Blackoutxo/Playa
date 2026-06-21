@@ -148,7 +148,7 @@ body {
 
 @keyframes MoveBack {
     0% {
-        transform: translate(12vw, -10vw);
+        transform: translate(12vw, -9.5vw);
         width: 5%;
         height: 10%;
     }
@@ -321,7 +321,7 @@ body {
 @keyframes moveBack {
     0% {
         font-size: 3vw;
-        transform: translate(7vw, -16vw);
+        transform: translate(7vw, -17vw);
         text-shadow: 0.2vw 0.2vw var(--txt-shadow);
     }
     50% {
