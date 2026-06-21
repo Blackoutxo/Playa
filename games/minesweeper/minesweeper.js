@@ -7,22 +7,22 @@ const levels = [
         MINES: 10,
 
         // Screen Attributes
-        GRIDW: 22,
-        GRIDH: 23, // using percentage basis for these values
-        LEFT: 0,
-        TOP: 0,
+        GRIDW: 20,
+        GRIDH: 44, // using percentage basis for these values
+        LEFT: 40,
+        TOP: 25,
     },
 
     {
         level: "Intermediate",
-        ROW: 16,
+        ROW: 14,
         COLM: 16,
-        MINES: 20,
+        MINES: 30,
 
-        GRIDW: 22,
-        GRIDH: 34,
-        LEFT: 0,
-        TOP: 0,
+        GRIDW: 35.5,
+        GRIDH: 68,
+        LEFT: 30,
+        TOP: 14,
     },
 
     {
@@ -64,8 +64,19 @@ const grid = document.getElementById('grid');
 const mineCount = document.querySelector('.mine-count');
 const scoreCount = document.querySelector('.score-count');
 
+// Header and loading screen it self
+const header = document.querySelector('.header');
+const loadingScreen = document.querySelector('.loading-screen');
+
+// loading screen buttons
 const buttons = document.querySelectorAll('.beginner, .intermediate, .expert');
+
+// Restart and back button
+const restartArea = document.querySelector('.restart-btn-area');
 const restartButton = document.querySelector('.new-game');
+
+const backArea = document.querySelector('.back-btn-area');
+const backButton = document.querySelector('.back-button');
 
 // Toggle theme
 const theme = localStorage.getItem('theme');
@@ -170,6 +181,7 @@ function init() {
 }
 
 // Loading screen buttons
+let clicked = false;
 function checkButtonClick() {
     buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -177,6 +189,11 @@ function checkButtonClick() {
         
             // Set the level
             level = button.getAttribute('data-level');
+
+            // Set clicked as tru
+            clicked = clicked ? false : true;
+
+            if (clicked) LevelSelected(button);
 
             // Init game when selected a level
             init();
@@ -188,13 +205,53 @@ function checkButtonClick() {
     });
 }
 
+// Back button
+backButton.addEventListener('click', () => {
+    BackButtonPressed();
+});
+
+// Area detection for button visibility
+restartArea.addEventListener('mouseover', () => {
+    restartButton.classList.add('hovered');
+});
+
+restartArea.addEventListener('mouseout', () => {
+    restartButton.classList.remove('hovered');
+});
+
+backArea.addEventListener('mouseover', () => {
+    backButton.classList.add('show');
+});
+
+backArea.addEventListener('mouseout', () => {
+    backButton.classList.remove('show');
+});
+
 // Restart button
 restartButton.addEventListener('click', () => {
-    init();
+    restart();
 });
 
 // Animate upon level selection 
+function LevelSelected(btn) {
+    btn.classList.add('clicked');
+    
+    buttons.forEach(button => button.classList.add('fade'));
 
+    header.classList.remove('back');
+    header.classList.add('enter-game');
+    loadingScreen.classList.remove('slideIn');
+    loadingScreen.classList.add('slideOut');
+}
+
+function BackButtonPressed(btn) {
+    buttons.forEach(button => button.classList.remove('fade'));
+
+    header.classList.add('back');
+    header.classList.remove('enter-game');
+    loadingScreen.classList.add('slideIn');
+    loadingScreen.classList.remove('slideOut');
+}
 
 // score
 var intv = setInterval(function() {
@@ -307,6 +364,8 @@ function flagged(r, c) {
 function restart() {
     gameOver = false;
     gameStarted = false;
+
+    scoreCount.textContent = 0;
 
     endGame(false);
     init();

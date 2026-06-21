@@ -11,12 +11,13 @@
 :root {
     --bg-color: rgb(255, 255, 255);
     --txt-color: rgb(0, 0, 0);
+    --txt-shadow: rgba(0, 0, 0, 0.158);
 
-    --shadow-color: rgb(0, 0, 0);
+    --shadow-color: rgb(96, 199, 76);
     --border-color: rgb(0, 0, 0);
 
-    --button-bg: rgb(255, 255, 255);
-    --button-border: rgb(230, 192, 90);
+    --button-bg: rgb(115, 230, 245);
+    --button-border: rgb(0, 0, 0);
     --button-shadow: rgb(0, 0, 0);
 
     --bg-min-color: rgb(0, 0, 0);
@@ -27,7 +28,10 @@
     --bg-color: rgb(0, 0, 0);
     --txt-color: rgb(255, 255, 255);
 
+    --txt-shadow: rgba(32, 128, 192, 0.212);
+
     --button-bg: rgb(32, 128, 192);
+    --button-border: rgb(230, 192, 90);
     --button-shadow: rgb(36, 103, 148);
 
     --border-color: rgb(32, 128, 192);
@@ -37,6 +41,8 @@
 
 body {
     font-family: "Space Grotesk";
+
+    overflow: hidden;
 
     background-color: var(--bg-color);
 }
@@ -57,13 +63,53 @@ body {
     z-index: 999;
 }
 
-/*.loading-screen.slideIn {
-
+.loading-screen.slideOut {
+    animation: RemoveScreen 3s ease-in-out forwards;
 }
 
-.loading-screen.slideOut {
+.loading-screen.slideIn {
+    animation: AddScreen 1s ease-in-out forwards;
+}
 
-}*/
+@keyframes RemoveScreen {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    90% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-120%);
+        opacity: 0;
+    }
+}
+
+@keyframes AddScreen {
+    0% {
+        transform: translateY(-120%);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
 
 .beginner {
     position: absolute;
@@ -84,7 +130,7 @@ body {
 }
 
 .beginner.fade {
-    animation: RemoveButton 0.7s ease-in-out forwards;
+    animation: RemoveButton 0.2s ease-in-out forwards;
 }
 
 .beginner.clicked {
@@ -110,7 +156,7 @@ body {
 }
 
 .intermediate.fade {
-    animation: RemoveButton 0.7s ease-in-out forwards;
+    animation: RemoveButton 0.2s ease-in-out forwards;
 }
 
 .intermediate.clicked {
@@ -136,7 +182,7 @@ body {
 }
 
 .expert.fade {
-    animation: RemoveButton 0.7s ease-in-out forwards;
+    animation: RemoveButton 0.2s ease-in-out forwards;
 }
 
 .expert.clicked {
@@ -159,12 +205,8 @@ body {
     0% {
         opacity: 1;
     }
-    50% {
-        opacity: 0;
-    }
     100% {
         opacity: 0;
-        transform: translateY(120%);
     }
 }
 
@@ -179,17 +221,17 @@ body {
 
     text-align: center;
     color: var(--txt-color);
-    text-shadow: 0.3vw 0.3vw var(--shadow-color);
+    text-shadow: 0.3vw 0.3vw var(--txt-shadow);
 
     z-index: 9999;
 }
 
-.header.enterGame {
-    animation: moveInPlace 3s ease-in-out forwards;
+.header.enter-game {
+    animation: moveInPlace 2s ease-in-out forwards;
 }
 
 .header.back {
-    animation: moveBack 3s ease-in-out;
+    animation: moveBack 2s ease-in-out;
 }
 
 @keyframes moveInPlace {
@@ -197,13 +239,13 @@ body {
         transform: translate(0, 0) scale(1);
     }
     50% {
-        transform: translateX(10vw);
+        transform: translateX(7vw);
         font-size: 3vw;        
     }
     100% {
         font-size: 3vw;
-        transform: translate(10vw, -16vw);
-        text-shadow: 0.2vw 0.2vw var(--shadow-color);
+        transform: translate(7vw, -17vw);
+        text-shadow: 0.2vw 0.2vw var(--txt-shadow);
     }
 }
 
@@ -211,7 +253,7 @@ body {
     0% {
         font-size: 3vw;
         transform: translate(10vw, -16vw);
-        text-shadow: 0.2vw 0.2vw var(--shadow-color);
+        text-shadow: 0.2vw 0.2vw var(--txt-shadow);
     }
     50% {
         transform: translateX(0);
@@ -224,6 +266,15 @@ body {
 }
 
 /* NEW GAME Button */
+.restart-btn-area {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    width: 7%;
+    height: 100%
+}
+
 .new-game {
     position: absolute;
     right: 3%;
@@ -236,14 +287,68 @@ body {
     color: var(--txt-color);
 
     padding: 0 1vw;
-    background-color: var(--button-bg);
     outline: 0.2vw solid var(--button-border);
+    background-color: var(--button-bg);
     box-shadow: 0.4vw 0.4vw 0 0 var(--button-shadow);
+
+    transform: translateX(200%);
 
     transition: 0.2s ease-in-out;
 }
 
+.new-game:hover {
+    transform: translateX(0);
+}
+
+.new-game.hovered {
+    transform: translateX(0);
+}
+
 .new-game:active {
+    transform: translate(0.4vw, 0.4vw);
+    box-shadow: none;
+}
+
+/* Back Button */
+.back-btn-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 4%;
+    height: 100%
+}
+
+.back-button {
+    position: absolute;
+    left: 2%;
+    top: 2%;
+
+    cursor: pointer;
+
+    font-size: 2vw;
+    font-weight: 500;
+    color: var(--txt-color);
+
+    padding: 0 1vw;
+    outline: 0.2vw solid var(--button-border);
+    background-color: var(--button-bg);
+    box-shadow: 0.4vw 0.4vw 0 0 var(--button-shadow);
+
+    transform: translateX(-200%);
+
+    transition: 0.2s ease-in-out;
+}
+
+.back-button:hover {
+    transform: translateX(0);
+}
+
+.back-button.show {
+    transform: translateX(0);
+}
+
+.back-button:active {
     transform: translate(0.4vw, 0.4vw);
     box-shadow: none;
 }
@@ -265,7 +370,7 @@ body {
 .mines {
     position: absolute;
     top: 90%;
-    left: 55%;
+    left: 57%;
 
     font-size: 3vw;
     font-weight: 800;
