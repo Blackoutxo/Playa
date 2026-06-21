@@ -372,7 +372,7 @@ function flagged(r, c) {
     if (cell.isFlagged) {
         cell.element.classList.add('flagged');
         cell.element.style.backgroundImage = "url('../../assets/game/minesweeper/images/minesweeper-icon.svg')";
-        cell.element.style.backgroundSize = "25px 25px";
+        cell.element.style.backgroundSize = "2vw 1.8vw";
     } else {
         cell.element.classList.remove('flagged');
         cell.element.style.backgroundImage = null;
