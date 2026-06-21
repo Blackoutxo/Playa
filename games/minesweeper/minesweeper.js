@@ -1,11 +1,65 @@
-const ROW = 13;
-const COLM = 27;
-const MINES = 40;
+const levels = [
+    {
+        // Game data attributes
+        level: "Beginner",
+        ROW: 9,
+        COLM: 9,
+        MINES: 10,
+
+        // Screen Attributes
+        GRIDW: 22,
+        GRIDH: 23, // using percentage basis for these values
+        LEFT: 0,
+        TOP: 0,
+    },
+
+    {
+        level: "Intermediate",
+        ROW: 16,
+        COLM: 16,
+        MINES: 20,
+
+        GRIDW: 22,
+        GRIDH: 34,
+        LEFT: 0,
+        TOP: 0,
+    },
+
+    {
+        level: "Expert",
+        ROW: 13,
+        COLM: 27,
+        MINES: 99,
+
+        GRIDW: 59.6,
+        GRIDH: 63.5,
+        LEFT: 20,
+        TOP: 20,
+    }
+]
+
+// Field vars
+let ROW;
+let COLM;
+let MINES;
+
+let widthS = window.innerWidth;
+let heightS = window.innerHeight;
+
+let gridWidth;
+let gridHeight;
+let LEFT;
+let TOP;
+
+let level = 2;
 
 let board = [];
 let score = 0;
 let gameOver = false;
+let gameStarted = false;
 
+// Documents
+const gameArea = document.querySelector('.game-area');
 const grid = document.getElementById('grid');
 const mineCount = document.querySelector('.mine-count');
 const scoreCount = document.querySelector('.score-count');
@@ -17,12 +71,32 @@ if (theme === '1') {
     document.documentElement.classList.add('dark');
 }
 
+// Re-size Event listener
+window.addEventListener('resize', () => {
+    widthS = window.innerWidth;
+    heightS = window.innerHeight;
+
+    updateDisplay();
+});
+
 // ------ Good game innit? ------ //
 function init() {
     grid.innerHTML = '';
     board = [];
     gameOver = false;
 
+    // Fetch level data
+    const levelData = levels[level];
+
+    // Initialize values
+    ROW = levelData.ROW;
+    COLM = levelData.COLM;
+    MINES = levelData.MINES;
+
+    // Set grid screen size & positioning
+    updateDisplay();
+
+    // Dynamic values for rows and column
     grid.style.gridTemplateColumns = `repeat(${COLM}, 2.1vw)`;
     grid.style.gridTemplateRows = `repeat(${ROW}, 2.1vw)`;
 
@@ -74,7 +148,12 @@ function init() {
             board[r][c].element = cellElements;
             
             // Left Click listner
-            cellElements.addEventListener('click', () => revealCell(r, c));
+            cellElements.addEventListener('click', () => {
+                gameStarted = true;
+                gameOver = false;
+
+                revealCell(r, c);
+            });
 
             // Right Click listner
             cellElements.addEventListener('contextmenu', (e) => {
@@ -85,6 +164,37 @@ function init() {
             grid.appendChild(cellElements);
         }
     }
+}
+
+// score
+var intv = setInterval(function() {
+    if (!gameStarted) return;
+
+    scoreCount.textContent = score;
+    score++;
+
+    if (gameOver) clearInterval(intv);
+}, 1000);
+
+// update Screen
+function updateDisplay() {
+    // level data
+    const levelData = levels[level];
+
+    // Set Values
+    gridWidth = levelData.GRIDW;
+    gridHeight = levelData.GRIDH;
+
+    LEFT = levelData.LEFT;
+    TOP = levelData.TOP;
+
+    // Set style using these values
+    gameArea.style.width = gridWidth + 'vw';
+    gameArea.style.height = gridHeight + 'vh';
+    
+    gameArea.style.position = 'absolute';
+    gameArea.style.top = TOP + 'vh';
+    gameArea.style.left = LEFT + 'vw';
 }
 
 // Count neighbours cell mine
@@ -161,6 +271,15 @@ function flagged(r, c) {
     } else {
         cell.element.classList.remove('flagged');
     }
+}
+
+// Restart
+function restart() {
+    gameOver = false;
+    gameStarted = false;
+
+    endGame(false);
+    init();
 }
 
 // Game over handling
