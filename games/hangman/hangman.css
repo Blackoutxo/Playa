@@ -8,14 +8,31 @@
 }
 
 body {
+    font-family: "Space Grotesk";
     background-color: white;
 
     overflow: hidden;
 }
 
+/* QNA Box */
+.QNA-box {
+    position: absolute;
+    top: 10%;
+    left: 4%;
+
+    font-size: 2vw;
+    font-weight: 800;
+    text-transform: uppercase;
+
+    width: 43%;
+    height: 30%;
+}
+
 /* THE HANGING POST*/
 .hang-post {
     position: absolute;
+    left: 10%;
+
     display: flex;
 
     margin: 0;
@@ -147,7 +164,7 @@ body {
     z-index: -1;
 }
 
-/*.trunk {
+.trunk {
     position: absolute;
     top: 41%;
     left: 49%;
@@ -159,7 +176,7 @@ body {
     outline: 0.2vw solid black;
 
     z-index: -1;
-}*/
+}
 
 .leg-left {
     position: absolute;
