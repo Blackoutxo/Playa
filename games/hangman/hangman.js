@@ -41,9 +41,32 @@ let topicSize = 0;
 
 
 function loadQuestion() {
-
+    setUpQuestion(topicAutomotive, 3);
 }
 
-function setUpQuestion() {
+function setUpQuestion(topic, ID) {
+    const container = document.querySelector('.box-container');
+    container.innerHTML = ``;
 
+    const topicData = topic[ID];
+
+    let rngLTR = Math.floor(Math.random() * topicData.A.length);
+    console.log(rngLTR);
+
+    for(i = 0; i < topicData.A.length; i++) {
+        
+        if (i === rngLTR){
+            container.innerHTML += `
+            <div class="cell"> 
+             ${topicData.A[i]}
+            </div>    
+            `;
+        }
+
+        container.innerHTML += `
+        
+        `;
+    } 
 }
+
+loadQuestion();
