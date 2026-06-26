@@ -9,7 +9,6 @@ const topicAutomotive = [
     {Q: "Which car part filters harmful particles from the air entering the engine?", A: "AIRFILTER"},
     {Q: "Which part allows the driver to engage or disengage the engine from the wheels?", A: "CLUTCH"},
     {Q: "Which part of a car provides traction by gripping the road surface?", A: "TIRES"},
-    {Q: "Which transmission type changes gears automatically without driver input?", A: "AUTOMATIC TRANSMISSION"},
     {Q: "Which engine component compresses air-fuel mixture before ignition?", A: "PISTON"},
     {Q: "Which part of the engine ignites the fuel-air mixture?", A: "SPARK PLUGS"},
     {Q: "Which exterior part of a car protects the front and rear from minor collisions?", A: "BUMPER"},
@@ -45,28 +44,30 @@ function loadQuestion() {
 }
 
 function setUpQuestion(topic, ID) {
+    const questions = document.querySelector('.question');
     const container = document.querySelector('.box-container');
     container.innerHTML = ``;
 
-    const topicData = topic[ID];
+    let qRNG = Math.floor(Math.random() * topic.length);
+
+    const topicData = topic[qRNG];
+
+    questions.textContent = topicData.Q;
 
     let rngLTR = Math.floor(Math.random() * topicData.A.length);
     console.log(rngLTR);
 
-    for(i = 0; i < topicData.A.length; i++) {
-        
-        if (i === rngLTR){
-            container.innerHTML += `
-            <div class="cell"> 
-             ${topicData.A[i]}
-            </div>    
-            `;
-        }
+    for(let i = 0; i < topicData.A.length; i++) {
+        const input = document.createElement('input');
 
-        container.innerHTML += `
-        
-        `;
-    } 
+        input.type = 'none';
+        input.inputMode = 'text';
+        input.maxLength = 1;
+        input.className = 'cell';
+    
+        container.appendChild(input);
+    }
 }
+
 
 loadQuestion();
