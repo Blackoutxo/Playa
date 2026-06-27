@@ -34,18 +34,20 @@ const topicGeneralGame = [
 // Field variables
 let question = "";
 let answer = "";
+let typed = "";
 
 let topicSize = 0;
 
+ const container = document.querySelector('.box-container');
 
-
+// Load question
 function loadQuestion() {
-    setUpQuestion(topicAutomotive, 3);
+    setUpQuestion(topicAutomotive);
 }
 
-function setUpQuestion(topic, ID) {
+// Set up the question
+function setUpQuestion(topic) {
     const questions = document.querySelector('.question');
-    const container = document.querySelector('.box-container');
 
     let qRNG = Math.floor(Math.random() * topic.length);
 
@@ -61,38 +63,40 @@ function setUpQuestion(topic, ID) {
     let rngLTR = Math.floor(Math.random() * topicData.A.length);
 
     answer.forEach((letter, i) => {
-        console.log(i);
-
         const input = document.createElement('input');
 
+        // Set function
         input.type = 'text';
         input.inputMode = 'text';
         input.maxLength = 1;
-        input.className = "cell";
-        input.dataset.index = i;
         input.dataset.correct = letter.toUpperCase();
+        input.className = "cell";
+        input.readOnly = true;
 
-        input.addEventListener('input', (e) => {
-            const typed = e.target.value.toUpperCase();
-
-            if (!typed) return;
-
-            if (typed === input.dataset.correct) {
-                console.log("CORRECTO");
-            }
-            
-            // Move over to other cell
-            const cells = Array.from(container.querySelectorAll('.cell'));
-            const next = cells.slice(i + 1).find(c => !c.value) ?? cells[i + 1];
-            if (next) next.focus();
-        });
-
+        // Initial clue
+        input.value = i === rngLTR ? answer[i] : '';      
+    
         container.appendChild(input);
     });
 }
 
-function checkAnswer(answer, cells) {
-    
-}
+// Input log
+window.addEventListener('keydown', (e) => {
+    typed = e.key.toUpperCase();
 
+    const cells = Array.from(container.querySelectorAll(".cell"));
+
+
+
+    cells.forEach((cell) => {
+        if (cell.dataset.correct === typed) {
+            console.log(typed);
+            cell.value = typed; 
+        } else {
+
+        }
+    });
+});
+
+// START THE GAME
 loadQuestion();
