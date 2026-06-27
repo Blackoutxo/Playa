@@ -43,24 +43,29 @@ body {
 
 .box-container {
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 5vw);
     grid-template-columns: repeat(6, 6vw);
 
     position: absolute;
-    top: 5%;
-    left: 5%;
+    top: 20%;
+    left: 10%;
 
     width: 98%;
-    height: 95%;
+    height: 95%; 
 }
 
 .cell {
+    font-family: "Space Grotesk";
+
     width: 4vw;
     height: 2.5vw;
 
     text-align: center;
+    font-size: 1.5vw;
+    font-weight: 600;
 
     outline: 0.2vw solid black;
+    border: none;
 }
 
 .cell-text {
