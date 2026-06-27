@@ -46,28 +46,53 @@ function loadQuestion() {
 function setUpQuestion(topic, ID) {
     const questions = document.querySelector('.question');
     const container = document.querySelector('.box-container');
-    container.innerHTML = ``;
 
     let qRNG = Math.floor(Math.random() * topic.length);
 
     const topicData = topic[qRNG];
 
+    // Set question
     questions.textContent = topicData.Q;
 
-    let rngLTR = Math.floor(Math.random() * topicData.A.length);
-    console.log(rngLTR);
+    // Answer
+    const answer = topicData.A.split('');
 
-    for(let i = 0; i < topicData.A.length; i++) {
+    // Random clue generator
+    let rngLTR = Math.floor(Math.random() * topicData.A.length);
+
+    answer.forEach((letter, i) => {
+        console.log(i);
+
         const input = document.createElement('input');
 
-        input.type = 'none';
+        input.type = 'text';
         input.inputMode = 'text';
         input.maxLength = 1;
-        input.className = 'cell';
-    
+        input.className = "cell";
+        input.dataset.index = i;
+        input.dataset.correct = letter.toUpperCase();
+
+        input.addEventListener('input', (e) => {
+            const typed = e.target.value.toUpperCase();
+
+            if (!typed) return;
+
+            if (typed === input.dataset.correct) {
+                console.log("CORRECTO");
+            }
+            
+            // Move over to other cell
+            const cells = Array.from(container.querySelectorAll('.cell'));
+            const next = cells.slice(i + 1).find(c => !c.value) ?? cells[i + 1];
+            if (next) next.focus();
+        });
+
         container.appendChild(input);
-    }
+    });
 }
 
+function checkAnswer(answer, cells) {
+    
+}
 
 loadQuestion();
