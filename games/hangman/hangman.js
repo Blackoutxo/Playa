@@ -10,7 +10,7 @@ const topicAutomotive = [
     {Q: "Which part allows the driver to engage or disengage the engine from the wheels?", A: "CLUTCH"},
     {Q: "Which part of a car provides traction by gripping the road surface?", A: "TIRES"},
     {Q: "Which engine component compresses air-fuel mixture before ignition?", A: "PISTON"},
-    {Q: "Which part of the engine ignites the fuel-air mixture?", A: "SPARK PLUGS"},
+    {Q: "Which part of the engine ignites the fuel-air mixture?", A: "SPARKPLUGS"},
     {Q: "Which exterior part of a car protects the front and rear from minor collisions?", A: "BUMPER"},
     {Q: "What part covers the wheels and protects the car from road debris?", A: "FENDER"},
     {Q: "Which exterior component opens to allow passengers to enter or exit the car?", A: "DOOR"},
@@ -19,7 +19,7 @@ const topicAutomotive = [
     {Q: "What car component regulates engine temperature by controlling coolant flow between the engine and radiator?", A: "THERMOSTAT"},
     {Q: "Which engine part increases efficiency by forcing extra air into the combustion chamber?", A: "TURBOCHARGER"},
     {Q: "What component converts rotational energy into electrical energy to charge the battery?", A: "ALTERNATOR"},
-    {Q: "Which car part filters and cleans the engine oil to prevent wear and tear?", A: "OIL FILTER"},
+    {Q: "Which car part filters and cleans the engine oil to prevent wear and tear?", A: "OILFILTER"},
     {Q: "What component in the drivetrain compensates for differences in wheel speed during turns?", A: "DIFFERENTIAL"},
 ];
 
@@ -36,9 +36,18 @@ let question = "";
 let answer = "";
 let typed = "";
 
+let strike = 5;
+
 let topicSize = 0;
 
- const container = document.querySelector('.box-container');
+// Elements
+const container = document.querySelector('.box-container');
+const head = document.querySelector('.head');
+const Larm = document.querySelector('.arm-left');
+const Rarm = document.querySelector('.arm-right');
+const trunk = document.querySelector('.trunk');
+const Lleg = document.querySelector('.leg-left');
+const Rleg = document.querySelector('.leg-right');
 
 // Load question
 function loadQuestion() {
@@ -53,6 +62,9 @@ function setUpQuestion(topic) {
 
     const topicData = topic[qRNG];
 
+    // Setup topic size
+    topicSize = topicData.length;
+
     // Set question
     questions.textContent = topicData.Q;
 
@@ -65,7 +77,7 @@ function setUpQuestion(topic) {
     answer.forEach((letter, i) => {
         const input = document.createElement('input');
 
-        // Set function
+        // Define
         input.type = 'text';
         input.inputMode = 'text';
         input.maxLength = 1;
@@ -86,8 +98,6 @@ window.addEventListener('keydown', (e) => {
 
     const cells = Array.from(container.querySelectorAll(".cell"));
 
-
-
     cells.forEach((cell) => {
         if (cell.dataset.correct === typed) {
             console.log(typed);
@@ -98,5 +108,17 @@ window.addEventListener('keydown', (e) => {
     });
 });
 
+function checkAnswer(cells, answer) {
+
+}
+
+function hideAll() {
+    const hangman = document.querySelectorAll('.head, .arm-left, .arm-right, .trunk, .leg-left, .leg-right');
+    hangman.forEach((elm) => {
+        elm.classList.add('hide');
+    });
+}
+
 // START THE GAME
+hideAll();
 loadQuestion();
