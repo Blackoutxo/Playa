@@ -54,8 +54,12 @@ let topicsCount = 0;
 let selectedTopic = null;
 
 // Elements
+const loadingScreen = document.querySelector('.loading-screen');
+const header = document.querySelector('.header');
+
 const container = document.querySelector('.box-container');
 const buttonContainer = document.getElementById('buttons');
+
 const head = document.querySelector('.head');
 const Larm = document.querySelector('.arm-left');
 const Rarm = document.querySelector('.arm-right');
@@ -65,8 +69,7 @@ const Rleg = document.querySelector('.leg-right');
 
 // Load question
 function loadQuestion() {
-    selectedTopic = selectedTopic === null ? topicAutomotive : selectedTopic;
-
+    console.log(selectedTopic);
     setUpQuestion(selectedTopic);
 }
 
@@ -74,8 +77,6 @@ function loadQuestion() {
 function setUpQuestion(topic) {
     const questions = document.querySelector('.question');
     container.innerHTML = '';
-
-    let qRNG = Math.floor(Math.random() * topic.length);
 
     const topicData = topic[score];
 
@@ -167,6 +168,7 @@ function createButton() {
 
         // define the element
         button.classList.add('button');
+        button.setAttribute = e;
         button.textContent = e;
 
         buttonContainer.style.gridTemplateColumns = `repeat(${topicsCount}, 10vw)`;
@@ -179,7 +181,12 @@ function createButton() {
 function fetchButtonID() {
     buttonContainer.childNodes.forEach((childs) => {
         childs.addEventListener('click', (button) => {
-            selectedTopic = clicked(button.textContent);
+            loadingScreen.classList.add('moveOut');
+            header.classList.add('moveIn');
+
+            selectedTopic = clicked(childs.textContent);
+        
+            loadQuestion();
         });
     });
 }
@@ -191,7 +198,7 @@ function clicked(button) {
     else if (button === "Aircraft") return topicAircraft;
     else if (button === "Human Anatomy") return topicAnatomy;
 
-    return topicAutomotive;
+    return null;
 }
 
 // Check if the answer in the cell is correct
