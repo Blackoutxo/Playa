@@ -32,11 +32,12 @@ const topicGeneralGame = [
 ];
 
 // Field variables
-let question = "";
-let answer = "";
+let QUESTIONS = [""];
+let ANSWER = "";
 let typed = "";
 
-let strike = 5;
+let strike = 6;
+let score = 0;
 
 let topicSize = 0;
 
@@ -57,25 +58,36 @@ function loadQuestion() {
 // Set up the question
 function setUpQuestion(topic) {
     const questions = document.querySelector('.question');
+    container.innerHTML = '';
 
     let qRNG = Math.floor(Math.random() * topic.length);
 
-    const topicData = topic[qRNG];
+    const topicData = topic[score];
 
     // Setup topic size
-    topicSize = topicData.length;
+    topicSize = topic.length;
 
     // Set question
     questions.textContent = topicData.Q;
 
+    // Add asked questions to the array
+    QUESTIONS.push(topicData.Q);
+    
+    console.log(QUESTIONS); 
+    
     // Answer
     const answer = topicData.A.split('');
+
+    // Set up local accessible variable
+    ANSWER = answer;
 
     // Random clue generator
     let rngLTR = Math.floor(Math.random() * topicData.A.length);
 
     answer.forEach((letter, i) => {
         const input = document.createElement('input');
+
+        if (container.contains(input)) container.removeChild(input);
 
         // Define
         input.type = 'text';
@@ -94,24 +106,52 @@ function setUpQuestion(topic) {
 
 // Input log
 window.addEventListener('keydown', (e) => {
+    if (strike < 0) return;
+
+    // Fetch input key
     typed = e.key.toUpperCase();
 
     const cells = Array.from(container.querySelectorAll(".cell"));
 
+    // Strike if incorrect
+    if (!ANSWER.includes(typed)) strike--;
+
+    // Check hangman elements
+    hangman();
+
+    // Check if every cell is filled
+    if (checkAnswer(cells, ANSWER)) {
+        score++;
+        loadQuestion();
+    }
+
     cells.forEach((cell) => {
         if (cell.dataset.correct === typed) {
-            console.log(typed);
-            cell.value = typed; 
-        } else {
-
+            cell.value = typed;
         }
     });
 });
 
-function checkAnswer(cells, answer) {
-
+// Hangman generation
+function hangman() {
+    if (strike === 5) Lleg.classList.remove('hide');
+    else if (strike === 4) Rleg.classList.remove('hide');
+    else if (strike === 3) trunk.classList.remove('hide');
+    else if (strike === 2) Larm.classList.remove('hide');
+    else if (strike === 1) Rarm.classList.remove('hide');
+    else if (strike === 0) head.classList.remove('hide'); 
 }
 
+// Check if the answer in the cell is correct
+function checkAnswer(cells, answer) {
+    const correct = cells.every(
+        (cell, i) => cell.value === answer[i]
+    );
+
+    return correct;
+}
+
+// Hide da man!
 function hideAll() {
     const hangman = document.querySelectorAll('.head, .arm-left, .arm-right, .trunk, .leg-left, .leg-right');
     hangman.forEach((elm) => {
@@ -120,5 +160,5 @@ function hideAll() {
 }
 
 // START THE GAME
-hideAll();
 loadQuestion();
+hideAll();
