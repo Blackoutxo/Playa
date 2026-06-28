@@ -31,7 +31,17 @@ const topicGeneralGame = [
 
 ];
 
+const topicAircraft = [
+
+];
+
+const topicAnatomy = [
+
+];
+
 // Field variables
+const topics = ["Automotive", "Computer", "Game", "Aircraft", "Human anatomy"];
+
 let QUESTIONS = [""];
 let ANSWER = "";
 let typed = "";
@@ -40,9 +50,12 @@ let strike = 6;
 let score = 0;
 
 let topicSize = 0;
+let topicsCount = 0;
+let selectedTopic = null;
 
 // Elements
 const container = document.querySelector('.box-container');
+const buttonContainer = document.getElementById('buttons');
 const head = document.querySelector('.head');
 const Larm = document.querySelector('.arm-left');
 const Rarm = document.querySelector('.arm-right');
@@ -52,7 +65,9 @@ const Rleg = document.querySelector('.leg-right');
 
 // Load question
 function loadQuestion() {
-    setUpQuestion(topicAutomotive);
+    selectedTopic = selectedTopic === null ? topicAutomotive : selectedTopic;
+
+    setUpQuestion(selectedTopic);
 }
 
 // Set up the question
@@ -142,6 +157,43 @@ function hangman() {
     else if (strike === 0) head.classList.remove('hide'); 
 }
 
+// Buttons
+function createButton() {
+    topics.forEach((e) => {
+        const button = document.createElement('div');
+
+        // Topics count
+        topicsCount++;
+
+        // define the element
+        button.classList.add('button');
+        button.textContent = e;
+
+        buttonContainer.style.gridTemplateColumns = `repeat(${topicsCount}, 10vw)`;
+        buttonContainer.style.gridTemplateRows = `repeat(1, 1)`;
+
+        buttonContainer.appendChild(button);
+    });
+}
+
+function fetchButtonID() {
+    buttonContainer.childNodes.forEach((childs) => {
+        childs.addEventListener('click', (button) => {
+            selectedTopic = clicked(button.textContent);
+        });
+    });
+}
+
+function clicked(button) {
+    if (button === "Automotive") return topicAutomotive;
+    else if (button === "Computer") return topicComputer;
+    else if (button === "Game") return topicGeneralGame;
+    else if (button === "Aircraft") return topicAircraft;
+    else if (button === "Human Anatomy") return topicAnatomy;
+
+    return topicAutomotive;
+}
+
 // Check if the answer in the cell is correct
 function checkAnswer(cells, answer) {
     const correct = cells.every(
@@ -160,5 +212,6 @@ function hideAll() {
 }
 
 // START THE GAME
-loadQuestion();
 hideAll();
+createButton();
+fetchButtonID();
