@@ -70,7 +70,6 @@ const topicGeneralGame = [
 ];
 
 const topicAircraft = [
-    {Q: "Which brothers invented the first aircraft?", A: "WRIGHTBROTHERS"},
     {Q: "How long was the first flight? (in words)", A: "THIRTYSECOND"},
     {Q: "What is the area called where the pilot's sit?", A: "COCKPIT"},
     {Q: "What is the common call pilots use when the aircraft has an issue?", A: "MAYDAY"},
@@ -83,7 +82,20 @@ const topicAircraft = [
 ];
 
 const topicAnatomy = [
-
+    {Q: "What fibrous tissue connects the calf muscles to the calcaneus? It is named after the Greek hero who killed Hector outside of Troy.", A: "ACHILLESTENDON"},
+    {Q: "Which sensory organ is the tympanic membrane found in? (Hint: You’ll have to drum up your memories of human anatomy to answer correctly).", A: "EAR"},
+    {Q: "There are about 5.6 liters (or about 7% of their total body weight) of which life-giving fluid in the average adult’s body?", A: "BLOOD"},
+    {Q: "The nares are another name for which part of your nose that leads into your nasal passages?", A: "NOSTRILS"},
+    {Q: "What muscle in the human body gets its name from the resemblance of its shape to that of the fourth letter in the Greek alphabet?", A: "DELTOID"},
+    {Q: "The islets of Langerhans are groups of cells that produce insulin and glucagon located in what organ of the body?", A: "PANCREAS"},
+    {Q: "Recent research suggests that what organ is not vestigial, as earlier believed, but may act as a reservoir for beneficial gut bacteria?", A: "APPENDIX"},
+    {Q: "The 'cholecyst' is another name for what small organ that stores bile?", A: "GALLBLADDER"},
+    {Q: "What is the five-letter name of the oily substance that is produced to protect hair and skin on humans and is considered the main ingredient in the body's 'natural oils'?", A: "SEBUM"},
+    {Q: "What “C” word describes the lower end of the uterus, which allows for a baby to pass from the womb into the birth canal?", A: "CERVIX"},
+    {Q: "Which tiny, finger-like units lining the walls of the small intestine help increase its surface area in order to absorb nutrients more efficiently? The micro version of these projections can be found on any kind of cell membrane", A: "VILLI"},
+    {Q: "With an average weight in adults of approximately 3lbs (1.5kg), what is the heaviest gland in the human body?", A: "LIVER"},
+    {Q: "What's the top part of the mouth called?", A: "PALETTE"},
+    {Q: "What “C” skeletal part is the superior aspect of the skull? It encloses and protects the brain.", A: "CRANIUM"}
 ];
 
 // Field variables
@@ -110,6 +122,10 @@ const restartBTN = document.querySelector('.restart-button');
 const backBTNArea = document.querySelector('.back-button-area');
 const backBTN = document.querySelector('.back-button');
 
+const backgroundFN = document.querySelector('.background-FN');
+const backgroundFNS = document.querySelector('.background-finish');
+const winCard = document.querySelector('.win-card');
+
 const container = document.querySelector('.box-container');
 const buttonContainer = document.getElementById('buttons');
 
@@ -130,21 +146,28 @@ function setUpQuestion(topic) {
     const questions = document.querySelector('.question');
     container.innerHTML = '';
 
-    //let qRNG = 
+    let qRng = 0;
 
     const topicData = topic[score];
 
     // Setup topic size
     topicSize = topic.length;
 
+    // Add asked questions to the array    
+    /*if (QUESTIONS.includes(topicData.Q)) {
+        loadQuestion();
+        return;
+    }*/
+
+    // Random questions
+    qRng = Math.floor(Math.random() * topic.length);
+
+    // Add questions to the list
+    //QUESTIONS.push(topicData.Q);
+
     // Set question
     questions.textContent = topicData.Q;
 
-    // Add asked questions to the array
-    QUESTIONS.push(topicData.Q);
-    
-    console.log(QUESTIONS); 
-    
     // Answer
     const answer = topicData.A.split('');
 
@@ -189,16 +212,16 @@ window.addEventListener('keydown', (e) => {
     // Check hangman elements
     hangman();
 
+    // Check if all questions have been answered
+    /*if (topicSize < score) {
+        celebrate();
+        return;
+    }*/
+
     // Check if every cell is filled
     if (checkAnswer(cells, ANSWER)) {
         score++;
         loadQuestion();
-    }
-
-    // Check if all questions have been answered
-    if (topicSize < score) {
-        score = 0;
-        celebrate();
     }
 
     cells.forEach((cell) => {
@@ -273,7 +296,7 @@ function checkAnswer(cells, answer) {
 
 // Hide da man!
 function hideAll() {
-    const hangman = document.querySelectorAll('.head, .arm-left, .arm-right, .trunk, .leg-left, .leg-right, .background-finish');
+    const hangman = document.querySelectorAll('.head, .arm-left, .arm-right, .trunk, .leg-left, .leg-right, .background-FN, .background-finish');
     hangman.forEach((elm) => {
         elm.classList.add('hide');
     });
@@ -309,7 +332,9 @@ restartBTNArea.addEventListener('mouseout', () => {
 
 // Celebrate if all questions is answered
 function celebrate() {
-
+    backgroundFN.classList.remove('hide');
+    backgroundFNS.classList.remove('hide');
+    winCard.classList.add('hide');
 }
 
 // START THE GAME
