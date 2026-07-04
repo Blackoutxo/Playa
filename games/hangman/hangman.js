@@ -66,11 +66,20 @@ const topicGeneralGame = [
     {Q: "What is the name of the cheat code “Up, Up, Down, Down, Left, Right, Left, Right, B, A” associated with many Konami games?", A: "KONAMICODE"},
     {Q: "Which 2013 mobile game was removed from the App Store by its creator due to concerns over its addictive nature?", A: "FLAPPYBIRD"},
     {Q: "Which classic puzzle game involves arranging falling blocks to complete lines?", A: "TETRIS"},
-    {Q: ""}
+    {Q: "Which is THE MOST anticipated game for 2026?", A: "GTAVI"},
 ];
 
 const topicAircraft = [
-
+    {Q: "Which brothers invented the first aircraft?", A: "WRIGHTBROTHERS"},
+    {Q: "How long was the first flight? (in words)", A: "THIRTYSECOND"},
+    {Q: "What is the area called where the pilot's sit?", A: "COCKPIT"},
+    {Q: "What is the common call pilots use when the aircraft has an issue?", A: "MAYDAY"},
+    {Q: "What is the name for the safety belt used on an airplane?", A: "SEATBELT"},
+    {Q: "What is the bottom aircraft part that helps to safely land the aircraft?", A: "LANDINGGEAR"},
+    {Q: "What instrument in the cockpit can increase the speed of aircraft?", A: "Throttle"},
+    {Q: "How many landing gears are there in an aircraft? (in words)", A: "THREE"},
+    {Q: "Which commercial aircraft can hold the most passengers? (Name & number)", A: "AIRBUS380"},
+    {Q: "Which part is the fuel tank located in the aircraft by design to fuel the turbines?", A: "WINGS"},
 ];
 
 const topicAnatomy = [
@@ -179,6 +188,8 @@ window.addEventListener('keydown', (e) => {
         loadQuestion();
     }
 
+    
+
     cells.forEach((cell) => {
         if (cell.dataset.correct === typed) {
             cell.value = typed;
@@ -254,6 +265,11 @@ function hideAll() {
     hangman.forEach((elm) => {
         elm.classList.add('hide');
     });
+}
+
+// Celebrate if all questions is answered
+function celebrate() {
+
 }
 
 // START THE GAME
