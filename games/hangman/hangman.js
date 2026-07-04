@@ -104,6 +104,12 @@ let selectedTopic = null;
 const loadingScreen = document.querySelector('.loading-screen');
 const header = document.querySelector('.header');
 
+const restartBTNArea = document.querySelector('.restart-button-area');
+const restartBTN = document.querySelector('.restart-button');
+
+const backBTNArea = document.querySelector('.back-button-area');
+const backBTN = document.querySelector('.back-button');
+
 const container = document.querySelector('.box-container');
 const buttonContainer = document.getElementById('buttons');
 
@@ -116,7 +122,6 @@ const Rleg = document.querySelector('.leg-right');
 
 // Load question
 function loadQuestion() {
-    console.log(selectedTopic);
     setUpQuestion(selectedTopic);
 }
 
@@ -124,6 +129,8 @@ function loadQuestion() {
 function setUpQuestion(topic) {
     const questions = document.querySelector('.question');
     container.innerHTML = '';
+
+    //let qRNG = 
 
     const topicData = topic[score];
 
@@ -188,7 +195,11 @@ window.addEventListener('keydown', (e) => {
         loadQuestion();
     }
 
-    
+    // Check if all questions have been answered
+    if (topicSize < score) {
+        score = 0;
+        celebrate();
+    }
 
     cells.forEach((cell) => {
         if (cell.dataset.correct === typed) {
@@ -230,6 +241,7 @@ function createButton() {
 function fetchButtonID() {
     buttonContainer.childNodes.forEach((childs) => {
         childs.addEventListener('click', (button) => {
+            loadingScreen.classList.remove('moveIn');
             loadingScreen.classList.add('moveOut');
             header.classList.add('moveIn');
 
@@ -261,11 +273,39 @@ function checkAnswer(cells, answer) {
 
 // Hide da man!
 function hideAll() {
-    const hangman = document.querySelectorAll('.head, .arm-left, .arm-right, .trunk, .leg-left, .leg-right');
+    const hangman = document.querySelectorAll('.head, .arm-left, .arm-right, .trunk, .leg-left, .leg-right, .background-finish');
     hangman.forEach((elm) => {
         elm.classList.add('hide');
     });
 }
+
+// Mouse hover event listner
+backBTNArea.addEventListener('mouseover', () => {
+    backBTN.classList.add('show');
+});
+
+restartBTNArea.addEventListener('mouseover', () => {
+    restartBTN.classList.add('show');
+});
+
+backBTN.addEventListener('click', () => {
+    loadingScreen.classList.add('moveIn');
+    loadingScreen.classList.remove('moveOut');
+    header.classList.remove('moveIn');
+});
+
+restartBTN.addEventListener('click', () => {
+    score = 0;
+    loadQuestion();
+});
+
+backBTNArea.addEventListener('mouseout', () => {
+    backBTN.classList.remove('show');
+});
+
+restartBTNArea.addEventListener('mouseout', () => {
+    restartBTN.classList.remove('show');
+});
 
 // Celebrate if all questions is answered
 function celebrate() {
