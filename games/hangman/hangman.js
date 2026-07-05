@@ -113,6 +113,7 @@ let topicsCount = 0;
 let selectedTopic = null;
 
 // Elements
+const docs = document.documentElement;
 const loadingScreen = document.querySelector('.loading-screen');
 const header = document.querySelector('.header');
 
@@ -135,6 +136,8 @@ const Rarm = document.querySelector('.arm-right');
 const trunk = document.querySelector('.trunk');
 const Lleg = document.querySelector('.leg-left');
 const Rleg = document.querySelector('.leg-right');
+
+docs.classList.add('dark');
 
 // Load question
 function loadQuestion() {
@@ -312,6 +315,7 @@ restartBTNArea.addEventListener('mouseover', () => {
 });
 
 backBTN.addEventListener('click', () => {
+    score = 0;
     loadingScreen.classList.add('moveIn');
     loadingScreen.classList.remove('moveOut');
     header.classList.remove('moveIn');

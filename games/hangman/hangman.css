@@ -7,9 +7,41 @@
   font-style: normal;
 }
 
+:root {
+    --bg-color: rgb(255, 255, 255);
+
+    --box-outline: rgb(0, 0, 0);
+    --box-shadow: rgb(0, 0, 0, 0.219);
+
+    --text-color: rgb(0, 0, 0);
+    --text-outline: rgb(0, 0, 0);
+    --text-shadow: rgba(0, 0, 0, 0.219);
+
+    --hangman: rgb(0, 0, 0);
+
+    --gradient-1: rgba(255, 255, 255, 0.445);
+    --gradient-2: rgb(255, 255, 255);
+}
+
+:root.dark {
+    --bg-color: rgb(0, 0, 0);
+
+    --box-outline: rgb(81, 98, 197);
+    --box-shadow: rgba(81, 98, 197, 0.3);
+
+    --text-color: rgb(255, 255, 255);
+    --text-outline: rgb(81, 98, 197);
+    --text-shadow: rgba(81, 98, 197, 0.3);
+
+    --hangman: rgb(255, 255, 255);
+
+    --gradient-1: rgba(87, 222, 87, 0.3);
+    --gradient-2: rgba(87, 222, 87, 0.849);
+}
+
 body {
     font-family: "Space Grotesk";
-    background-color: white;
+    background-color: var(--bg-color);
 
     overflow: hidden;
 }
@@ -25,7 +57,7 @@ body {
     width: 100%;
     height: 100%;
 
-    background-color: white;
+    background-color: var(--bg-color);
 
     transition: 5s ease-in-out;
 
@@ -96,14 +128,16 @@ body {
 
     cursor: pointer;
 
+    color: var(--text-color);
+
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
 
     padding: 0 0.7vw;
-    background-color: white;
-    outline: 0.2vw solid black;
-    box-shadow: 0.3vw 0.3vw 0 0 black;
+    background-color: var(--bg-color);
+    outline: 0.2vw solid var(--box-outline);
+    box-shadow: 0.3vw 0.3vw 0 0 var(--box-shadow);
 
     z-index: 9999;
 }
@@ -119,11 +153,10 @@ body {
     font-size: 7vw;
     font-weight: 800;
     text-transform: uppercase;
-    text-shadow: 0.2vw 0.2vw rgba(0, 0, 0, 0.226);
+    text-shadow: 0.2vw 0.2vw var(--text-shadow);
 
-
-    stroke: black;
-    fill: black;
+    stroke: var(--text-outline);
+    fill: var(--text-outline);
     
     stroke-width: 0.1vw;
     stroke-dasharray: 5000;
@@ -148,7 +181,7 @@ body {
         fill: transparent;
     }
     100% {
-        text-shadow: 0.2vw 0.2vw rgba(0, 0, 0, 0.226);
+        text-shadow: 0.2vw 0.2vw var(--text-shadow);
         stroke-dashoffset: 0;
     }
 }
@@ -165,7 +198,6 @@ body {
         font-size: 3vw;
         transform: translate(8vw, -47vh);
     }
-
 }
 
 /* Game area */
@@ -188,7 +220,7 @@ body {
     width: 100%;
     height: 100%;
 
-    background-color: white;
+    background-color: var(--bg-color);
 
     z-index: 9999;
 }
@@ -208,7 +240,7 @@ body {
     width: 100%;
     height: 100%;
 
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.356), rgb(0, 0, 0));
+    background-image: linear-gradient(to bottom, var(--gradient-1), var(--gradient-2));
     z-index: 9999;
 }
 
@@ -232,11 +264,11 @@ body {
     width: 33%;
 
     padding: 3% 0;
-    outline: 0.3vw solid black;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0.5vw 0.5vw 0 0 rgb(67, 106, 211);
+    outline: 0.3vw solid var(--box-outline);
+    background-color: var(--bg-color);
+    box-shadow: 0.5vw 0.5vw 0 0 var(--box-shadow);
 
-    opacity: 0;
+    opacity: 1;
 
     transition: 0.4s ease-in-out;
 
@@ -266,6 +298,8 @@ body {
 
     cursor: pointer;
 
+    color: var(--text-color);
+
     font-size: 2vw;
     font-weight: 600;
     text-transform: uppercase;
@@ -273,9 +307,9 @@ body {
     transform: translateX(-200%);
 
     padding: 0.3vw 1.2vw;
-    outline: 0.2vw solid black;
-    background-color: white;
-    box-shadow: 0vw 0vw 0 0 black;
+    outline: 0.2vw solid var(--box-outline);
+    background-color: var(--bg-color);
+    box-shadow: 0vw 0vw 0 0 var(--box-shadow);
 
     transition: 0.5s ease-in-out;
 
@@ -284,12 +318,12 @@ body {
 
 .back-button:hover {
     transform: translate(0, 0);
-    box-shadow: 0.4vw 0.4vw 0 0 black;
+    box-shadow: 0.4vw 0.4vw 0 0 var(--box-shadow);
 }
 
 .back-button.show {
     transform: translate(0, 0);
-    box-shadow: 0.4vw 0.4vw 0 0 black;
+    box-shadow: 0.4vw 0.4vw 0 0 var(--box-shadow);
 }
 
 /* Restart button */
@@ -311,6 +345,8 @@ body {
 
     cursor: pointer;
 
+    color: var(--text-color);
+
     font-size: 2vw;
     font-weight: 600;
     text-transform: uppercase;
@@ -318,9 +354,9 @@ body {
     transform: translateX(200%);
 
     padding: 0.3vw 1.2vw;
-    outline: 0.2vw solid black;
-    background-color: white;
-    box-shadow: 0vw 0vw 0 0 black;
+    outline: 0.2vw solid var(--box-outline);
+    background-color: var(--bg-color);
+    box-shadow: 0vw 0vw 0 0 var(--box-shadow);
 
     transition: 0.5s ease-in-out;
 
@@ -329,12 +365,12 @@ body {
 
 .restart-button:hover {
     transform: translate(0, 0);
-    box-shadow: 0.4vw 0.4vw 0 0 black;
+    box-shadow: 0.4vw 0.4vw 0 0 var(--box-shadow);
 }
 
 .restart-button.show {
     transform: translate(0, 0);
-    box-shadow: 0.4vw 0.4vw 0 0 black;
+    box-shadow: 0.4vw 0.4vw 0 0 var(--box-shadow);
 }
 
 
@@ -343,6 +379,8 @@ body {
     position: absolute;
     top: 10%;
     left: 4%;
+
+    color: var(--text-color);
 
     font-size: 2vw;
     font-weight: 800;
@@ -362,7 +400,7 @@ body {
     height: 30%;
 
     border-radius: 0.2vw;
-    outline: 0.2vw solid black
+    outline: 0.2vw solid var(--box-outline);
 }
 
 .box-container {
@@ -384,11 +422,14 @@ body {
     width: 4vw;
     height: 2.5vw;
 
+    color: var(--text-color);
+
     text-align: center;
     font-size: 1.5vw;
     font-weight: 600;
 
-    outline: 0.2vw solid black;
+    outline: 0.2vw solid var(--box-outline);
+    background-color: var(--bg-color);
     border: none;
 }
 
@@ -417,9 +458,9 @@ body {
     width: 1.5vw;
     height: 80vh;
 
-    background-color: rgb(255, 255, 255);
-    outline: 0.2vw solid black;
-    box-shadow: 0.3vw 0.3vw 0 0 black;
+    background-color: var(--bg-color);
+    outline: 0.2vw solid var(--box-outline);
+    box-shadow: 0.3vw 0.3vw 0 0 var(--box-shadow);
 }
 
 .nail-SH {
@@ -432,9 +473,9 @@ body {
 
     border-radius: 1vw;
 
-    background-color: rgb(255, 255, 255);
-    outline: 0.1vw solid black;
-    box-shadow: 0.2vw 0.2vw 0 0 black;
+    background-color: var(--bg-color);
+    outline: 0.1vw solid var(--box-outline);
+    box-shadow: 0.2vw 0.2vw 0 0 var(--box-shadow);
 
     z-index: 999;
 }
@@ -447,9 +488,9 @@ body {
     width: 25%;
     height: 3%;
 
-    background-color: rgb(255, 255, 255);
-    outline: 0.2vw solid black;
-    box-shadow: 0.3vw 0.3vw 0 0 black;
+    background-color: var(--bg-color);
+    outline: 0.2vw solid var(--box-outline);
+    box-shadow: 0.3vw 0.3vw 0 0 var(--box-shadow);
 }
 
 .nail-HH {
@@ -462,9 +503,9 @@ body {
 
     border-radius: 1vw;
 
-    background-color: rgb(255, 255, 255);
-    outline: 0.1vw solid black;
-    box-shadow: 0.2vw 0.2vw 0 0 black;
+    background-color: var(--bg-color);
+    outline: 0.1vw solid var(--box-outline);
+    box-shadow: 0.2vw 0.2vw 0 0 var(--box-shadow);
 
     z-index: 999;
 }
@@ -477,9 +518,9 @@ body {
     width: 1.5%;
     height: 20%;
 
-    background-color: rgb(255, 255, 255);
-    outline: 0.2vw solid black;
-    box-shadow: 0.3vw 0.1vw 0 0 black;
+    background-color: var(--bg-color);
+    outline: 0.2vw solid var(--box-outline);
+    box-shadow: 0.3vw 0.1vw 0 0 var(--box-shadow);
 
     z-index: -1;
 }
@@ -495,9 +536,9 @@ body {
 
     border-radius: 3vw;
 
-    background-color: rgb(255, 255, 255);
-    outline: 0.2vw solid black;
-    box-shadow: 0.3vw 0.3vw 0 0 black;
+    background-color: var(--bg-color);
+    outline: 0.2vw solid var(--hangman);
+    box-shadow: 0.3vw 0.3vw 0 0 var(--hangman);
 
     transition: 1.5s ease-in-out;
 }
@@ -516,7 +557,7 @@ body {
 
     transform: rotate(20deg);
 
-    background-color: rgb(0, 0, 0);
+    background-color: var(--hangman);
 
     transition: 1.5s ease-in-out;
 
@@ -537,7 +578,7 @@ body {
 
     transform: rotate(-20deg);
 
-    background-color: rgb(0, 0, 0);
+    background-color: var(--hangman);
 
     transition: 1.5s ease-in-out;
 
@@ -556,7 +597,7 @@ body {
     width: 1.1%;
     height: 16%;
 
-    background-color: rgb(0, 0, 0);
+    background-color: var(--hangman);
 
     transition: 1.5s ease-in-out;
 
@@ -577,7 +618,7 @@ body {
 
     transform: rotate(20deg);
 
-    background-color: rgb(0, 0, 0);
+    background-color: var(--hangman);
 
     transition: 1.5s ease-in-out;
 }
@@ -596,7 +637,7 @@ body {
 
     transform: rotate(-20deg);
 
-    background-color: rgb(0, 0, 0);
+    background-color: var(--hangman);
 
     transition: 1.5s ease-in-out;
 }
