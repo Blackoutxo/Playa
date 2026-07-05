@@ -22,7 +22,7 @@
 <img width="1366" height="610" alt="image" src="https://github.com/user-attachments/assets/a5b62e95-b5fc-4e6a-bc05-3396067131a1" />
 
 ## Tetris
-###  Tetris is another classic game where falling pieces of block are arranged next to one another where a line is formed and the made line removes and you score and increases the speed as you clean the line. This game has a loading screen which is really simple with a half-fitting sfx sound for it. This game was also ported from the same old project into javascript.
+###  Tetris is another classic game where falling pieces of block are arranged next to one another where a line is formed and the made line removes and you score and increases the speed as you clean the line. This game has a loading screen which is really simple with a half-fitting sfx sound for it. This game was also ported from the same old project into javascript. The java project being 2 files long was a bit hard to port it into javascript so had to use AI and its consultation to fix issues.
 ### Controls: Arrow up(Rotate), Arrow Left(Left), Arrow Right (Right), Arrow Down (Down), Space (instant down).
 
 <img width="1366" height="620" alt="image" src="https://github.com/user-attachments/assets/57db2b10-4bcd-4238-bfe6-b138f772260e" />
@@ -34,7 +34,7 @@
 <img width="1366" height="615" alt="image" src="https://github.com/user-attachments/assets/2b31f2a9-fc40-47db-8a60-b0f7bb510522" />
 
 ## Minesweeper
-### Minesweeper is another classic game where players logically and carefully deduct which cell might contain the bomb so as to win the game. This game improves one's deduction skills. The game has sleek animations when the selected cells are pressed and the same system to flag the cells. The game has 3 levels (Beginner, Intermediate, Expert). This game has a loading screen to select the levels with one button to go back to main-page. When selected a level an animation is played to load up the level same goes for pressing the back button. This game pops up back button when hovered over at left side and restart button pops up when hovered over the right side.
+### Minesweeper is another classic game where players logically and carefully deduct which cell might contain the bomb so as to win the game. This game improves one's deduction skills. The game has sleek animations when the selected cells are pressed and the same system to flag the cells. The game has 3 levels (Beginner, Intermediate, Expert). This game has a loading screen to select the levels with one button to go back to main-page. When selected a level an animation is played to load up the level same goes for pressing the back button. This game pops up back button when hovered over at left side and restart button pops up when hovered over the right side. The game used help of AI for some logics but not for design, animations and such.
 ### Controls: Left-click (Reveal cell), Right-click (Flag cell)
 
 <img width="1366" height="616" alt="image" src="https://github.com/user-attachments/assets/1a38eae9-fd22-44ac-845f-b51f39f2d3c6" />
