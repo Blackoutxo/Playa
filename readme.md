@@ -1,0 +1,45 @@
+# PLAYA
+### Playa is a neo-brutalist themed web-playable game website including some classics game like "Snake, Tetris". This website has local storage system for keeping your score for your own future use. The main page has global variable theme change in the settings icon which changes every theme of the games and the main page's itself. The game selection window arranges the game in grid layout instead of absolute positioning (The grid layout was added in Jul 5, '26), for future use for adding more games below the currently made ones.
+
+### Here's the image of the main page
+
+[main page image here]
+
+### The currently available games are :
+
+## Snake
+### Snake is a one of the classic game where a small body of snake moves around a grid where it is guided towards apple where the snake eats the sugary apple and gets fat (He actually gets longer) and player play until the full grid is filled. The game is currently desktop supported only. This game has an loading screen made up of pure css and js, giving the feel of arcade machine.
+### Controls: W (UP), A (Left), S (Down), D (RIGHT)
+
+[Image here]
+
+## Gravity
+### Gravity is simple minimalistic a space based physics game where a player uses currently given placeable planets (Blue circular objects), to overcome the effect of the heavenly bodies (red circular objects) and lead the moving body (comet) to the goal position. This game has buttons on its left and right side, where player hovers upon the left and right side the buttons appears to visit previous levels or get to the highest level the player has achieved till then. This game has semi-futuristic loading screen with its fitting sound.
+### Controls: Space (Launching comet), Left-click (placing planets), Enter (Restart)
+### Levels: 30
+
+[Image here]
+
+## Tetris
+###  Tetris is another classic game where falling pieces of block are arranged next to one another where a line is formed and the made line removes and you score and increases the speed as you clean the line. This game has a loading screen which is really simple with a half-fitting sfx sound for it.
+
+[Image Here]
+
+## PI
+### PI is a sequencing based game where players press the next-sequence number from num-pad or the numbers button or straight up the calculator button, the calculator features a button to reset the sequence and another button where you can see the next sequence for practicing. Players have to sequence upto 1000th digit of PI to win the game. This game might just be mobile friendly perhaps? This game has a sleek and modern-ish loading scree with the calculator being spawned up when the loading gradually fades into the abyss.
+### Controls: Number button, num-pad buttons, calculator buttons, 
+
+[Image here]
+
+## Minesweeper
+### Minesweeper is another classic game where players logically and carefully deduct which cell might contain the bomb so as to win the game. This game improves one's deduction skills. The game has sleek animations when the selected cells are pressed and the same system to flag the cells. The game has 3 levels (Beginner, Intermediate, Expert). This game has a loading screen to select the levels with one button to go back to main-page. When selected a level an animation is played to load up the level same goes for pressing the back button. This game pops up back button when hovered over at left side and restart button pops up when hovered over the right side.
+### Controls: Left-click (Reveal cell), Right-click (Flag cell)
+
+[Image here]
+
+## Hangman
+### Hangman is yet another classic game following the neo-brutalist theme of this website where players choose a topic they want to play about then answer each question carefully by given clues by the question or just answering it. The game is over when the stick figure man is completely made. This game has a loading screen where the header gradually builds and fills to create the full header. When selected a topic an animation is played and same goes for pressing the back button which appears when hovered over the left side and restart-button when hovered upon the right side.
+### Controls: Keyboard keys (Any key pressed counts as a letter of its own so if you even press enter button it is registered as wrong input, if you press one of the letters included in the cells when the cell is filled your cell input is checked and lets you off to another level)
+ 
+[Image here]
+
