@@ -137,7 +137,12 @@ const trunk = document.querySelector('.trunk');
 const Lleg = document.querySelector('.leg-left');
 const Rleg = document.querySelector('.leg-right');
 
-docs.classList.add('dark');
+// Get theme from local storage
+const theme = localStorage.getItem('theme');
+
+if (theme === '1') {
+    document.documentElement.classList.add('dark');
+}
 
 // Load question
 function loadQuestion() {
