@@ -8,13 +8,13 @@
 ### The currently available games are :
 
 ## Snake
-### Snake is a one of the classic game where a small body of snake moves around a grid where it is guided towards apple where the snake eats the sugary apple and gets fat (He actually gets longer) and player play until the full grid is filled. The game is currently desktop supported only. This game has an loading screen made up of pure css and js, giving the feel of arcade machine.
+### Snake is a one of the classic game where a small body of snake moves around a grid where it is guided towards apple where the snake eats the sugary apple and gets fat (He actually gets longer) and player play until the full grid is filled. The game is currently desktop supported only. This game has an loading screen made up of pure css and js, giving the feel of arcade machine. This game was ported from one of my old java projects into javascript.
 ### Controls: W (UP), A (Left), S (Down), D (RIGHT)
 
 [Image here]
 
 ## Gravity
-### Gravity is simple minimalistic a space based physics game where a player uses currently given placeable planets (Blue circular objects), to overcome the effect of the heavenly bodies (red circular objects) and lead the moving body (comet) to the goal position. This game has buttons on its left and right side, where player hovers upon the left and right side the buttons appears to visit previous levels or get to the highest level the player has achieved till then. This game has semi-futuristic loading screen with its fitting sound.
+### Gravity is simple minimalistic a space based physics game where a player uses currently given placeable planets (Blue circular objects), to overcome the effect of the heavenly bodies (red circular objects) and lead the moving body (comet) to the goal position. This game has buttons on its left and right side, where player hovers upon the left and right side the buttons appears to visit previous levels or get to the highest level the player has achieved till then. This game has semi-futuristic loading screen with its fitting sound. This game uses matter-js for physics based calculation.
 ### Controls: Space (Launching comet), Left-click (placing planets), Enter (Restart)
 ### Levels: 30
 
