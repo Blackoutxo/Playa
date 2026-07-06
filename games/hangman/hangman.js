@@ -329,8 +329,11 @@ backBTN.addEventListener('click', () => {
 restartBTN.addEventListener('click', () => {
     score = 0;
     strike = 6;
-    hangman();
+    
+    // Hide da man again
     hideAll();
+
+    // Load the question from the start
     loadQuestion();
 });
 
