@@ -1,6 +1,10 @@
 # PLAYA
 ### Playa is a neo-brutalist themed web-playable game website including some classics game like "Snake, Tetris". This website has local storage system for keeping your score for your own future use. The main page has global variable theme change in the settings icon which changes every theme of the games and the main page's itself. The game selection window arranges the game in grid layout instead of absolute positioning (The grid layout was added in Jul 5, '26), for future use for adding more games below the currently made ones.
 
+
+### Here's the web link
+[[Click here]](https://blackoutxo.github.io/Playa/)
+
 ### Here's the image of the main page
 
 <img width="1365" height="616" alt="image" src="https://github.com/user-attachments/assets/11ca34b8-f344-46d6-b9ac-dc9e0fca9086" />
