@@ -70,6 +70,8 @@
 ##                                                                                         Setup Instrctions
 ### If you want to locally run this website you can clone this repository into your IDE
 For eg. in VS Code
-``` git clone https://github.com/Blackoutxo/Playa ```
+```
+git clone https://github.com/Blackoutxo/Playa
+```
 After cloning, you must have __LIVE SERVER__ extension installed in order to properly use the website. After installing the extension you should press 'Go live' button to then start the website,
 and VOILA! you have PLAYA website running right from your desktop.
