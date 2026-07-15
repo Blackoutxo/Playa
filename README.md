@@ -11,7 +11,7 @@
 
 ### The currently available games are :
 
-## Snake
+## Snake (The snake appears buggy and is supposed to, It was how I made the game in my minecraft's mod's GUI screen, buggy, simple, fun)
 ### Snake is a one of the classic game where a small body of snake moves around a grid where it is guided towards apple where the snake eats the sugary apple and gets fat (He actually gets longer) and player play until the full grid is filled. The game is currently desktop supported only. This game has an loading screen made up of pure css and js, giving the feel of arcade machine. This game was ported from one of my old java projects into javascript.
 
 ### Controls: W (UP), A (Left), S (Down), D (RIGHT), Enter (Start / Re-start)
@@ -25,7 +25,7 @@
 
 <img width="1366" height="610" alt="image" src="https://github.com/user-attachments/assets/a5b62e95-b5fc-4e6a-bc05-3396067131a1" />
 
-## Tetris
+## Tetris (The 'bugs' aren't bugs, they are meant to be there to represent my old mod's coding style ported from java)
 ###  Tetris is another classic game where falling pieces of block are arranged next to one another where a line is formed and the made line removes and you score and increases the speed as you clean the line. This game has a loading screen which is really simple with a half-fitting sfx sound for it. This game was also ported from the same old project into javascript. The java project being 2 files long was a bit hard to port it into javascript so had to use AI and its consultation to fix issues.
 ### Controls: Arrow up(Rotate), Arrow Left(Left), Arrow Right (Right), Arrow Down (Down), Space (instant down).
 
