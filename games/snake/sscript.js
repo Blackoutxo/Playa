@@ -65,8 +65,8 @@ const over = new Audio('../../assets/game/game over.mp3');
 const eat = new Audio('../../assets/game/snake/audio/eat.mp3');
 
 // var
-const width = 680;
-const height = 440;
+const width = 685;
+const height = 436;
 
 // making this so I dont have to constantly change every body of snake (i just found out that any grid size greater than 20 cause snake go kablow)
 const grid_size = 20;
