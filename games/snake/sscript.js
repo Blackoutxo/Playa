@@ -292,6 +292,26 @@ function render() {
         ctx.fillText( "Press Enter to play!", (width / 2), height - 20);
     }
 
+    if ((width * height) === snakeSize) {
+        ctx.textAlign = "center";
+
+        // EHH game ova!
+        ctx.fillStyle = "#1aff39";
+        ctx.font = "50px 'Comic Relief', monospace";
+        ctx.fillText("YOU WON!", (width / 2), (height / 2));
+
+        // Score
+        ctx.fillStyle = "#0BFF03";
+        ctx.font = "20px 'Comic Relief', monospace";
+        ctx.fillText("Holy schmoly how'd you do it?", (width / 2), (height / 2 + 25))
+        ctx.fillText("Score : " + snakeSize, (width / 2), (height / 2) + 30);
+
+        // Click to play text
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "20px 'Comic Relief', monospace";
+        ctx.fillText( "Press Enter to play again!", (width / 2), height - 20);
+    }
+
     requestAnimationFrame(render);
 }
 
