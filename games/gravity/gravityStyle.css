@@ -46,18 +46,31 @@ body {
   background-color: rgb(70, 87, 129);
 
   z-index: 9999;
+}
 
-  animation: disappear 8s ease-in-out forwards;
+.loading-screen.disappear {
+  animation: disappear 3s ease-in-out forwards;
 }
 
 @keyframes disappear {
   0% {
-    transform: translateY(0%);
-  }
-  80% {
+    opacity: 1;
     transform: translateY(0);
   }
+  30%{ 
+    opacity: 0;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 0;
+    transform: translateY(-200%);
+  }
   100% {
+    opacity: 0;
     transform: translateY(-200%);
   }
 }

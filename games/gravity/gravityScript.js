@@ -394,6 +394,8 @@ let highestLevel = Number(localStorage.getItem("Highest_level"));
 let currentLevel = Number(localStorage.getItem("Current_level"));
 
 // Docs and audio
+const loadingScreen = document.querySelector('.loading-screen');
+
 const dnf = document.querySelector('.dnf');
 const lvlComplete = document.querySelector('.level-completed');
 const intrd = new Audio('../../assets/game/gravity/audio/gravity intro.mp3');
@@ -403,6 +405,11 @@ const nextButton = document.querySelector(".level-next");
 
 const leftArea = document.querySelector('.left-area');
 const rightArea = document.querySelector('.right-area');
+
+// Loading screen
+setTimeout(() => {
+    loadingScreen.classList.add('disappear');
+}, 5000);
 
 // hide
 dnf.classList.add('hide');
