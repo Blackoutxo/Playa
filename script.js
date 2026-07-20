@@ -6,6 +6,52 @@ setInterval(() => {
     initWindow.classList.add('disappear');
 }, 1800);
 
+// -------- Lenis --------- // 
+let lenis;
+let rafId;
+
+function initLenis() {
+    // Destroy old
+    if (lenis) {
+        lenis.destroy();
+        lenis = null;
+    }
+    if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+    }
+
+    // horizontal scroll
+    document.body.style.overflowY = '';
+    document.body.style.overflowX = '';
+
+    const wrapper = document.querySelector('.game-selection-window');
+    const content = document.querySelector('.game-container');
+    
+    lenis = new Lenis({
+        wrapper: wrapper,
+        content: content,
+        eventsTarget: wrapper,
+        orientation: 'horizontal',   
+        gestureOrientation: 'both',
+        smoothWheel: true,
+        wheelMultiplier: 3,
+        touchMultiplier: 1.8,
+        lerp: 0.1,
+        infinite: false,
+    });
+
+    // RAF loop
+    function raf(time) {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+    }
+
+    rafId = requestAnimationFrame(raf);
+}
+
+initLenis();
+
 // --------- Settings ---------- //
 const settingsBar = document.querySelector('.settings');
 const settingBtn = document.querySelector('.settings-icon');
