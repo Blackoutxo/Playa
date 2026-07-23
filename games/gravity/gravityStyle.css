@@ -57,21 +57,9 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-  30%{ 
-    opacity: 0;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  70% {
-    opacity: 0;
-    transform: translateY(-200%);
-  }
   100% {
     opacity: 0;
-    transform: translateY(-200%);
+    transform: scale(20);
   }
 }
 
@@ -101,7 +89,13 @@ body {
       2px 2px 0px #bbb,
       3px 3px 0px rgba(0,0,0,0.4);
 
-  animation: fadeInText 5s ease-in-out forwards;
+  animation: fadeInText 5s ease-in-out;
+
+  transition: 1s ease-in-out;
+}
+
+.header.disappear {
+  opacity: 0;
 }
 
 @keyframes fadeInText {

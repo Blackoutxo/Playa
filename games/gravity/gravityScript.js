@@ -395,6 +395,7 @@ let currentLevel = Number(localStorage.getItem("Current_level"));
 
 // Docs and audio
 const loadingScreen = document.querySelector('.loading-screen');
+const header = document.querySelector('.header');
 
 const dnf = document.querySelector('.dnf');
 const lvlComplete = document.querySelector('.level-completed');
@@ -408,6 +409,7 @@ const rightArea = document.querySelector('.right-area');
 
 // Loading screen
 setTimeout(() => {
+    header.classList.add('disappear');
     loadingScreen.classList.add('disappear');
 }, 5000);
 
