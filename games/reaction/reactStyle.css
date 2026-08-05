@@ -1,9 +1,9 @@
 :root {
-    --main-background: black;
+    --main-background: white;
 }
 
 :root.dark {
-
+    --main-background: black;
 }
 
 body {
@@ -20,8 +20,53 @@ body {
     height: 100%;
 }
 
-.circ {
-   position: absolute;
-   top: 0;
-   left: 0;
+.loading-screen.zoom {
+    animation: zoomIn 3s ease-in-out forwards;
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(30);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-1000%);
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.dial {
+    position: absolute;
+    top: 30%;
+    left: 35%;
+}
+
+.pin {
+    position: absolute;
+    top: 49%;
+    left: 49.6%;
+
+    scale: 1.4;
+    
+    transform-origin: 50% 80%; 
+    animation: pinUpdate 3s ease-in-out forwards;
+}
+
+@keyframes pinUpdate {
+    0% {
+        transform: rotate(-100deg);
+    }
+    40% {
+        transform: rotate(0deg);
+    }
+    70% {
+        transform: rotate(-80deg);
+    }
+    100% {
+        transform: rotate(80deg);
+    }
 }
