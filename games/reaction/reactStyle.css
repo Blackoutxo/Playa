@@ -100,8 +100,70 @@ body {
 .info {
     position: absolute;
     top: 3%;
-    left: 33%;
+    left: 29%;
 
-    font-size: 2vw;
+    width: 40%;
+    height: 8%;
+
+    text-align: center;
+    font-size: 1.5vw;
+    font-weight: 500;
+    color: white;
+
+    padding: 0.3vw 0;
+    border: 0.26vw solid rgb(185, 22, 22);
+    background-color: rgb(27, 92, 136);
+    box-shadow: 0.3vw 0.3vw 0 0 rgb(109, 17, 17);
+}
+
+@keyframes info {
+    
+}
+
+/* Stats */
+.stats {
+    position: absolute;
+    top: 93%;
+    left: 1%;
+
+    font-size: 1vw;
     color: var(--general-txt);
+}
+
+/* Start info */
+.start-info {
+    position: absolute;
+    top: 70%;
+    left: 45%;
+
+    color: var(--general-txt);
+    font-size: 1.6vw;
+
+    animation: flicker 2s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Count down */
+.count {
+    position: absolute;
+    top: 40%;
+    left: 48.5%;
+
+    font-size: 5vw;
+    color: var(--general-txt);
+}
+
+.count.hide {
+    opacity: 0;
 }
