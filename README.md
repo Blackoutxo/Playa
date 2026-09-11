@@ -82,6 +82,11 @@ This game works in simple html, css, js tech-stack. The question, answers box ar
 
 (To continue to next question you MUST press letters included IN the question's answer)
 
+### Reaction: 
+This game is made in vanilla html, css, js. its a basic reaction game which gives you your reaction time to the game's given color choice. This game does not follow its predecessors with the loading screen and all BUT it does have a notification bar to give you your first piece of information about the game and a handy text in the first screen to tell you to 'click to start'. When its pressed a "wait!" text appears with no flickering then color change of background with "Click now!" text is where you'll click to determine your reaction time.
+
+(The code of the reactScript.js shows how the reaction calculation, best reaction calculation is done.)
+
 ## Setup Instructions
 ### If you want to locally run this website you can clone this repository into your IDE
 For eg. in VS Code
