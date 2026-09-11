@@ -6,7 +6,6 @@ const bestTime = document.querySelector('.BMS');
 const currentTime = document.querySelector(".CMS");
 
 // General vars
-const count = document.querySelector('.count');
 const gameArea = document.querySelector(".game-area");
 const gameAreaID = document.getElementById('game-area');
 const startInfo = document.querySelector('.start-info');
@@ -24,9 +23,6 @@ let state = "idle";
 if (theme === '1') {
     document.documentElement.classList.add('dark');
 }
-
-// hide elements that need hiding
-count.classList.add('hide');
 
 // game area click detection
 gameArea.addEventListener('click', () => {
