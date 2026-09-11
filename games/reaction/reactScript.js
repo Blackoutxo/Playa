@@ -14,7 +14,6 @@ const startInfo = document.querySelector('.start-info');
 const gameInfo = document.querySelector('.game-info');
 
 let bestRXN = 0;
-let currentRXN = 0;
 
 let startTime;
 let timeId;
@@ -25,11 +24,6 @@ let state = "idle";
 if (theme === '1') {
     document.documentElement.classList.add('dark');
 }
-
-// Animating timeouts (temporarily unused)
-//setTimeout(() => {
-//    document.querySelector('.loading-screen').classList.add('zoom');
-//}, 3000);
 
 // hide elements that need hiding
 count.classList.add('hide');
@@ -65,12 +59,14 @@ function end() {
 
     state = "idle";
 
-    if (reactionTime < currentRXN) bestRXN = reactionTime;
+    if (bestRXN === 0) bestRXN = reactionTime;            // Never letting the best rxn only be 0ms lol
+    if (reactionTime < bestRXN) bestRXN = reactionTime;
 
     bestTime.textContent = bestRXN;
-    currentTime.textContent = currentRXN;
+    currentTime.textContent = reactionTime;
 
     gameInfo.textContent = "Your time was " + reactionTime + "ms";
+    gameArea.classList.remove('green');
 }
 
 // Premature clicks
